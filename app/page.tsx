@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useMemo, useEffect } from "react";
 import {
   Map,
@@ -17,6 +18,7 @@ import {
   Info,
   AlertTriangle,
   Globe,
+  Move,
 } from "lucide-react";
 
 // Instagramアイコン用SVG
@@ -536,7 +538,7 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
-  // リアルタイムイベント特定ロジック（時間内のみピックアップ）
+  // リアルタイムイベント特定ロジック
   const liveEvent = useMemo(() => {
     if (!currentTime) return null;
 
@@ -700,9 +702,7 @@ export default function Page() {
             <span className="text-slate-400 font-normal">@鶴岡高専</span>
           </div>
 
-          {/* 高専HP QR ＆ 高専祭インスタ QR（タップで各直接サイトへ遷移） */}
           <div className="flex items-center justify-center gap-6 pt-2 z-10 w-full">
-            {/* 高専HP */}
             <a
               href="https://www.tsuruoka-nct.ac.jp/"
               target="_blank"
@@ -722,7 +722,6 @@ export default function Page() {
               </div>
             </a>
 
-            {/* 高専祭インスタ */}
             <a
               href="https://www.instagram.com/nittc_kosensai2026?stkn=cjgxeW1rbW5hbjBn"
               target="_blank"
@@ -766,6 +765,25 @@ export default function Page() {
   // 2. 入場後アプリメイン画面
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 pb-20 font-sans relative">
+      <style>{`
+        /* スクロールバーのスタイル調整 */
+        .custom-map-scrollbar::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+        .custom-map-scrollbar::-webkit-scrollbar-track {
+          background: rgba(241, 245, 249, 0.8);
+          border-radius: 9999px;
+        }
+        .custom-map-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(203, 213, 225, 0.9);
+          border-radius: 9999px;
+        }
+        .custom-map-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(148, 163, 184, 1);
+        }
+      `}</style>
+
       {/* リアルタイムLIVEバナー（時間内のみ表示） */}
       {liveEvent && (
         <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-red-600 text-white border-b border-white/20 shadow-xl overflow-hidden">
@@ -892,59 +910,73 @@ export default function Page() {
         {/* タブ 1: 校内マップ */}
         {activeTab === "map" && (
           <div className="space-y-4">
-            {/* インタラクティブ構内図 */}
-            <div className="relative w-full rounded-3xl overflow-hidden border-2 border-slate-200 shadow-md bg-slate-200 aspect-[4/3]">
-              <img
-                src="/校内図.jpeg"
-                alt="鶴岡高専 構内図"
-                className="w-full h-full object-cover select-none"
-              />
+            {/* 上下左右スクロール操作ヒント */}
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
+              <span className="flex items-center gap-1.5 text-slate-700">
+                <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse" />
+                <span>画面をドラッグ・スワイプして上下左右に移動できます</span>
+              </span>
+              <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-extrabold shrink-0">
+                全方向移動マップ
+              </span>
+            </div>
 
-              {CAMPUS_ZONES.map((zone) => {
-                const isSelected = selectedZoneId === zone.id;
-                const isLiveStageZone = liveEvent?.locationZoneId === zone.id;
+            {/* スクロール可能キャンパスマップコンテナ */}
+            <div className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative">
+              {/* スクロール基準となる高解像度マップレイヤー (min-width指定で常にスクロール空間を保持) */}
+              <div className="relative min-w-[780px] aspect-[4/3] select-none">
+                <img
+                  src="/校内図.jpeg"
+                  alt="鶴岡高専 構内図"
+                  className="w-full h-full object-cover pointer-events-none"
+                />
 
-                return (
-                  <button
-                    key={zone.id}
-                    onClick={() =>
-                      setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))
-                    }
-                    style={{ top: zone.top, left: zone.left }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-10 flex flex-col items-center group ${
-                      isSelected ? "scale-125 z-30" : "hover:scale-110"
-                    }`}
-                  >
-                    {isSelected && (
-                      <div className="px-2.5 py-1 rounded-full text-[11px] font-black whitespace-nowrap shadow-lg mb-1 border border-slate-700 bg-slate-900 text-white ring-2 ring-rose-400 flex items-center gap-1 animate-in fade-in zoom-in-90 duration-200">
-                        <span>{zone.icon}</span>
-                        <span>{zone.pinLabel}</span>
-                      </div>
-                    )}
+                {CAMPUS_ZONES.map((zone) => {
+                  const isSelected = selectedZoneId === zone.id;
+                  const isLiveStageZone = liveEvent?.locationZoneId === zone.id;
 
-                    <div className="relative flex items-center justify-center">
-                      {(isSelected || isLiveStageZone) && (
-                        <span
-                          className={`absolute w-8 h-8 rounded-full ${
-                            isLiveStageZone ? "bg-red-500/50" : "bg-rose-500/40"
-                          } animate-ping`}
-                        />
+                  return (
+                    <button
+                      key={zone.id}
+                      onClick={() =>
+                        setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))
+                      }
+                      style={{ top: zone.top, left: zone.left }}
+                      className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-10 flex flex-col items-center group ${
+                        isSelected ? "scale-125 z-30" : "hover:scale-110"
+                      }`}
+                    >
+                      {isSelected && (
+                        <div className="px-2.5 py-1 rounded-full text-[11px] font-black whitespace-nowrap shadow-lg mb-1 border border-slate-700 bg-slate-900 text-white ring-2 ring-rose-400 flex items-center gap-1 animate-in fade-in zoom-in-90 duration-200">
+                          <span>{zone.icon}</span>
+                          <span>{zone.pinLabel}</span>
+                        </div>
                       )}
-                      <div
-                        className={`w-7 h-7 rounded-full flex items-center justify-center shadow-lg text-white border-2 border-white transition ${
-                          isSelected
-                            ? "bg-rose-600 ring-4 ring-rose-300"
-                            : isLiveStageZone
-                            ? "bg-red-700"
-                            : `${zone.color}`
-                        }`}
-                      >
-                        <MapPin className="w-4 h-4" />
+
+                      <div className="relative flex items-center justify-center">
+                        {(isSelected || isLiveStageZone) && (
+                          <span
+                            className={`absolute w-8 h-8 rounded-full ${
+                              isLiveStageZone ? "bg-red-500/50" : "bg-rose-500/40"
+                            } animate-ping`}
+                          />
+                        )}
+                        <div
+                          className={`w-7 h-7 rounded-full flex items-center justify-center shadow-lg text-white border-2 border-white transition ${
+                            isSelected
+                              ? "bg-rose-600 ring-4 ring-rose-300"
+                              : isLiveStageZone
+                              ? "bg-red-700"
+                              : `${zone.color}`
+                          }`}
+                        >
+                          <MapPin className="w-4 h-4" />
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* 選択されたスポットの詳細パネル */}
@@ -1200,7 +1232,6 @@ export default function Page() {
         {/* タブ 4: 交通・アクセス */}
         {activeTab === "access" && (
           <div className="space-y-4">
-            {/* 駐車場についての注意書きアラート */}
             <div className="bg-amber-50 border border-amber-200 p-4 rounded-3xl shadow-sm flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div className="space-y-1">
@@ -1214,7 +1245,6 @@ export default function Page() {
               </div>
             </div>
 
-            {/* 本校へのアクセス ＆ Googleマップ */}
             <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
               <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
                 <span className="text-3xl p-2.5 bg-sky-50 rounded-2xl text-sky-600">🏫</span>
@@ -1224,7 +1254,6 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* 指定座標（38.70950241993693, 139.79776942224186）を中心としたマップ */}
               <div className="space-y-2">
                 <div className="relative w-full h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
                   <iframe
@@ -1241,7 +1270,6 @@ export default function Page() {
                 </p>
               </div>
 
-              {/* 交通手段の案内 */}
               <div className="space-y-3 pt-2">
                 <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
                   <div className="flex items-center gap-2 text-xs font-black text-slate-800">
