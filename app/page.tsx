@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   Map,
   Store,
@@ -316,7 +316,7 @@ const STALLS_DATA: StallItem[] = [
     title: "総合メディアセンター",
     category: "校内施設・サービス",
     grade: "施設",
-    dept: "図書館・情報基盤",
+    dept: "図書・情報基盤",
     location: "第一体育館 西側",
     zoneId: "media_center",
     description: "図書室や情報処理施設が設置された総合メディアセンターです。休憩場所としてもご利用いただけます。",
@@ -402,7 +402,7 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標
+// 校内マップのピン座標（校内図-2 [左50%] + 校内図-1 [右50%] 連結座標系）
 const CAMPUS_ZONES = [
   {
     id: "bldg1",
@@ -412,8 +412,8 @@ const CAMPUS_ZONES = [
     color: "bg-blue-500",
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
-    top: "27%",
-    left: "53%",
+    top: "32%",
+    left: "48%",
     desc: "キャンパス中央に位置するメイン校舎。1F〜3Fにクラス企画・模擬店が出展しています。",
   },
   {
@@ -424,8 +424,8 @@ const CAMPUS_ZONES = [
     color: "bg-purple-500",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
-    top: "20%",
-    left: "86%",
+    top: "24%",
+    left: "78%",
     desc: "3Mお化け屋敷、4Eキッキングスナイパー、4B格付けチェックを開催！",
   },
   {
@@ -436,8 +436,8 @@ const CAMPUS_ZONES = [
     color: "bg-emerald-500",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎟️",
-    top: "27%",
-    left: "73%",
+    top: "28%",
+    left: "64%",
     desc: "模擬店や各種販売で使用する金券をお買い求めいただけます。",
   },
   {
@@ -448,8 +448,8 @@ const CAMPUS_ZONES = [
     color: "bg-amber-500",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
-    top: "45%",
-    left: "78%",
+    top: "46%",
+    left: "76%",
     desc: "話題のキッチンカー3店（ラーメン、スイーツ、ガパオライス）が集結！",
   },
   {
@@ -460,8 +460,8 @@ const CAMPUS_ZONES = [
     color: "bg-rose-500",
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
-    top: "72%",
-    left: "52%",
+    top: "70%",
+    left: "58%",
     desc: "メインステージイベントと2年生模擬店（餃子・ポップコーン・玉こん・焼き鳥）の会場です。",
   },
   {
@@ -473,7 +473,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
     top: "72%",
-    left: "28%",
+    left: "26%",
     desc: "第一体育館西側に位置する図書・情報メディアの総合施設です。",
   },
   {
@@ -484,8 +484,8 @@ const CAMPUS_ZONES = [
     color: "bg-orange-500",
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
-    top: "78%",
-    left: "11%",
+    top: "80%",
+    left: "10%",
     desc: "総合メディアセンター西側に隣接する学内売店です。",
   },
   {
@@ -496,8 +496,8 @@ const CAMPUS_ZONES = [
     color: "bg-sky-500",
     lightBg: "bg-sky-50 border-sky-300 text-sky-900",
     icon: "🅿️",
-    top: "78%",
-    left: "93%",
+    top: "82%",
+    left: "91%",
     desc: "校内関係者・許可車用駐車場です。台数に限りがあります。",
   },
 ];
@@ -523,6 +523,9 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
+  // マップコンテナの参照（初期表示で右側「校内図-1」を正面に合わせる用）
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+
   // 1号館フロア詳細モーダル用ステート
   const [isBldg1ModalOpen, setIsBldg1ModalOpen] = useState(false);
   const [currentFloor, setCurrentFloor] = useState<"1F" | "2F" | "3F">("1F");
@@ -537,6 +540,14 @@ export default function Page() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  // マップ表示時、初期位置を右側（校内図-1）にセット
+  useEffect(() => {
+    if (activeTab === "map" && mapContainerRef.current) {
+      const container = mapContainerRef.current;
+      container.scrollLeft = container.scrollWidth;
+    }
+  }, [activeTab, isEntered]);
 
   // リアルタイムイベント特定ロジック
   const liveEvent = useMemo(() => {
@@ -914,23 +925,32 @@ export default function Page() {
             <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
               <span className="flex items-center gap-1.5 text-slate-700">
                 <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse" />
-                <span>画面をドラッグ・スワイプして上下左右に移動できます</span>
+                <span>左にスクロールすると「校内図-2」エリアを表示できます</span>
               </span>
               <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-extrabold shrink-0">
-                全方向移動マップ
+                2分割連動マップ
               </span>
             </div>
 
-            {/* スクロール可能キャンパスマップコンテナ */}
-            <div className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative">
-              {/* スクロール基準となる高解像度マップレイヤー (min-width指定で常にスクロール空間を保持) */}
-              <div className="relative min-w-[780px] aspect-[4/3] select-none">
+            {/* スクロール可能キャンパスマップコンテナ（校内図-2 | 校内図-1 連結構成） */}
+            <div
+              ref={mapContainerRef}
+              className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative"
+            >
+              {/* 校内図-2（左: 西側）+ 校内図-1（右: 東側/正面）を結合した領域 */}
+              <div className="relative min-w-[1200px] aspect-[8/3] select-none flex">
                 <img
-                  src="/校内図.jpeg"
-                  alt="鶴岡高専 構内図"
-                  className="w-full h-full object-cover pointer-events-none"
+                  src="/校内図-2.jpeg"
+                  alt="校内図-2 (西側)"
+                  className="w-1/2 h-full object-cover pointer-events-none"
+                />
+                <img
+                  src="/校内図-1.jpeg"
+                  alt="校内図-1 (東側・正面)"
+                  className="w-1/2 h-full object-cover pointer-events-none"
                 />
 
+                {/* 統合マップ座標系上のピン */}
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvent?.locationZoneId === zone.id;
