@@ -817,7 +817,7 @@ export default function Page() {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能（指2本の中央を中心に拡大縮小）
+  // スマホ用ピンチイン・ピンチアウト機能（手ブレ・ズレ完全防止版）
   useEffect(() => {
     if (!isEntered || activeTab !== "map") return;
 
@@ -826,47 +826,60 @@ export default function Page() {
 
     let startDist = 0;
     let startZoom = 2.0;
+    let startScrollLeft = 0;
+    let startScrollTop = 0;
+    let startMidX = 0;
+    let startMidY = 0;
+    let rafId: number | null = null;
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
         if (e.cancelable) e.preventDefault();
+        
+        // 2本指の距離
         startDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
         startZoom = zoomLevelRef.current;
+
+        // ピンチ開始時点の「2指の中心位置」と「スクロール位置」を基準点として固定
+        const rect = container.getBoundingClientRect();
+        startMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        startMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+        startScrollLeft = container.scrollLeft;
+        startScrollTop = container.scrollTop;
       }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 2 && startDist > 0) {
         if (e.cancelable) e.preventDefault();
+
         const currentDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
+
         const scale = currentDist / startDist;
         const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 3.5);
-        const oldZoom = zoomLevelRef.current;
 
-        if (oldZoom !== newZoom) {
-          // 2本指の中央位置を取得してスクロール座標を補正
-          const rect = container.getBoundingClientRect();
-          const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-          const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+        if (rafId) cancelAnimationFrame(rafId);
 
-          const ratio = newZoom / oldZoom;
-          container.scrollLeft = (container.scrollLeft + midX) * ratio - midX;
-          container.scrollTop = (container.scrollTop + midY) * ratio - midY;
-
-          setZoomLevel(Math.round(newZoom * 100) / 100);
-        }
+        // 描画フレームに合わせてなめらかに拡大縮小＆スクロール補正
+        rafId = requestAnimationFrame(() => {
+          const ratio = newZoom / startZoom;
+          container.scrollLeft = (startScrollLeft + startMidX) * ratio - startMidX;
+          container.scrollTop = (startScrollTop + startMidY) * ratio - startMidY;
+          setZoomLevel(newZoom);
+        });
       }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (e.touches.length < 2) {
         startDist = 0;
+        if (rafId) cancelAnimationFrame(rafId);
       }
     };
 
@@ -880,6 +893,7 @@ export default function Page() {
       container.removeEventListener("touchmove", handleTouchMove);
       container.removeEventListener("touchend", handleTouchEnd);
       container.removeEventListener("touchcancel", handleTouchEnd);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [isEntered, activeTab]);
 
