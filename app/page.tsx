@@ -634,7 +634,7 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標（添付画像のピン留め位置に準拠）
+// 校内マップのピン座標
 const CAMPUS_ZONES = [
   {
     id: "yamazaki",
@@ -758,16 +758,11 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // マップのズームレベル（初期表示で昇降口前広場が見えやすいように拡大: 1.6）
-  const [zoomLevel, setZoomLevel] = useState<number>(1.6);
+  // マップの初期ズーム倍率を 2.0倍 に変更
+  const [zoomLevel, setZoomLevel] = useState<number>(2.0);
 
   // マップコンテナの参照
   const mapContainerRef = useRef<HTMLDivElement>(null);
-
-  // ピンチ操作用の参照
-  const touchDistRef = useRef<number | null>(null);
-  const initialZoomRef = useRef<number>(1.6);
-  const isCenteredRef = useRef<boolean>(false);
 
   // 1号館フロア詳細モーダル用ステート
   const [isBldg1ModalOpen, setIsBldg1ModalOpen] = useState(false);
@@ -784,16 +779,14 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
-  // 学生昇降口前広場（left: 78%, top: 43%）を中心に配置スクロールさせるロジック
-  const centerEntranceSquare = () => {
+  // マップの初期表示位置を画像右側（学生昇降口〜駐車場エリア付近）に設定する処理
+  const scrollToRightSide = () => {
     if (!mapContainerRef.current) return;
     const container = mapContainerRef.current;
-    const entranceZone = CAMPUS_ZONES.find((z) => z.id === "entrance");
-    const leftPercent = entranceZone ? parseFloat(entranceZone.left) / 100 : 0.78;
-    const topPercent = entranceZone ? parseFloat(entranceZone.top) / 100 : 0.43;
-
-    const targetX = container.scrollWidth * leftPercent - container.clientWidth / 2;
-    const targetY = container.scrollHeight * topPercent - container.clientHeight / 2;
+    
+    // 画像右側 (left 82%, top 40% 付近) をスクロールの中央へ移動
+    const targetX = container.scrollWidth * 0.82 - container.clientWidth / 2;
+    const targetY = container.scrollHeight * 0.40 - container.clientHeight / 2;
 
     container.scrollTo({
       left: Math.max(0, targetX),
@@ -802,61 +795,71 @@ export default function Page() {
     });
   };
 
-  // マップタブ切り替え時、または初回表示時に学生昇降口前広場を中央へ
+  // マップタブ切り替え時、または初回表示時に画像右側を中央へ移動
   useEffect(() => {
     if (activeTab === "map") {
       const timer = setTimeout(() => {
-        centerEntranceSquare();
+        scrollToRightSide();
       }, 150);
       return () => clearTimeout(timer);
     }
   }, [activeTab, zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能（2本指でのタッチ操作対応）
+  // 最新のズームレベルを ref で保持してピンチ処理で使用
+  const zoomLevelRef = useRef(zoomLevel);
+  useEffect(() => {
+    zoomLevelRef.current = zoomLevel;
+  }, [zoomLevel]);
+
+  // スマホ用ピンチイン・ピンチアウト機能（2本指タッチ操作対応）の最適化
   useEffect(() => {
     const container = mapContainerRef.current;
     if (!container) return;
 
+    let startDist = 0;
+    let startZoom = 2.0;
+
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
-        const dist = Math.hypot(
+        startDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
-        touchDistRef.current = dist;
-        initialZoomRef.current = zoomLevel;
+        startZoom = zoomLevelRef.current;
       }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 2 && touchDistRef.current !== null) {
-        e.preventDefault(); // 画面全体の拡大縮小を防ぐ
+      if (e.touches.length === 2 && startDist > 0) {
+        if (e.cancelable) e.preventDefault(); // ブラウザ独自のズームを抑制
         const currentDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
-        const scale = currentDist / touchDistRef.current;
-        const newZoom = Math.min(Math.max(initialZoomRef.current * scale, 1), 3.5);
+        const scale = currentDist / startDist;
+        const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 3.5);
         setZoomLevel(Math.round(newZoom * 100) / 100);
       }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (e.touches.length < 2) {
-        touchDistRef.current = null;
+        startDist = 0;
       }
     };
 
     container.addEventListener("touchstart", handleTouchStart, { passive: true });
     container.addEventListener("touchmove", handleTouchMove, { passive: false });
     container.addEventListener("touchend", handleTouchEnd, { passive: true });
+    container.addEventListener("touchcancel", handleTouchEnd, { passive: true });
 
     return () => {
       container.removeEventListener("touchstart", handleTouchStart);
       container.removeEventListener("touchmove", handleTouchMove);
       container.removeEventListener("touchend", handleTouchEnd);
+      container.removeEventListener("touchcancel", handleTouchEnd);
     };
-  }, [zoomLevel]);
+  }, []);
 
   // ズーム操作ハンドラー
   const handleZoomIn = () => {
@@ -864,12 +867,12 @@ export default function Page() {
   };
 
   const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(Math.round((prev - 0.25) * 100) / 100, 1));
+    setZoomLevel((prev) => Math.max(Math.round((prev - 0.25) * 100) / 100, 1.0));
   };
 
   const handleResetZoom = () => {
-    setZoomLevel(1.6);
-    setTimeout(centerEntranceSquare, 100);
+    setZoomLevel(2.0);
+    setTimeout(scrollToRightSide, 100);
   };
 
   // リアルタイムイベント特定ロジック
@@ -1255,14 +1258,14 @@ export default function Page() {
             <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1 gap-2">
               <span className="flex items-center gap-1.5 text-slate-700 truncate">
                 <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse shrink-0" />
-                <span className="truncate">ピンチ操作/＋ーで拡大縮小、指で移動</span>
+                <span className="truncate">指2本で拡大縮小、ドラッグで移動</span>
               </span>
 
               {/* ズームコントローラー */}
               <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-full p-1 shadow-sm shrink-0">
                 <button
                   onClick={handleZoomOut}
-                  disabled={zoomLevel <= 1}
+                  disabled={zoomLevel <= 1.0}
                   className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
                   title="縮小"
                 >
@@ -1279,11 +1282,11 @@ export default function Page() {
                 >
                   <ZoomIn className="w-3.5 h-3.5" />
                 </button>
-                {zoomLevel !== 1.6 && (
+                {zoomLevel !== 2.0 && (
                   <button
                     onClick={handleResetZoom}
                     className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition ml-0.5 border-l border-slate-200"
-                    title="標準位置（昇降口中心）に戻す"
+                    title="標準位置（初期位置）に戻す"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                   </button>
@@ -1303,14 +1306,14 @@ export default function Page() {
                 }}
                 className="relative aspect-[2.37/1] select-none transition-all duration-150 ease-out"
               >
-                {/* アスペクト比を完全保持した校内図画像 */}
+                {/* 校内図画像 */}
                 <img
                   src="/校内図.jpeg"
                   alt="校内図"
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 校内マップのピン（拡大縮小してもアスペクト比・相対座標を維持） */}
+                {/* 校内マップのピン */}
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
@@ -1324,21 +1327,21 @@ export default function Page() {
                       style={{ top: zone.top, left: zone.left }}
                       className={`absolute -translate-x-1/2 -translate-y-full transition-all duration-200 z-10 flex items-center gap-1.5 cursor-pointer group ${
                         isSelected
-                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/50 p-0.5 shadow-md"
+                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/60 p-0.5 shadow-md"
                           : "hover:scale-105"
                       }`}
                     >
-                      {/* 黒いピンアイコン */}
+                      {/* おしゃれなローズ〜オレンジグラデーションピンアイコン */}
                       <div className="relative flex items-center justify-center shrink-0">
                         {isLiveStageZone && (
-                          <span className="absolute w-5 h-5 rounded-full bg-red-500/50 animate-ping" />
+                          <span className="absolute w-6 h-6 rounded-full bg-rose-500/50 animate-ping" />
                         )}
-                        <div className="w-3.5 h-3.5 bg-slate-950 rounded-t-full rounded-bl-full rotate-45 border border-slate-900 shadow-sm flex items-center justify-center shrink-0">
-                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                        <div className="w-4 h-4 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
+                          <div className="w-1.5 h-1.5 bg-white rounded-full -rotate-45 shadow-inner" />
                         </div>
                       </div>
 
-                      {/* テキストラベル（黒文字＋白縁） */}
+                      {/* テキストラベル */}
                       <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
                         {zone.pinLabel}
                       </span>
