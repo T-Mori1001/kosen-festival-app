@@ -19,9 +19,6 @@ import {
   AlertTriangle,
   Globe,
   Move,
-  ZoomIn,
-  ZoomOut,
-  RotateCcw,
 } from "lucide-react";
 
 // Instagramアイコン用SVG
@@ -758,9 +755,6 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // マップのズームレベル（1 = 100%, 1.25 = 125%, ... 3 = 300%）
-  const [zoomLevel, setZoomLevel] = useState<number>(1);
-
   // マップコンテナの参照
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
@@ -779,18 +773,13 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
-  // ズーム操作ハンドラー
-  const handleZoomIn = () => {
-    setZoomLevel((prev) => Math.min(Math.round((prev + 0.25) * 100) / 100, 3));
-  };
-
-  const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(Math.round((prev - 0.25) * 100) / 100, 1));
-  };
-
-  const handleResetZoom = () => {
-    setZoomLevel(1);
-  };
+  // マップ表示時、初期位置を右側（校内図-1）にセット
+  useEffect(() => {
+    if (activeTab === "map" && mapContainerRef.current) {
+      const container = mapContainerRef.current;
+      container.scrollLeft = container.scrollWidth;
+    }
+  }, [activeTab, isEntered]);
 
   // リアルタイムイベント特定ロジック
   const liveEvents = useMemo(() => {
@@ -1171,66 +1160,35 @@ export default function Page() {
         {/* タブ 1: 校内マップ */}
         {activeTab === "map" && (
           <div className="space-y-4">
-            {/* 上下左右スクロール＆拡大縮小コントローラー */}
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1 gap-2">
-              <span className="flex items-center gap-1.5 text-slate-700 truncate">
-                <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse shrink-0" />
-                <span className="truncate">ドラッグ/スクロールで移動、＋ーで拡大縮小</span>
+            {/* 上下左右スクロール操作ヒント */}
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
+              <span className="flex items-center gap-1.5 text-slate-700">
+                <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse" />
+                <span>左にスクロールすると「校内図-2」エリアを表示できます</span>
               </span>
-
-              {/* ズームコントローラー */}
-              <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-full p-1 shadow-sm shrink-0">
-                <button
-                  onClick={handleZoomOut}
-                  disabled={zoomLevel <= 1}
-                  className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
-                  title="縮小"
-                >
-                  <ZoomOut className="w-3.5 h-3.5" />
-                </button>
-                <span className="text-[10px] font-black min-w-[36px] text-center text-slate-700 select-none">
-                  {Math.round(zoomLevel * 100)}%
-                </span>
-                <button
-                  onClick={handleZoomIn}
-                  disabled={zoomLevel >= 3}
-                  className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
-                  title="拡大"
-                >
-                  <ZoomIn className="w-3.5 h-3.5" />
-                </button>
-                {zoomLevel !== 1 && (
-                  <button
-                    onClick={handleResetZoom}
-                    className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition ml-0.5 border-l border-slate-200"
-                    title="等倍(100%)に戻す"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
+              <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-extrabold shrink-0">
+                2分割連動マップ
+              </span>
             </div>
 
-            {/* スクロール＆拡大縮小可能キャンパスマップコンテナ */}
+            {/* スクロール可能キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
               className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative"
             >
-              <div
-                style={{
-                  width: `${zoomLevel * 100}%`,
-                  minWidth: "100%",
-                }}
-                className="relative aspect-[2.37/1] select-none transition-all duration-200 ease-out"
-              >
-                {/* 1枚の校内図画像 */}
+              <div className="relative min-w-[1200px] aspect-[8/3] select-none flex">
                 <img
-                  src="/校内図.jpeg"
-                  alt="校内図"
-                  className="w-full h-full object-contain pointer-events-none rounded-2xl"
+                  src="/校内図-2.jpeg"
+                  alt="校内図-2 (西側)"
+                  className="w-1/2 h-full object-cover pointer-events-none"
+                />
+                <img
+                  src="/校内図-1.jpeg"
+                  alt="校内図-1 (東側・正面)"
+                  className="w-1/2 h-full object-cover pointer-events-none"
                 />
 
-                {/* 校内マップのピン（拡大縮小してもアスペクト比・座標を完全保持） */}
+                {/* 統合マップ座標系上のピン（黒いピンアイコン＋直書きラベル） */}
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
