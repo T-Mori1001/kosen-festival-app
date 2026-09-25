@@ -758,7 +758,7 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // マップの初期ズーム倍率を 2.0倍 に変更
+  // マップの初期ズーム倍率 2.0倍
   const [zoomLevel, setZoomLevel] = useState<number>(2.0);
 
   // マップコンテナの参照
@@ -783,9 +783,9 @@ export default function Page() {
   const scrollToRightSide = () => {
     if (!mapContainerRef.current) return;
     const container = mapContainerRef.current;
-    
-    // 画像右側 (left 82%, top 40% 付近) をスクロールの中央へ移動
-    const targetX = container.scrollWidth * 0.82 - container.clientWidth / 2;
+
+    // 画像右側 (left 80%, top 40% 付近) をスクロールの中央へ移動
+    const targetX = container.scrollWidth * 0.80 - container.clientWidth / 2;
     const targetY = container.scrollHeight * 0.40 - container.clientHeight / 2;
 
     container.scrollTo({
@@ -795,24 +795,27 @@ export default function Page() {
     });
   };
 
-  // マップタブ切り替え時、または初回表示時に画像右側を中央へ移動
+  // タブ切り替え・入場時・ズームレベル変更時に右側へスクロール
   useEffect(() => {
-    if (activeTab === "map") {
+    if (isEntered && activeTab === "map") {
+      // DOMの描画完了を待つために複数のタイミングでスクロール処理を実施
       const timer = setTimeout(() => {
         scrollToRightSide();
-      }, 150);
+      }, 100);
       return () => clearTimeout(timer);
     }
-  }, [activeTab, zoomLevel]);
+  }, [isEntered, activeTab, zoomLevel]);
 
-  // 最新のズームレベルを ref で保持してピンチ処理で使用
+  // 最新のズームレベルを ref で保持
   const zoomLevelRef = useRef(zoomLevel);
   useEffect(() => {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能（2本指タッチ操作対応）の最適化
+  // スマホ用ピンチイン・ピンチアウト機能（依存配列に isEntered と activeTab を指定してイベント登録漏れを防ぐ）
   useEffect(() => {
+    if (!isEntered || activeTab !== "map") return;
+
     const container = mapContainerRef.current;
     if (!container) return;
 
@@ -821,6 +824,7 @@ export default function Page() {
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
+        if (e.cancelable) e.preventDefault(); // 2本指の場合のブラウザ既定ピンチを抑制
         startDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
@@ -831,7 +835,7 @@ export default function Page() {
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 2 && startDist > 0) {
-        if (e.cancelable) e.preventDefault(); // ブラウザ独自のズームを抑制
+        if (e.cancelable) e.preventDefault(); // スクロールやブラウザ拡大を抑制
         const currentDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
@@ -848,7 +852,7 @@ export default function Page() {
       }
     };
 
-    container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    container.addEventListener("touchstart", handleTouchStart, { passive: false });
     container.addEventListener("touchmove", handleTouchMove, { passive: false });
     container.addEventListener("touchend", handleTouchEnd, { passive: true });
     container.addEventListener("touchcancel", handleTouchEnd, { passive: true });
@@ -859,7 +863,7 @@ export default function Page() {
       container.removeEventListener("touchend", handleTouchEnd);
       container.removeEventListener("touchcancel", handleTouchEnd);
     };
-  }, []);
+  }, [isEntered, activeTab]);
 
   // ズーム操作ハンドラー
   const handleZoomIn = () => {
@@ -1297,7 +1301,7 @@ export default function Page() {
             {/* スクロール＆ピンチ操作対応キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
-              className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative"
+              className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none"
             >
               <div
                 style={{
@@ -1306,10 +1310,11 @@ export default function Page() {
                 }}
                 className="relative aspect-[2.37/1] select-none transition-all duration-150 ease-out"
               >
-                {/* 校内図画像 */}
+                {/* 校内図画像（読み込み完了時に自動で右側へスクロール） */}
                 <img
                   src="/校内図.jpeg"
                   alt="校内図"
+                  onLoad={scrollToRightSide}
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
@@ -1331,7 +1336,7 @@ export default function Page() {
                           : "hover:scale-105"
                       }`}
                     >
-                      {/* おしゃれなローズ〜オレンジグラデーションピンアイコン */}
+                      {/* ピンアイコン */}
                       <div className="relative flex items-center justify-center shrink-0">
                         {isLiveStageZone && (
                           <span className="absolute w-6 h-6 rounded-full bg-rose-500/50 animate-ping" />
