@@ -346,57 +346,188 @@ const STALLS_DATA: StallItem[] = [
   },
 ];
 
-// ステージ企画データ
+// ステージ企画データ（添付「高専祭 2日目」スケジュールに基づく）
 const EVENTS_DATA = [
   {
-    stageId: "main",
-    stageName: "メインステージ",
+    stageId: "gym1",
+    stageName: "第一体育館",
     location: "第一体育館",
     locationZoneId: "gym1",
     schedule: [
       {
-        id: "m1",
-        time: "09:30 - 10:30",
-        startTime: "09:30",
-        endTime: "10:30",
-        title: "オープニング ＆ 腕立て選手権",
+        id: "g1_1",
+        time: "10:00 - 11:00",
+        startTime: "10:00",
+        endTime: "11:00",
+        title: "腕立て選手権 あつまれ さんにくの森",
         org: "実行委員会",
-        desc: "高専生の筋肉の頂点を決める熱いバトル！誰が一番腕立て伏せができるかを競い合うオープニングイベント！",
-        tag: "競技・体験",
+        desc: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
+        tag: "競技・企画",
         icon: "💪",
       },
       {
-        id: "m2",
-        time: "11:30 - 12:30",
-        startTime: "11:30",
-        endTime: "12:30",
-        title: "爆笑！高専生有志 漫才ステージ",
-        org: "有志団体",
-        desc: "学内の爆笑王たちが集結！高専あるあるから本格コントまで、会場を笑顔の渦に巻き込みます！",
+        id: "g1_2",
+        time: "12:00 - 13:00",
+        startTime: "12:00",
+        endTime: "13:00",
+        title: "漫才 鶴専-1グランプリ",
+        org: "有志企画",
+        desc: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
         tag: "お笑い",
         icon: "🎙️",
       },
       {
-        id: "m3",
+        id: "g1_3",
         time: "13:30 - 14:30",
         startTime: "13:30",
         endTime: "14:30",
-        title: "ダンスパフォーマンス LIVE",
-        org: "ダンス同好会 ＆ 有志",
-        desc: "キレキレのロックダンスからヒップホップまで！エネルギー溢れる最高のステージパフォーマンス！",
+        title: "ダンス DoKa Project",
+        org: "ダンス部・有志",
+        desc: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
         tag: "ダンス",
         icon: "💃",
       },
       {
-        id: "m4",
+        id: "g1_4",
         time: "14:30 - 15:30",
         startTime: "14:30",
         endTime: "15:30",
-        title: "グランドエンディング ＆ フィナーレ",
-        org: "全校生徒・実行委員会",
-        desc: "高専祭2026のフィナーレ！全校生徒と来場者の皆様で盛り上がる感動のクライマックス！",
+        title: "エンディング",
+        org: "全校・実行委員会",
+        desc: "高専祭2日目の感動のフィナーレ！（ダンス企画からの移行時間含む）",
         tag: "セレモニー",
         icon: "🎆",
+      },
+    ],
+  },
+  {
+    stageId: "gym2",
+    stageName: "第二体育館",
+    location: "第二体育館",
+    locationZoneId: "gym1",
+    schedule: [
+      {
+        id: "g2_1",
+        time: "10:00 - 15:00",
+        startTime: "10:00",
+        endTime: "15:00",
+        title: "★音楽部 体育館ライブ",
+        org: "音楽部",
+        desc: "バンド演奏による熱いロック＆ポップスサウンドを一日中お届け！",
+        tag: "音楽・ライブ",
+        icon: "🎸",
+      },
+    ],
+  },
+  {
+    stageId: "bldg8",
+    stageName: "8号館 2階",
+    location: "8号館 2階",
+    locationZoneId: "bldg1",
+    schedule: [
+      {
+        id: "b8_1",
+        time: "09:00 - 11:45",
+        startTime: "09:00",
+        endTime: "11:45",
+        title: "★吹奏楽部 ミニコンサート",
+        org: "吹奏楽部",
+        desc: "心に響く美しい合奏とポップス曲のスペシャルミニコンサート！",
+        tag: "演奏会",
+        icon: "🎷",
+      },
+    ],
+  },
+  {
+    stageId: "joint",
+    stageName: "合同講義室",
+    location: "合同講義室",
+    locationZoneId: "bldg1",
+    schedule: [
+      {
+        id: "j_1",
+        time: "10:00 - 10:30",
+        startTime: "10:00",
+        endTime: "10:30",
+        title: "参加者募集",
+        org: "ゲーム企画運営",
+        desc: "ゲーム大会参加者の受付およびルール説明を行います。",
+        tag: "受付",
+        icon: "📝",
+      },
+      {
+        id: "j_2",
+        time: "10:30 - 15:00",
+        startTime: "10:30",
+        endTime: "15:00",
+        title: "ゲーム企画",
+        org: "ゲーム企画運営",
+        desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
+        tag: "eスポーツ",
+        icon: "🎮",
+      },
+    ],
+  },
+  {
+    stageId: "culture",
+    stageName: "文化部企画・展示",
+    location: "各部活展示室",
+    locationZoneId: "bldg1",
+    schedule: [
+      {
+        id: "c_1",
+        time: "09:00 - 15:00",
+        startTime: "09:00",
+        endTime: "15:00",
+        title: "★ロボット研究部 ロボット展示",
+        org: "ロボット研究部",
+        desc: "多目的交流室にて自作ロボットのデモ実演および体験操縦！",
+        tag: "部活展示",
+        icon: "🤖",
+      },
+      {
+        id: "c_2",
+        time: "10:00 - 15:00",
+        startTime: "10:00",
+        endTime: "15:00",
+        title: "★天文部 展示",
+        org: "天文部",
+        desc: "小会議室にて天体写真の展示や宇宙に関する解説パネルを展示。",
+        tag: "部活展示",
+        icon: "🌌",
+      },
+      {
+        id: "c_3",
+        time: "11:30 - 14:30",
+        startTime: "11:30",
+        endTime: "14:30",
+        title: "★プラネタリウム",
+        org: "天文部",
+        desc: "13Fゼミ室にて手作りドームによる幻想的な自作プラネタリウム上映！",
+        tag: "体験",
+        icon: "⭐",
+      },
+      {
+        id: "c_4",
+        time: "10:00 - 15:00",
+        startTime: "10:00",
+        endTime: "15:00",
+        title: "★AMデザイン部 作品展示・3Dプリンタ体験",
+        org: "AMデザイン部",
+        desc: "731教室にて3Dプリンタの実演・造形体験およびデザイン作品の展示。",
+        tag: "体験・展示",
+        icon: "🖨️",
+      },
+      {
+        id: "c_5",
+        time: "10:00 - 15:00",
+        startTime: "10:00",
+        endTime: "15:00",
+        title: "★美術写真部 作品展示・看板展示",
+        org: "美術写真部",
+        desc: "絵画・写真作品や高専祭を彩る各種看板作品の展示。",
+        tag: "アート展示",
+        icon: "🖼️",
       },
     ],
   },
@@ -406,15 +537,15 @@ const EVENTS_DATA = [
 const CAMPUS_ZONES = [
   {
     id: "bldg1",
-    name: "1号館",
-    subName: "一般教室棟 (1F/2F/3F)",
+    name: "1号館・合同講義室",
+    subName: "一般教室棟・文化部展示",
     pinLabel: "1号館",
     color: "bg-blue-500",
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "32%",
     left: "48%",
-    desc: "キャンパス中央に位置するメイン校舎。1F〜3Fにクラス企画・模擬店が出展しています。",
+    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画や各種文化部展示が実施されています。",
   },
   {
     id: "bldg7",
@@ -454,15 +585,15 @@ const CAMPUS_ZONES = [
   },
   {
     id: "gym1",
-    name: "第一体育館",
-    subName: "メインステージ ＆ 模擬店",
-    pinLabel: "第一体育館",
+    name: "第一・第二体育館",
+    subName: "メインステージ・音楽部ライブ・模擬店",
+    pinLabel: "体育館エリア",
     color: "bg-rose-500",
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
     top: "70%",
     left: "58%",
-    desc: "メインステージイベントと2年生模擬店（餃子・ポップコーン・玉こん・焼き鳥）の会場です。",
+    desc: "第一体育館（ステージ企画・2年模擬店）および第二体育館（音楽部ライブ）の会場です。",
   },
   {
     id: "media_center",
@@ -549,13 +680,15 @@ export default function Page() {
     }
   }, [activeTab, isEntered]);
 
-  // リアルタイムイベント特定ロジック
-  const liveEvent = useMemo(() => {
-    if (!currentTime) return null;
+  // リアルタイムイベント特定ロジック（複数同時開催対応）
+  const liveEvents = useMemo(() => {
+    if (!currentTime) return [];
 
     const currentHours = currentTime.getHours();
     const currentMinutes = currentTime.getMinutes();
     const currentTotalMinutes = currentHours * 60 + currentMinutes;
+
+    const list: Array<any> = [];
 
     for (const stage of EVENTS_DATA) {
       for (const event of stage.schedule) {
@@ -566,16 +699,18 @@ export default function Page() {
         const endTotalMinutes = endHour * 60 + endMin;
 
         if (currentTotalMinutes >= startTotalMinutes && currentTotalMinutes <= endTotalMinutes) {
-          return {
+          list.push({
             ...event,
             stageName: stage.stageName,
             locationZoneId: stage.locationZoneId,
-          };
+          });
         }
       }
     }
-    return null;
+    return list;
   }, [currentTime]);
+
+  const primaryLiveEvent = liveEvents[0] || null;
 
   // 検索・カテゴリフィルタリング
   const filteredStalls = useMemo(() => {
@@ -661,7 +796,7 @@ export default function Page() {
         {/* メインタイトル ＆ 入場ボタン */}
         <div className="w-full max-w-sm flex flex-col items-center text-center z-10 my-auto space-y-6">
           <div className="text-teal-600 font-extrabold text-xs tracking-[0.25em] font-sans">
-            TSURUOKA KOSEN FESTIVAL 2026
+            TSURUOKA KOSEN FESTIVAL 2026 (DAY 2)
           </div>
 
           <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans">
@@ -707,9 +842,9 @@ export default function Page() {
           </div>
 
           <div className="bg-white/95 border border-slate-200/80 shadow-md rounded-full px-5 py-2.5 flex items-center justify-center gap-2 text-xs font-extrabold text-slate-700">
-            <span className="text-rose-600">2026.10.24 SAT</span>
+            <span className="text-rose-600">高専祭 2日目</span>
             <span className="text-slate-300">|</span>
-            <span>9:30〜15:30</span>
+            <span>10:00〜15:00</span>
             <span className="text-slate-400 font-normal">@鶴岡高専</span>
           </div>
 
@@ -758,7 +893,7 @@ export default function Page() {
               onClick={() => setIsEntered(true)}
               className="w-full max-w-[260px] py-4 rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-500 text-white text-base font-black tracking-wider shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 border border-white/30"
             >
-              <span>入場する</span>
+              <span>プログラムを見る</span>
               <span className="text-lg">⚙️</span>
             </button>
 
@@ -795,8 +930,8 @@ export default function Page() {
         }
       `}</style>
 
-      {/* リアルタイムLIVEバナー（時間内のみ表示） */}
-      {liveEvent && (
+      {/* リアルタイムLIVEバナー（開催時間内のみ表示） */}
+      {primaryLiveEvent && (
         <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-red-600 text-white border-b border-white/20 shadow-xl overflow-hidden">
           <style>{`
             @keyframes liveFade {
@@ -816,17 +951,17 @@ export default function Page() {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 text-xs sm:text-sm font-black tracking-widest uppercase mb-1 opacity-90">
                 <Radio className="w-4 h-4 animate-live-fade" />
-                <span>ただいま実施中のステージ企画！</span>
+                <span>ただいま実施中の企画 ({liveEvents.length}件)</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 text-[13px] sm:text-base font-bold">
-                <span className="flex items-center gap-1">
-                  <span className="text-xl">{liveEvent.icon}</span>
-                  <span>
-                    {liveEvent.stageName}: {liveEvent.title}
+                <span className="flex items-center gap-1 truncate">
+                  <span className="text-xl">{primaryLiveEvent.icon}</span>
+                  <span className="truncate">
+                    {primaryLiveEvent.stageName}: {primaryLiveEvent.title}
                   </span>
                 </span>
                 <span className="text-xs sm:text-sm font-black bg-white/20 px-2 py-0.5 rounded flex items-center gap-1.5 shrink-0 w-fit">
-                  <span>{liveEvent.time}</span>
+                  <span>{primaryLiveEvent.time}</span>
                   <div className="flex items-end gap-0.5 h-3">
                     <div className="w-0.5 h-full bg-white animate-live-wave" style={{ animationDelay: "0s" }} />
                     <div className="w-0.5 h-full bg-white animate-live-wave" style={{ animationDelay: "0.2s" }} />
@@ -845,7 +980,7 @@ export default function Page() {
               className="bg-white/95 text-red-700 px-3 py-1.5 rounded-full text-xs font-black shadow hover:bg-white hover:scale-105 transition flex items-center gap-1.5 shrink-0"
             >
               <MapPin className="w-3.5 h-3.5" />
-              <span>詳細・場所</span>
+              <span>全プログラム</span>
             </button>
           </div>
         </div>
@@ -854,13 +989,16 @@ export default function Page() {
       {/* ヘッダー・ナビゲーション */}
       <header
         className={`sticky ${
-          liveEvent ? "top-[76px] sm:top-[72px]" : "top-0"
+          primaryLiveEvent ? "top-[76px] sm:top-[72px]" : "top-0"
         } z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all`}
       >
         <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
           <button onClick={() => setIsEntered(false)} className="flex items-center gap-2.5 text-left shrink-0">
             <img src="/高専ロゴ.jpg" alt="高専ロゴ" className="w-9 h-9 object-contain" />
-            <span className="font-black text-lg text-slate-800">高専祭</span>
+            <div className="flex flex-col">
+              <span className="font-black text-base text-slate-800 leading-tight">高専祭 2日目</span>
+              <span className="text-[10px] font-extrabold text-orange-600">10:00〜15:00</span>
+            </div>
           </button>
 
           <nav className="flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200">
@@ -895,10 +1033,10 @@ export default function Page() {
                   ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white"
                   : "text-slate-600 hover:text-slate-900"
               }`}
-              title="ステージ"
+              title="タイムスケジュール"
             >
               <Calendar className="w-4 h-4" />
-              {activeTab === "events" && <span>ステージ</span>}
+              {activeTab === "events" && <span>スケジュール</span>}
             </button>
             <button
               onClick={() => setActiveTab("access")}
@@ -953,7 +1091,7 @@ export default function Page() {
                 {/* 統合マップ座標系上のピン */}
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
-                  const isLiveStageZone = liveEvent?.locationZoneId === zone.id;
+                  const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
 
                   return (
                     <button
@@ -1119,7 +1257,7 @@ export default function Page() {
             {/* 一覧リスト */}
             <div className="space-y-2">
               <p className="text-xs font-extrabold text-slate-500 px-1">
-                該当件数: {filteredStalls.length}件
+                該当件数: {filteredStalls.length}件 （開催時間: 10:00〜15:00）
               </p>
 
               {filteredStalls.length > 0 ? (
@@ -1175,9 +1313,16 @@ export default function Page() {
           </div>
         )}
 
-        {/* タブ 3: ステージ企画 */}
+        {/* タブ 3: ステージ・タイムスケジュール（添付のスケジュール２日目を反映） */}
         {activeTab === "events" && (
-          <div className="space-y-4">
+          <div className="space-y-6">
+            <div className="bg-orange-50 border border-orange-200 p-3.5 rounded-2xl text-xs font-bold text-orange-900 flex items-center justify-between">
+              <span>📅 高専祭 2日目 タイムスケジュール</span>
+              <span className="bg-orange-200 text-orange-900 px-2 py-0.5 rounded font-black text-[10px]">
+                10:00〜15:00
+              </span>
+            </div>
+
             {EVENTS_DATA.map((stage) => (
               <div key={stage.stageId} className="space-y-3">
                 <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 rounded-3xl shadow-md flex items-center justify-between">
@@ -1193,16 +1338,16 @@ export default function Page() {
                       setSelectedZoneId(stage.locationZoneId);
                       setActiveTab("map");
                     }}
-                    className="text-xs bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1"
+                    className="text-xs bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1 shrink-0"
                   >
                     <MapPin className="w-3.5 h-3.5" />
-                    <span>マップ表示</span>
+                    <span>マップ</span>
                   </button>
                 </div>
 
                 <div className="space-y-3">
                   {stage.schedule.map((event) => {
-                    const isLive = liveEvent?.id === event.id;
+                    const isLive = liveEvents.some((e) => e.id === event.id);
 
                     return (
                       <div
@@ -1221,7 +1366,7 @@ export default function Page() {
                         )}
 
                         <div className="flex items-start gap-3">
-                          <span className="text-3xl p-2 bg-slate-100 rounded-2xl shrink-0 mt-1">
+                          <span className="text-3xl p-2.5 bg-slate-100 rounded-2xl shrink-0 mt-1">
                             {event.icon}
                           </span>
                           <div className="space-y-1 flex-1">
@@ -1236,7 +1381,7 @@ export default function Page() {
                             </div>
 
                             <h3 className="font-black text-base text-slate-900">{event.title}</h3>
-                            <p className="text-xs text-slate-500 font-bold">主催: {event.org}</p>
+                            <p className="text-xs text-slate-500 font-bold">主催・担当: {event.org}</p>
                             <p className="text-xs text-slate-600 leading-relaxed pt-1">{event.desc}</p>
                           </div>
                         </div>
