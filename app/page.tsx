@@ -42,7 +42,7 @@ const InstagramIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 interface StallItem {
   id: number;
   title: string;
-  category: "模擬店" | "クラス企画" | "キッチンカー" | "校内施設・サービス";
+  category: "模擬店" | "クラス企画" | "部活動企画" | "実行委員会企画" | "キッチンカー" | "校内施設・その他";
   grade: string;
   dept: string;
   location: string;
@@ -55,7 +55,7 @@ interface StallItem {
   menu?: string[];
 }
 
-// 全出店・企画・施設データ
+// 全出店・企画・施設・その他データ
 const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 1F ---
   {
@@ -183,6 +183,45 @@ const STALLS_DATA: StallItem[] = [
     description: "3Bによるゆったり寛げる特製喫茶店！こだわりのドリンクでおもてなし。",
     icon: "☕",
   },
+  {
+    id: 301,
+    title: "天文部（写真展示・プラネタリウム）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "天文部",
+    location: "1号館 13Fゼミ室",
+    zoneId: "bldg1",
+    floor: "3F",
+    roomNo: "13Fゼミ室",
+    description: "天体写真展示および手作りドームによる幻想的なプラネタリウム上映！",
+    icon: "🌌",
+  },
+  {
+    id: 302,
+    title: "美術写真部（作品展示・看板展示）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "美術写真部",
+    location: "1号館 12Fゼミ室",
+    zoneId: "bldg1",
+    floor: "2F",
+    roomNo: "12Fゼミ室",
+    description: "絵画・写真作品や高専祭を彩る各種看板作品の展示。",
+    icon: "🖼️",
+  },
+
+  // --- 合同講義室（1号館内） ---
+  {
+    id: 401,
+    title: "今日、ゲームになりました。",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "1号館 合同講義室",
+    zoneId: "bldg1",
+    description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
+    icon: "🎮",
+  },
 
   // --- 第一体育館 (gym1) ---
   {
@@ -191,7 +230,7 @@ const STALLS_DATA: StallItem[] = [
     category: "模擬店",
     grade: "2M",
     dept: "2年 機械コース (2M)",
-    location: "第一体育館 模擬店エリア",
+    location: "第一体育館",
     zoneId: "gym1",
     description: "2M特製！鉄板で一気に焼き上げるパリッとジューシーな絶品焼き餃子！",
     icon: "🥟",
@@ -203,7 +242,7 @@ const STALLS_DATA: StallItem[] = [
     category: "模擬店",
     grade: "2E",
     dept: "2年 電気・電子コース (2E)",
-    location: "第一体育館 模擬店エリア",
+    location: "第一体育館",
     zoneId: "gym1",
     description: "2Eがお届けする弾ける香ばしさ！選べるフレーバーポップコーン！",
     icon: "🍿",
@@ -215,7 +254,7 @@ const STALLS_DATA: StallItem[] = [
     category: "模擬店",
     grade: "2I",
     dept: "2年 情報コース (2I)",
-    location: "第一体育館 模擬店エリア",
+    location: "第一体育館",
     zoneId: "gym1",
     description: "2I秘伝の出汁がしっかり染み込んだ熱々の山形名物・玉こんにゃく！",
     icon: "🍡",
@@ -227,11 +266,77 @@ const STALLS_DATA: StallItem[] = [
     category: "模擬店",
     grade: "2B",
     dept: "2年 生物・化学コース (2B)",
-    location: "第一体育館 模擬店エリア",
+    location: "第一体育館",
     zoneId: "gym1",
     description: "2B香ばしく焼き上げる秘伝タレ＆塩のやみつき焼き鳥！",
     icon: "🍢",
     menu: ["やみつき焼き鳥"],
+  },
+  {
+    id: 402,
+    title: "2026KOSEN歌謡祭 秋",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "高専生の自慢の歌声を競う熱いカラオケステージ！",
+    icon: "🎤",
+  },
+  {
+    id: 403,
+    title: "あつまれ きんにくの森",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
+    icon: "💪",
+  },
+  {
+    id: 404,
+    title: "カリモノ競争",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "何を引き当てるか分からない！？大興奮のクラス対抗リレー！",
+    icon: "🏃",
+  },
+  {
+    id: 405,
+    title: "鶴専-1グランプリ",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
+    icon: "🎙️",
+  },
+  {
+    id: 406,
+    title: "DoKa Project",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
+    icon: "💃",
+  },
+  {
+    id: 303,
+    title: "音楽部（音楽ライブ）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "音楽部",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
+    icon: "🎸",
   },
 
   // --- 7号館 (bldg7) ---
@@ -241,7 +346,7 @@ const STALLS_DATA: StallItem[] = [
     category: "クラス企画",
     grade: "3M",
     dept: "3年 機械コース (3M)",
-    location: "7号館 1F (711・712教室)",
+    location: "7号館 (711・712教室)",
     zoneId: "bldg7",
     description: "3Mギミック満載！機械コースの技術を結集した本格的な恐怖があなたを襲う…！",
     icon: "👻",
@@ -252,31 +357,116 @@ const STALLS_DATA: StallItem[] = [
     category: "クラス企画",
     grade: "4E",
     dept: "4年 電気・電子コース (4E)",
-    location: "7号館 2F 722教室",
+    location: "7号館 722教室",
     zoneId: "bldg7",
     description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！",
     icon: "⚽",
   },
+  {
+    id: 304,
+    title: "AMデザイン部（作品展示・3Dプリンタ体験）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "AMデザイン部",
+    location: "7号館 731教室",
+    zoneId: "bldg7",
+    description: "3Dプリンタの実演・造形体験およびデザイン作品の展示。",
+    icon: "🖨️",
+  },
+  {
+    id: 305,
+    title: "5B 研究発表（ポスター）",
+    category: "部活動企画",
+    grade: "5B",
+    dept: "5年 生物・化学コース",
+    location: "7号館 721教室",
+    zoneId: "bldg7",
+    description: "5Bによる先進的な研究成果のポスター発表展示。",
+    icon: "🔬",
+  },
+
+  // --- 4号館 (bldg4) ---
+  {
+    id: 306,
+    title: "E.S.S.（展示）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "E.S.S.",
+    location: "4号館 LL教室",
+    zoneId: "bldg4",
+    description: "E.S.S.部員による活動紹介・英語文化に関する展示。",
+    icon: "🔤",
+  },
+  {
+    id: 307,
+    title: "かるた体験（見学・体験）",
+    category: "部活動企画",
+    grade: "有志",
+    dept: "かるた体験",
+    location: "4号館 411教室",
+    zoneId: "bldg4",
+    description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
+    icon: "🎴",
+  },
+
+  // --- 8号館 (bldg8) ---
+  {
+    id: 308,
+    title: "吹奏楽部（ミニコンサート）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "吹奏楽部",
+    location: "8号館 2階 大講義室",
+    zoneId: "bldg8",
+    description: "心に響く美しい合奏とポップス曲のスペシャルミニコンサート！",
+    icon: "🎷",
+  },
+
+  // --- 総合メディアセンター (media_center) ---
   {
     id: 16,
     title: "格付けチェック",
     category: "クラス企画",
     grade: "4B",
     dept: "4年 生物・化学コース (4B)",
-    location: "7号館 マルチメディア教室",
-    zoneId: "bldg7",
+    location: "総合メディアセンター マルチメディア教室",
+    zoneId: "media_center",
     description: "4Bあなたの一流度が試される！高級品と激安品を見破れるか！？",
     icon: "🍷",
   },
+  {
+    id: 309,
+    title: "ロボット研究部（ロボット展示）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "ロボット研究部",
+    location: "総合メディアセンター 多目的交流室",
+    zoneId: "media_center",
+    description: "自作ロボットのデモ実演および操縦体験コーナー！",
+    icon: "🤖",
+  },
 
-  // --- 昇降口前広場 (entrance) ---
+  // --- 学生昇降口 (entrance) ---
+  {
+    id: 407,
+    title: "高専生の主張",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "学生昇降口",
+    zoneId: "entrance",
+    description: "高専生が日頃の思いや愛を大声で叫ぶ伝統の大人気企画！",
+    icon: "📢",
+  },
+
+  // --- キッチンカー (kitchen_car) ---
   {
     id: 101,
     title: "ラーメン もっけだの",
     category: "キッチンカー",
     grade: "外部",
     dept: "キッチンカー",
-    location: "学生昇降口前広場",
+    location: "学生昇降口前ロータリー",
     zoneId: "entrance",
     description: "スープと麺にこだわり抜いた自慢の本格ラーメン！高専祭で味わう極上の一杯！",
     icon: "🍜",
@@ -289,7 +479,7 @@ const STALLS_DATA: StallItem[] = [
     category: "キッチンカー",
     grade: "外部",
     dept: "キッチンカー",
-    location: "学生昇降口前広場",
+    location: "学生昇降口前ロータリー",
     zoneId: "entrance",
     description: "とろける口溶けの本格本わらび餅や、出来立てふわふわのベビーカステラ！",
     icon: "🍡",
@@ -302,7 +492,7 @@ const STALLS_DATA: StallItem[] = [
     category: "キッチンカー",
     grade: "外部",
     dept: "キッチンカー",
-    location: "学生昇降口前広場",
+    location: "学生昇降口前ロータリー",
     zoneId: "entrance",
     description: "フルーツたっぷりのフレッシュスムージー＆スパイシーで食欲をそそる本格ガパオライス！",
     icon: "🥤",
@@ -310,11 +500,33 @@ const STALLS_DATA: StallItem[] = [
     menu: ["スムージー", "ガパオライス等"],
   },
 
-  // --- 校内施設・サービス ---
+  // --- 校内施設・その他 (other) ---
+  {
+    id: 501,
+    title: "金券販売",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "実行委員会",
+    location: "学生昇降口 交流ラウンジ",
+    zoneId: "entrance",
+    description: "模擬店等で使用できる金券の販売を行っています。お買い求めはこちらでどうぞ！",
+    icon: "🎟️",
+  },
+  {
+    id: 502,
+    title: "学校紹介ブース",
+    category: "校内施設・その他",
+    grade: "案内",
+    dept: "広報・入試",
+    location: "学生昇降口 交流ラウンジ",
+    zoneId: "entrance",
+    description: "鶴岡高専の学校案内、学科紹介、入試相談などを行っている特設ブースです。",
+    icon: "🏫",
+  },
   {
     id: 201,
     title: "総合メディアセンター",
-    category: "校内施設・サービス",
+    category: "校内施設・その他",
     grade: "施設",
     dept: "図書・情報基盤",
     location: "第一体育館 西側",
@@ -325,7 +537,7 @@ const STALLS_DATA: StallItem[] = [
   {
     id: 202,
     title: "ヤマザキショップ 鶴岡高専店",
-    category: "校内施設・サービス",
+    category: "校内施設・その他",
     grade: "店舗",
     dept: "学内購買",
     location: "総合メディアセンター 西側隣接",
@@ -333,20 +545,9 @@ const STALLS_DATA: StallItem[] = [
     description: "パン、お菓子、飲料、文房具などを販売している校内売店です。",
     icon: "🏪",
   },
-  {
-    id: 203,
-    title: "金券販売所",
-    category: "校内施設・サービス",
-    grade: "本部",
-    dept: "実行委員会",
-    location: "1号館 東端（7号館前通路）",
-    zoneId: "ticket_sales",
-    description: "模擬店等で使用できる金券の販売を行っています。お買い求めはこちらでお済ませください。",
-    icon: "🎟️",
-  },
 ];
 
-// ステージ企画データ（添付「高専祭 2日目」スケジュールに基づく）
+// ステージ・タイムスケジュールデータ
 const EVENTS_DATA = [
   {
     stageId: "gym1",
@@ -359,7 +560,7 @@ const EVENTS_DATA = [
         time: "10:00 - 11:00",
         startTime: "10:00",
         endTime: "11:00",
-        title: "腕立て選手権 あつまれ さんにくの森",
+        title: "腕立て選手権 あつまれ きんにくの森",
         org: "実行委員会",
         desc: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
         tag: "競技・企画",
@@ -394,43 +595,24 @@ const EVENTS_DATA = [
         endTime: "15:30",
         title: "エンディング",
         org: "全校・実行委員会",
-        desc: "高専祭2日目の感動のフィナーレ！（ダンス企画からの移行時間含む）",
+        desc: "高専祭の感動のフィナーレ！",
         tag: "セレモニー",
         icon: "🎆",
       },
     ],
   },
   {
-    stageId: "gym2",
-    stageName: "第二体育館",
-    location: "第二体育館",
-    locationZoneId: "gym1",
-    schedule: [
-      {
-        id: "g2_1",
-        time: "10:00 - 15:00",
-        startTime: "10:00",
-        endTime: "15:00",
-        title: "★音楽部 体育館ライブ",
-        org: "音楽部",
-        desc: "バンド演奏による熱いロック＆ポップスサウンドを一日中お届け！",
-        tag: "音楽・ライブ",
-        icon: "🎸",
-      },
-    ],
-  },
-  {
     stageId: "bldg8",
-    stageName: "8号館 2階",
+    stageName: "8号館 2階 大講義室",
     location: "8号館 2階",
-    locationZoneId: "bldg1",
+    locationZoneId: "bldg8",
     schedule: [
       {
         id: "b8_1",
         time: "09:00 - 11:45",
         startTime: "09:00",
         endTime: "11:45",
-        title: "★吹奏楽部 ミニコンサート",
+        title: "吹奏楽部 ミニコンサート",
         org: "吹奏楽部",
         desc: "心に響く美しい合奏とポップス曲のスペシャルミニコンサート！",
         tag: "演奏会",
@@ -440,7 +622,7 @@ const EVENTS_DATA = [
   },
   {
     stageId: "joint",
-    stageName: "合同講義室",
+    stageName: "1号館 合同講義室",
     location: "合同講義室",
     locationZoneId: "bldg1",
     schedule: [
@@ -460,80 +642,17 @@ const EVENTS_DATA = [
         time: "10:30 - 15:00",
         startTime: "10:30",
         endTime: "15:00",
-        title: "ゲーム企画",
-        org: "ゲーム企画運営",
+        title: "今日、ゲームになりました。",
+        org: "実行委員会",
         desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
         tag: "eスポーツ",
         icon: "🎮",
       },
     ],
   },
-  {
-    stageId: "culture",
-    stageName: "文化部企画・展示",
-    location: "各部活展示室",
-    locationZoneId: "bldg1",
-    schedule: [
-      {
-        id: "c_1",
-        time: "09:00 - 15:00",
-        startTime: "09:00",
-        endTime: "15:00",
-        title: "★ロボット研究部 ロボット展示",
-        org: "ロボット研究部",
-        desc: "多目的交流室にて自作ロボットのデモ実演および体験操縦！",
-        tag: "部活展示",
-        icon: "🤖",
-      },
-      {
-        id: "c_2",
-        time: "10:00 - 15:00",
-        startTime: "10:00",
-        endTime: "15:00",
-        title: "★天文部 展示",
-        org: "天文部",
-        desc: "小会議室にて天体写真の展示や宇宙に関する解説パネルを展示。",
-        tag: "部活展示",
-        icon: "🌌",
-      },
-      {
-        id: "c_3",
-        time: "11:30 - 14:30",
-        startTime: "11:30",
-        endTime: "14:30",
-        title: "★プラネタリウム",
-        org: "天文部",
-        desc: "13Fゼミ室にて手作りドームによる幻想的な自作プラネタリウム上映！",
-        tag: "体験",
-        icon: "⭐",
-      },
-      {
-        id: "c_4",
-        time: "10:00 - 15:00",
-        startTime: "10:00",
-        endTime: "15:00",
-        title: "★AMデザイン部 作品展示・3Dプリンタ体験",
-        org: "AMデザイン部",
-        desc: "731教室にて3Dプリンタの実演・造形体験およびデザイン作品の展示。",
-        tag: "体験・展示",
-        icon: "🖨️",
-      },
-      {
-        id: "c_5",
-        time: "10:00 - 15:00",
-        startTime: "10:00",
-        endTime: "15:00",
-        title: "★美術写真部 作品展示・看板展示",
-        org: "美術写真部",
-        desc: "絵画・写真作品や高専祭を彩る各種看板作品の展示。",
-        tag: "アート展示",
-        icon: "🖼️",
-      },
-    ],
-  },
 ];
 
-// 校内マップのピン座標（校内図-2 [左50%] + 校内図-1 [右50%] 連結座標系）
+// 校内マップのピン座標
 const CAMPUS_ZONES = [
   {
     id: "bldg1",
@@ -545,67 +664,79 @@ const CAMPUS_ZONES = [
     icon: "🏫",
     top: "32%",
     left: "48%",
-    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画や各種文化部展示が実施されています。",
+    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
     id: "bldg7",
     name: "7号館",
-    subName: "アトラクション棟",
+    subName: "アトラクション・展示棟",
     pinLabel: "7号館",
     color: "bg-purple-500",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
     top: "24%",
     left: "78%",
-    desc: "3Mお化け屋敷、4Eキッキングスナイパー、4B格付けチェックを開催！",
+    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
   },
   {
-    id: "ticket_sales",
-    name: "金券販売",
-    subName: "金券購入エリア",
-    pinLabel: "金券販売",
-    color: "bg-emerald-500",
-    lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
-    icon: "🎟️",
-    top: "28%",
-    left: "64%",
-    desc: "模擬店や各種販売で使用する金券をお買い求めいただけます。",
+    id: "bldg4",
+    name: "4号館",
+    subName: "展示・体験棟",
+    pinLabel: "4号館",
+    color: "bg-teal-500",
+    lightBg: "bg-teal-50 border-teal-300 text-teal-900",
+    icon: "🎴",
+    top: "38%",
+    left: "62%",
+    desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
+  },
+  {
+    id: "bldg8",
+    name: "8号館",
+    subName: "大講義室（2階）",
+    pinLabel: "8号館",
+    color: "bg-indigo-500",
+    lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
+    icon: "🎷",
+    top: "40%",
+    left: "40%",
+    desc: "2階の大講義室にて吹奏楽部によるミニコンサートを開催！",
   },
   {
     id: "entrance",
-    name: "学生昇降口前広場",
-    subName: "キッチンカーエリア",
-    pinLabel: "学生昇降口前",
+    name: "学生昇降口・交流ラウンジ・広場",
+    subName: "金券販売・学校紹介・キッチンカー",
+    pinLabel: "学生昇降口",
     color: "bg-amber-500",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
     top: "46%",
     left: "76%",
-    desc: "話題のキッチンカー3店（ラーメン、スイーツ、ガパオライス）が集結！",
+    desc: "金券販売・学校紹介ブース（交流ラウンジ）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
   },
   {
     id: "gym1",
-    name: "第一・第二体育館",
-    subName: "メインステージ・音楽部ライブ・模擬店",
+    name: "第一体育館",
+    subName: "メインステージ・音楽部ライブ・2年模擬店",
     pinLabel: "体育館エリア",
     color: "bg-rose-500",
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
     top: "70%",
     left: "58%",
-    desc: "第一体育館（ステージ企画・2年模擬店）および第二体育館（音楽部ライブ）の会場です。",
+    desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
   },
   {
     id: "media_center",
     name: "総合メディアセンター",
-    subName: "図書室・情報施設",
+    subName: "図書室・マルチメディア",
     pinLabel: "総合メディアセンター",
     color: "bg-indigo-500",
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
     top: "72%",
     left: "26%",
-    desc: "第一体育館西側に位置する図書・情報メディアの総合施設です。",
+    desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
     id: "yamazaki",
@@ -618,18 +749,6 @@ const CAMPUS_ZONES = [
     top: "80%",
     left: "10%",
     desc: "総合メディアセンター西側に隣接する学内売店です。",
-  },
-  {
-    id: "parking",
-    name: "駐車場",
-    subName: "校内駐車場",
-    pinLabel: "駐車場",
-    color: "bg-sky-500",
-    lightBg: "bg-sky-50 border-sky-300 text-sky-900",
-    icon: "🅿️",
-    top: "82%",
-    left: "91%",
-    desc: "校内関係者・許可車用駐車場です。台数に限りがあります。",
   },
 ];
 
@@ -654,14 +773,14 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // マップコンテナの参照（初期表示で右側「校内図-1」を正面に合わせる用）
+  // マップコンテナの参照
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   // 1号館フロア詳細モーダル用ステート
   const [isBldg1ModalOpen, setIsBldg1ModalOpen] = useState(false);
   const [currentFloor, setCurrentFloor] = useState<"1F" | "2F" | "3F">("1F");
 
-  // 現在時刻ステート（リアルタイム更新）
+  // 現在時刻ステート
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -680,7 +799,7 @@ export default function Page() {
     }
   }, [activeTab, isEntered]);
 
-  // リアルタイムイベント特定ロジック（複数同時開催対応）
+  // リアルタイムイベント特定ロジック
   const liveEvents = useMemo(() => {
     if (!currentTime) return [];
 
@@ -796,7 +915,7 @@ export default function Page() {
         {/* メインタイトル ＆ 入場ボタン */}
         <div className="w-full max-w-sm flex flex-col items-center text-center z-10 my-auto space-y-6">
           <div className="text-teal-600 font-extrabold text-xs tracking-[0.25em] font-sans">
-            TSURUOKA KOSEN FESTIVAL 2026 (DAY 2)
+            TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
           <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans">
@@ -842,7 +961,7 @@ export default function Page() {
           </div>
 
           <div className="bg-white/95 border border-slate-200/80 shadow-md rounded-full px-5 py-2.5 flex items-center justify-center gap-2 text-xs font-extrabold text-slate-700">
-            <span className="text-rose-600">高専祭 2日目</span>
+            <span className="text-rose-600">高専祭</span>
             <span className="text-slate-300">|</span>
             <span>10:00〜15:00</span>
             <span className="text-slate-400 font-normal">@鶴岡高専</span>
@@ -996,7 +1115,7 @@ export default function Page() {
           <button onClick={() => setIsEntered(false)} className="flex items-center gap-2.5 text-left shrink-0">
             <img src="/高専ロゴ.jpg" alt="高専ロゴ" className="w-9 h-9 object-contain" />
             <div className="flex flex-col">
-              <span className="font-black text-base text-slate-800 leading-tight">高専祭 2日目</span>
+              <span className="font-black text-base text-slate-800 leading-tight">高専祭</span>
               <span className="text-[10px] font-extrabold text-orange-600">10:00〜15:00</span>
             </div>
           </button>
@@ -1070,12 +1189,11 @@ export default function Page() {
               </span>
             </div>
 
-            {/* スクロール可能キャンパスマップコンテナ（校内図-2 | 校内図-1 連結構成） */}
+            {/* スクロール可能キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
               className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative"
             >
-              {/* 校内図-2（左: 西側）+ 校内図-1（右: 東側/正面）を結合した領域 */}
               <div className="relative min-w-[1200px] aspect-[8/3] select-none flex">
                 <img
                   src="/校内図-2.jpeg"
@@ -1238,7 +1356,15 @@ export default function Page() {
               </div>
 
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-                {["すべて", "模擬店", "クラス企画", "キッチンカー", "校内施設・サービス"].map((cat) => (
+                {[
+                  "すべて",
+                  "模擬店",
+                  "クラス企画",
+                  "部活動企画",
+                  "実行委員会企画",
+                  "キッチンカー",
+                  "校内施設・その他",
+                ].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
@@ -1313,11 +1439,11 @@ export default function Page() {
           </div>
         )}
 
-        {/* タブ 3: ステージ・タイムスケジュール（添付のスケジュール２日目を反映） */}
+        {/* タブ 3: ステージ・タイムスケジュール */}
         {activeTab === "events" && (
           <div className="space-y-6">
             <div className="bg-orange-50 border border-orange-200 p-3.5 rounded-2xl text-xs font-bold text-orange-900 flex items-center justify-between">
-              <span>📅 高専祭 2日目 タイムスケジュール</span>
+              <span>📅 高専祭 タイムスケジュール</span>
               <span className="bg-orange-200 text-orange-900 px-2 py-0.5 rounded font-black text-[10px]">
                 10:00〜15:00
               </span>
