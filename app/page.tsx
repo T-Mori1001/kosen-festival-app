@@ -409,19 +409,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🎴",
   },
 
-  // --- 8号館 (bldg8) ---
-  {
-    id: 308,
-    title: "吹奏楽部（ミニコンサート）",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "吹奏楽部",
-    location: "8号館 2階 大講義室",
-    zoneId: "bldg8",
-    description: "心に響く美しい合奏とポップス曲のスペシャルミニコンサート！",
-    icon: "🎷",
-  },
-
   // --- 総合メディアセンター (media_center) ---
   {
     id: 16,
@@ -446,7 +433,7 @@ const STALLS_DATA: StallItem[] = [
     icon: "🤖",
   },
 
-  // --- 学生昇降口 (entrance) ---
+  // --- 学生昇降口・広場 (entrance) ---
   {
     id: 407,
     title: "高専生の主張",
@@ -459,7 +446,7 @@ const STALLS_DATA: StallItem[] = [
     icon: "📢",
   },
 
-  // --- キッチンカー (kitchen_car) ---
+  // --- キッチンカー (entrance) ---
   {
     id: 101,
     title: "ラーメン もっけだの",
@@ -500,7 +487,7 @@ const STALLS_DATA: StallItem[] = [
     menu: ["スムージー", "ガパオライス等"],
   },
 
-  // --- 校内施設・その他 (other) ---
+  // --- 金券販売 (ticket) ---
   {
     id: 501,
     title: "金券販売",
@@ -508,7 +495,7 @@ const STALLS_DATA: StallItem[] = [
     grade: "本部",
     dept: "実行委員会",
     location: "学生昇降口 交流ラウンジ",
-    zoneId: "entrance",
+    zoneId: "ticket",
     description: "模擬店等で使用できる金券の販売を行っています。お買い求めはこちらでどうぞ！",
     icon: "🎟️",
   },
@@ -519,7 +506,7 @@ const STALLS_DATA: StallItem[] = [
     grade: "案内",
     dept: "広報・入試",
     location: "学生昇降口 交流ラウンジ",
-    zoneId: "entrance",
+    zoneId: "ticket",
     description: "鶴岡高専の学校案内、学科紹介、入試相談などを行っている特設ブースです。",
     icon: "🏫",
   },
@@ -544,6 +531,17 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "yamazaki",
     description: "パン、お菓子、飲料、文房具などを販売している校内売店です。",
     icon: "🏪",
+  },
+  {
+    id: 203,
+    title: "駐車場",
+    category: "校内施設・その他",
+    grade: "施設",
+    dept: "構内施設",
+    location: "東側 構内駐車場",
+    zoneId: "parking",
+    description: "ご来場者様用の構内駐車場です。台数に限りがございますので公共交通機関の利用にご協力ください。",
+    icon: "🅿️",
   },
 ];
 
@@ -602,25 +600,6 @@ const EVENTS_DATA = [
     ],
   },
   {
-    stageId: "bldg8",
-    stageName: "8号館 2階 大講義室",
-    location: "8号館 2階",
-    locationZoneId: "bldg8",
-    schedule: [
-      {
-        id: "b8_1",
-        time: "09:00 - 11:45",
-        startTime: "09:00",
-        endTime: "11:45",
-        title: "吹奏楽部 ミニコンサート",
-        org: "吹奏楽部",
-        desc: "心に響く美しい合奏とポップス曲のスペシャルミニコンサート！",
-        tag: "演奏会",
-        icon: "🎷",
-      },
-    ],
-  },
-  {
     stageId: "joint",
     stageName: "1号館 合同講義室",
     location: "合同講義室",
@@ -652,103 +631,106 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標
+// 校内マップのピン座標（添付画像のピン留め位置に準拠）
 const CAMPUS_ZONES = [
   {
-    id: "bldg1",
-    name: "1号館・合同講義室",
-    subName: "一般教室棟・文化部展示",
-    pinLabel: "1号館",
-    color: "bg-blue-500",
-    lightBg: "bg-blue-50 border-blue-300 text-blue-900",
-    icon: "🏫",
-    top: "32%",
-    left: "48%",
-    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
-  },
-  {
-    id: "bldg7",
-    name: "7号館",
-    subName: "アトラクション・展示棟",
-    pinLabel: "7号館",
-    color: "bg-purple-500",
-    lightBg: "bg-purple-50 border-purple-300 text-purple-900",
-    icon: "👻",
-    top: "24%",
-    left: "78%",
-    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
-  },
-  {
-    id: "bldg4",
-    name: "4号館",
-    subName: "展示・体験棟",
-    pinLabel: "4号館",
-    color: "bg-teal-500",
-    lightBg: "bg-teal-50 border-teal-300 text-teal-900",
-    icon: "🎴",
-    top: "38%",
-    left: "62%",
-    desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
-  },
-  {
-    id: "bldg8",
-    name: "8号館",
-    subName: "大講義室（2階）",
-    pinLabel: "8号館",
-    color: "bg-indigo-500",
-    lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
-    icon: "🎷",
-    top: "40%",
-    left: "40%",
-    desc: "2階の大講義室にて吹奏楽部によるミニコンサートを開催！",
-  },
-  {
-    id: "entrance",
-    name: "学生昇降口・交流ラウンジ・広場",
-    subName: "金券販売・学校紹介・キッチンカー",
-    pinLabel: "学生昇降口",
-    color: "bg-amber-500",
-    lightBg: "bg-amber-50 border-amber-300 text-amber-900",
-    icon: "🚚",
-    top: "46%",
-    left: "76%",
-    desc: "金券販売・学校紹介ブース（交流ラウンジ）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
-  },
-  {
-    id: "gym1",
-    name: "第一体育館",
-    subName: "メインステージ・音楽部ライブ・2年模擬店",
-    pinLabel: "体育館エリア",
-    color: "bg-rose-500",
-    lightBg: "bg-rose-50 border-rose-300 text-rose-900",
-    icon: "🏟️",
-    top: "70%",
-    left: "58%",
-    desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
+    id: "yamazaki",
+    name: "ヤマザキショップ 鶴岡高専店",
+    subName: "学内売店",
+    pinLabel: "ヤマザキショップ\n鶴岡高専店",
+    lightBg: "bg-orange-50 border-orange-300 text-orange-900",
+    icon: "🏪",
+    top: "76%",
+    left: "9.5%",
+    desc: "総合メディアセンター西側に隣接する学内売店です。",
   },
   {
     id: "media_center",
     name: "総合メディアセンター",
     subName: "図書室・マルチメディア",
     pinLabel: "総合メディアセンター",
-    color: "bg-indigo-500",
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
-    top: "72%",
-    left: "26%",
+    top: "70%",
+    left: "25.0%",
     desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
-    id: "yamazaki",
-    name: "ヤマザキショップ 鶴岡高専店",
-    subName: "学内売店",
-    pinLabel: "ヤマザキショップ",
-    color: "bg-orange-500",
-    lightBg: "bg-orange-50 border-orange-300 text-orange-900",
-    icon: "🏪",
-    top: "80%",
-    left: "10%",
-    desc: "総合メディアセンター西側に隣接する学内売店です。",
+    id: "gym1",
+    name: "第一体育館",
+    subName: "メインステージ・音楽部ライブ・2年模擬店",
+    pinLabel: "第一体育館",
+    lightBg: "bg-rose-50 border-rose-300 text-rose-900",
+    icon: "🏟️",
+    top: "72%",
+    left: "48.5%",
+    desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
+  },
+  {
+    id: "bldg1",
+    name: "1号館・合同講義室",
+    subName: "一般教室棟・文化部展示",
+    pinLabel: "1号館",
+    lightBg: "bg-blue-50 border-blue-300 text-blue-900",
+    icon: "🏫",
+    top: "27%",
+    left: "54.5%",
+    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
+  },
+  {
+    id: "bldg4",
+    name: "4号館",
+    subName: "展示・体験棟",
+    pinLabel: "4号館",
+    lightBg: "bg-teal-50 border-teal-300 text-teal-900",
+    icon: "🎴",
+    top: "3.5%",
+    left: "69.0%",
+    desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
+  },
+  {
+    id: "ticket",
+    name: "金券販売",
+    subName: "金券本部",
+    pinLabel: "金券販売",
+    lightBg: "bg-amber-50 border-amber-300 text-amber-900",
+    icon: "🎟️",
+    top: "28.5%",
+    left: "71.0%",
+    desc: "模擬店等で使用できる金券の販売を行っています。",
+  },
+  {
+    id: "bldg7",
+    name: "7号館",
+    subName: "アトラクション・展示棟",
+    pinLabel: "7号館",
+    lightBg: "bg-purple-50 border-purple-300 text-purple-900",
+    icon: "👻",
+    top: "18.0%",
+    left: "86.0%",
+    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
+  },
+  {
+    id: "entrance",
+    name: "学生昇降口前広場",
+    subName: "学校紹介・キッチンカー",
+    pinLabel: "学生昇降口前広場",
+    lightBg: "bg-amber-50 border-amber-300 text-amber-900",
+    icon: "🚚",
+    top: "43.0%",
+    left: "78.0%",
+    desc: "学校紹介ブース（交流ラウンジ）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
+  },
+  {
+    id: "parking",
+    name: "駐車場",
+    subName: "来場者用駐車場",
+    pinLabel: "駐車場",
+    lightBg: "bg-slate-50 border-slate-300 text-slate-900",
+    icon: "🅿️",
+    top: "75.0%",
+    left: "94.0%",
+    desc: "構内駐車場です。台数に限りがございます。",
   },
 ];
 
@@ -1206,7 +1188,7 @@ export default function Page() {
                   className="w-1/2 h-full object-cover pointer-events-none"
                 />
 
-                {/* 統合マップ座標系上のピン */}
+                {/* 統合マップ座標系上のピン（黒いピンアイコン＋直書きラベル） */}
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
@@ -1218,37 +1200,26 @@ export default function Page() {
                         setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))
                       }
                       style={{ top: zone.top, left: zone.left }}
-                      className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-10 flex flex-col items-center group ${
-                        isSelected ? "scale-125 z-30" : "hover:scale-110"
+                      className={`absolute -translate-x-1/2 -translate-y-full transition-all duration-200 z-10 flex items-center gap-1.5 cursor-pointer group ${
+                        isSelected
+                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/50 p-0.5 shadow-md"
+                          : "hover:scale-105"
                       }`}
                     >
-                      {isSelected && (
-                        <div className="px-2.5 py-1 rounded-full text-[11px] font-black whitespace-nowrap shadow-lg mb-1 border border-slate-700 bg-slate-900 text-white ring-2 ring-rose-400 flex items-center gap-1 animate-in fade-in zoom-in-90 duration-200">
-                          <span>{zone.icon}</span>
-                          <span>{zone.pinLabel}</span>
-                        </div>
-                      )}
-
-                      <div className="relative flex items-center justify-center">
-                        {(isSelected || isLiveStageZone) && (
-                          <span
-                            className={`absolute w-8 h-8 rounded-full ${
-                              isLiveStageZone ? "bg-red-500/50" : "bg-rose-500/40"
-                            } animate-ping`}
-                          />
+                      {/* 黒いピンアイコン */}
+                      <div className="relative flex items-center justify-center shrink-0">
+                        {isLiveStageZone && (
+                          <span className="absolute w-5 h-5 rounded-full bg-red-500/50 animate-ping" />
                         )}
-                        <div
-                          className={`w-7 h-7 rounded-full flex items-center justify-center shadow-lg text-white border-2 border-white transition ${
-                            isSelected
-                              ? "bg-rose-600 ring-4 ring-rose-300"
-                              : isLiveStageZone
-                              ? "bg-red-700"
-                              : `${zone.color}`
-                          }`}
-                        >
-                          <MapPin className="w-4 h-4" />
+                        <div className="w-3.5 h-3.5 bg-slate-950 rounded-t-full rounded-bl-full rotate-45 border border-slate-900 shadow-sm flex items-center justify-center shrink-0">
+                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
                         </div>
                       </div>
+
+                      {/* テキストラベル（黒文字＋白縁） */}
+                      <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
+                        {zone.pinLabel}
+                      </span>
                     </button>
                   );
                 })}
