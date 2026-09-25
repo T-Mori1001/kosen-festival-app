@@ -761,6 +761,9 @@ export default function Page() {
   // マップの初期ズーム倍率 2.0倍
   const [zoomLevel, setZoomLevel] = useState<number>(2.0);
 
+  // マップ表示完了フラグ（初期位置が整うまでの表示チラつき・スライド隠し用）
+  const [isMapReady, setIsMapReady] = useState<boolean>(false);
+
   // マップコンテナの参照
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
@@ -780,31 +783,33 @@ export default function Page() {
   }, []);
 
   // マップの初期表示位置を画像右側（学生昇降口〜駐車場エリア付近）に設定する処理
-  const scrollToRightSide = () => {
+  const scrollToRightSide = (smooth = false) => {
     if (!mapContainerRef.current) return;
     const container = mapContainerRef.current;
 
-    // 画像右側 (left 80%, top 40% 付近) をスクロールの中央へ移動
     const targetX = container.scrollWidth * 0.80 - container.clientWidth / 2;
     const targetY = container.scrollHeight * 0.40 - container.clientHeight / 2;
 
     container.scrollTo({
       left: Math.max(0, targetX),
       top: Math.max(0, targetY),
-      behavior: "smooth",
+      behavior: smooth ? "smooth" : "auto",
     });
   };
 
-  // タブ切り替え・入場時・ズームレベル変更時に右側へスクロール
+  // タブ切り替え・入場時に右側へ一瞬で移動させたあとフェードイン表示
   useEffect(() => {
     if (isEntered && activeTab === "map") {
-      // DOMの描画完了を待つために複数のタイミングでスクロール処理を実施
+      setIsMapReady(false);
       const timer = setTimeout(() => {
-        scrollToRightSide();
-      }, 100);
+        scrollToRightSide(false);
+        requestAnimationFrame(() => {
+          setIsMapReady(true);
+        });
+      }, 50);
       return () => clearTimeout(timer);
     }
-  }, [isEntered, activeTab, zoomLevel]);
+  }, [isEntered, activeTab]);
 
   // 最新のズームレベルを ref で保持
   const zoomLevelRef = useRef(zoomLevel);
@@ -812,7 +817,7 @@ export default function Page() {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能（依存配列に isEntered と activeTab を指定してイベント登録漏れを防ぐ）
+  // スマホ用ピンチイン・ピンチアウト機能（指2本の中央を中心に拡大縮小）
   useEffect(() => {
     if (!isEntered || activeTab !== "map") return;
 
@@ -824,7 +829,7 @@ export default function Page() {
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
-        if (e.cancelable) e.preventDefault(); // 2本指の場合のブラウザ既定ピンチを抑制
+        if (e.cancelable) e.preventDefault();
         startDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
@@ -835,14 +840,27 @@ export default function Page() {
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 2 && startDist > 0) {
-        if (e.cancelable) e.preventDefault(); // スクロールやブラウザ拡大を抑制
+        if (e.cancelable) e.preventDefault();
         const currentDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
         const scale = currentDist / startDist;
         const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 3.5);
-        setZoomLevel(Math.round(newZoom * 100) / 100);
+        const oldZoom = zoomLevelRef.current;
+
+        if (oldZoom !== newZoom) {
+          // 2本指の中央位置を取得してスクロール座標を補正
+          const rect = container.getBoundingClientRect();
+          const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+          const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+
+          const ratio = newZoom / oldZoom;
+          container.scrollLeft = (container.scrollLeft + midX) * ratio - midX;
+          container.scrollTop = (container.scrollTop + midY) * ratio - midY;
+
+          setZoomLevel(Math.round(newZoom * 100) / 100);
+        }
       }
     };
 
@@ -865,18 +883,40 @@ export default function Page() {
     };
   }, [isEntered, activeTab]);
 
-  // ズーム操作ハンドラー
+  // ズーム操作ハンドラー（画面中央を基点にズーム）
   const handleZoomIn = () => {
-    setZoomLevel((prev) => Math.min(Math.round((prev + 0.25) * 100) / 100, 3.5));
+    setZoomLevel((prev) => {
+      const next = Math.min(Math.round((prev + 0.25) * 100) / 100, 3.5);
+      if (mapContainerRef.current && prev !== next) {
+        const container = mapContainerRef.current;
+        const ratio = next / prev;
+        const midX = container.clientWidth / 2;
+        const midY = container.clientHeight / 2;
+        container.scrollLeft = (container.scrollLeft + midX) * ratio - midX;
+        container.scrollTop = (container.scrollTop + midY) * ratio - midY;
+      }
+      return next;
+    });
   };
 
   const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(Math.round((prev - 0.25) * 100) / 100, 1.0));
+    setZoomLevel((prev) => {
+      const next = Math.max(Math.round((prev - 0.25) * 100) / 100, 1.0);
+      if (mapContainerRef.current && prev !== next) {
+        const container = mapContainerRef.current;
+        const ratio = next / prev;
+        const midX = container.clientWidth / 2;
+        const midY = container.clientHeight / 2;
+        container.scrollLeft = (container.scrollLeft + midX) * ratio - midX;
+        container.scrollTop = (container.scrollTop + midY) * ratio - midY;
+      }
+      return next;
+    });
   };
 
   const handleResetZoom = () => {
     setZoomLevel(2.0);
-    setTimeout(scrollToRightSide, 100);
+    setTimeout(() => scrollToRightSide(true), 50);
   };
 
   // リアルタイムイベント特定ロジック
@@ -1301,20 +1341,25 @@ export default function Page() {
             {/* スクロール＆ピンチ操作対応キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
-              className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none"
+              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 ${
+                isMapReady ? "opacity-100" : "opacity-0"
+              }`}
             >
               <div
                 style={{
                   width: `${zoomLevel * 100}%`,
                   minWidth: "100%",
                 }}
-                className="relative aspect-[2.37/1] select-none transition-all duration-150 ease-out"
+                className="relative aspect-[2.37/1] select-none"
               >
-                {/* 校内図画像（読み込み完了時に自動で右側へスクロール） */}
+                {/* 校内図画像 */}
                 <img
                   src="/校内図.jpeg"
                   alt="校内図"
-                  onLoad={scrollToRightSide}
+                  onLoad={() => {
+                    scrollToRightSide(false);
+                    setIsMapReady(true);
+                  }}
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
