@@ -634,7 +634,7 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標（第一体育館・交流ラウンジのみ右補正+0.2%、その他は左補正-0.2%）
+// 校内マップのピン座標
 const CAMPUS_ZONES = [
   {
     id: "gym2",
@@ -706,7 +706,7 @@ const CAMPUS_ZONES = [
     id: "ticket",
     name: "高専祭本部（金券販売）",
     subName: "金券本部・案内",
-    pinLabel: "高専祭本部（金券販売）",
+    pinLabel: "高専祭本部\n（金券販売）",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
@@ -1410,41 +1410,53 @@ export default function Page() {
                   const showLabel = isSelected || zone.id === "gym1" || zone.id === "ticket";
 
                   return (
-                    <button
+                    <div
                       key={zone.id}
-                      onClick={() =>
-                        setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))
-                      }
                       style={{ top: zone.top, left: zone.left }}
-                      className={`absolute -translate-x-1/2 -translate-y-full transition-all duration-200 z-10 flex items-center gap-1.5 cursor-pointer group ${
-                        isSelected
-                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/80 p-0.5 shadow-md"
-                          : "hover:scale-105"
+                      className={`absolute transition-all duration-200 ${
+                        isSelected ? "z-30" : "z-10"
                       }`}
                     >
-                      {/* ピンアイコン（駐車場のみ青地に白文字のP、その他は標準ピン） */}
-                      <div className="relative flex items-center justify-center shrink-0">
-                        {isLiveStageZone && (
-                          <span className="absolute w-7 h-7 rounded-full bg-rose-500/50 animate-ping" />
-                        )}
-                        {zone.id === "parking" ? (
-                          <div className="w-6 h-6 bg-blue-600 rounded border-2 border-white shadow-md flex items-center justify-center text-white font-black text-xs leading-none shrink-0">
-                            P
-                          </div>
-                        ) : (
-                          <div className="w-5 h-5 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
-                            <div className="w-2 h-2 bg-white rounded-full -rotate-45 shadow-inner" />
-                          </div>
-                        )}
-                      </div>
+                      <button
+                        onClick={() =>
+                          setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))
+                        }
+                        className={`relative -translate-x-1/2 -translate-y-full flex items-center justify-center cursor-pointer group transition-transform duration-200 ${
+                          isSelected ? "scale-110" : "hover:scale-105"
+                        }`}
+                      >
+                        {/* ピンアイコン（駐車場のみ青地に白文字のP、その他は標準ピン） */}
+                        <div className="relative flex items-center justify-center shrink-0">
+                          {isLiveStageZone && (
+                            <span className="absolute w-7 h-7 rounded-full bg-rose-500/50 animate-ping" />
+                          )}
+                          {zone.id === "parking" ? (
+                            <div
+                              className={`w-6 h-6 bg-blue-600 rounded border-2 border-white shadow-md flex items-center justify-center text-white font-black text-xs leading-none shrink-0 ${
+                                isSelected ? "ring-2 ring-rose-500" : ""
+                              }`}
+                            >
+                              P
+                            </div>
+                          ) : (
+                            <div
+                              className={`w-5 h-5 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0 ${
+                                isSelected ? "ring-2 ring-rose-500" : ""
+                              }`}
+                            >
+                              <div className="w-2 h-2 bg-white rounded-full -rotate-45 shadow-inner" />
+                            </div>
+                          )}
+                        </div>
 
-                      {/* テキストラベル（初期表示は第一体育館・本部(高専祭本部)、または選択時） */}
-                      {showLabel && (
-                        <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
-                          {zone.pinLabel}
-                        </span>
-                      )}
-                    </button>
+                        {/* テキストラベル（初期表示は第一体育館・本部(高専祭本部)、または選択時） */}
+                        {showLabel && (
+                          <span className="absolute left-full top-1/2 -translate-y-1/2 ml-1.5 text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff] pointer-events-none whitespace-nowrap">
+                            {zone.pinLabel}
+                          </span>
+                        )}
+                      </button>
+                    </div>
                   );
                 })}
               </div>
@@ -1937,43 +1949,7 @@ export default function Page() {
                       <span className="text-xs font-black text-slate-800 line-clamp-1">
                         {stall.title}
                       </span>
-                      <span className="text-[9px] font-bold text-slate-400">{stall.grade}</span>
                     </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="text-xs font-extrabold text-slate-700">
-                  📍 {currentFloor} の催し物一覧 ({floorStalls.length}件)
-                </h4>
-
-                <div className="space-y-2">
-                  {floorStalls.map((stall) => (
-                    <div
-                      key={stall.id}
-                      onClick={() => {
-                        setIsBldg1ModalOpen(false);
-                        setModalItem(stall);
-                      }}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:bg-white hover:shadow-sm cursor-pointer transition flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{stall.icon}</span>
-                        <div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-[9px] font-black px-1.5 py-0.2 bg-blue-100 text-blue-800 rounded">
-                              {stall.roomNo}
-                            </span>
-                            <span className="text-[10px] font-bold text-slate-500">
-                              {stall.grade} ({stall.category})
-                            </span>
-                          </div>
-                          <h5 className="font-black text-xs text-slate-900 mt-0.5">{stall.title}</h5>
-                        </div>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-slate-400" />
-                    </div>
                   ))}
                 </div>
               </div>
