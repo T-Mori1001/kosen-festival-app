@@ -497,7 +497,7 @@ const STALLS_DATA: StallItem[] = [
     category: "校内施設・その他",
     grade: "本部",
     dept: "実行委員会",
-    location: "学生昇降口 交流ラウンジ",
+    location: "学生昇降口 高専祭本部（金券販売）",
     zoneId: "ticket",
     description: "模擬店等で使用できる金券の販売を行っています。お買い求めはこちらでどうぞ！",
     icon: "🎟️",
@@ -508,7 +508,7 @@ const STALLS_DATA: StallItem[] = [
     category: "校内施設・その他",
     grade: "案内",
     dept: "広報・入試",
-    location: "学生昇降口 交流ラウンジ",
+    location: "学生昇降口 高専祭本部（金券販売）",
     zoneId: "ticket",
     description: "鶴岡高専の学校案内、学科紹介、入試相談などを行っている特設ブースです。",
     icon: "🏫",
@@ -634,7 +634,7 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標（一律左方向-2.0%に補正）
+// 校内マップのピン座標（第一体育館・交流ラウンジのみ右補正+0.2%、その他は左補正-0.2%）
 const CAMPUS_ZONES = [
   {
     id: "gym2",
@@ -644,7 +644,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-slate-50 border-slate-300 text-slate-900",
     icon: "🏃",
     top: "56.0%",
-    left: "6.6%",
+    left: "6.4%",
     desc: "第二体育館エリアです。",
   },
   {
@@ -655,7 +655,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
     top: "45.0%",
-    left: "45.6%",
+    left: "45.4%",
     desc: "総合メディアセンター西側に隣接する学内売店です。",
   },
   {
@@ -666,7 +666,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
     top: "48.0%",
-    left: "53.9%",
+    left: "53.7%",
     desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
@@ -677,7 +677,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
     top: "62.0%",
-    left: "64.6%",
+    left: "64.8%",
     desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
   },
   {
@@ -688,7 +688,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "30.4%",
-    left: "71.8%",
+    left: "71.6%",
     desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
@@ -699,18 +699,18 @@ const CAMPUS_ZONES = [
     lightBg: "bg-teal-50 border-teal-300 text-teal-900",
     icon: "🎴",
     top: "9.0%",
-    left: "83.1%",
+    left: "82.9%",
     desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
   },
   {
     id: "ticket",
-    name: "交流ラウンジ（金券販売）",
+    name: "高専祭本部（金券販売）",
     subName: "金券本部・案内",
-    pinLabel: "交流ラウンジ",
+    pinLabel: "高専祭本部（金券販売）",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "78.5%",
+    left: "78.7%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -721,7 +721,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
     top: "40.6%",
-    left: "84.8%",
+    left: "84.6%",
     desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
   },
   {
@@ -732,8 +732,8 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
     top: "55.1%",
-    left: "79.4%",
-    desc: "学校紹介ブース（交流ラウンジ）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
+    left: "79.2%",
+    desc: "学校紹介ブース（高専祭本部）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
   },
   {
     id: "parking",
@@ -743,7 +743,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-slate-50 border-slate-300 text-slate-900",
     icon: "🅿️",
     top: "84.6%",
-    left: "80.8%",
+    left: "80.6%",
     desc: "構内駐車場です。台数に限りがございます。",
   },
 ];
@@ -769,8 +769,8 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // マップの初期ズーム倍率 2.0倍
-  const [zoomLevel, setZoomLevel] = useState<number>(2.0);
+  // マップの初期ズーム倍率 3.0倍 (300%)
+  const [zoomLevel, setZoomLevel] = useState<number>(3.0);
 
   // マップ表示完了フラグ
   const [isMapReady, setIsMapReady] = useState<boolean>(false);
@@ -837,7 +837,7 @@ export default function Page() {
     if (!container) return;
 
     let startDist = 0;
-    let startZoom = 2.0;
+    let startZoom = 3.0;
     let startScrollLeft = 0;
     let startScrollTop = 0;
     let startMidX = 0;
@@ -954,9 +954,9 @@ export default function Page() {
 
   const handleResetZoom = () => {
     if (mapContentRef.current) {
-      mapContentRef.current.style.width = "200%";
+      mapContentRef.current.style.width = "300%";
     }
-    setZoomLevel(2.0);
+    setZoomLevel(3.0);
     setTimeout(() => scrollToRightSide(true), 50);
   };
 
@@ -1365,7 +1365,7 @@ export default function Page() {
                 >
                   <ZoomIn className="w-3.5 h-3.5" />
                 </button>
-                {zoomLevel !== 2.0 && (
+                {zoomLevel !== 3.0 && (
                   <button
                     onClick={handleResetZoom}
                     className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition ml-0.5 border-l border-slate-200"
@@ -1425,20 +1425,20 @@ export default function Page() {
                       {/* ピンアイコン（駐車場のみ青地に白文字のP、その他は標準ピン） */}
                       <div className="relative flex items-center justify-center shrink-0">
                         {isLiveStageZone && (
-                          <span className="absolute w-6 h-6 rounded-full bg-rose-500/50 animate-ping" />
+                          <span className="absolute w-7 h-7 rounded-full bg-rose-500/50 animate-ping" />
                         )}
                         {zone.id === "parking" ? (
-                          <div className="w-5 h-5 bg-blue-600 rounded border-2 border-white shadow-md flex items-center justify-center text-white font-black text-[11px] leading-none shrink-0">
+                          <div className="w-6 h-6 bg-blue-600 rounded border-2 border-white shadow-md flex items-center justify-center text-white font-black text-xs leading-none shrink-0">
                             P
                           </div>
                         ) : (
-                          <div className="w-4 h-4 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
-                            <div className="w-1.5 h-1.5 bg-white rounded-full -rotate-45 shadow-inner" />
+                          <div className="w-5 h-5 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
+                            <div className="w-2 h-2 bg-white rounded-full -rotate-45 shadow-inner" />
                           </div>
                         )}
                       </div>
 
-                      {/* テキストラベル（初期表示は第一体育館・本部(交流ラウンジ)、または選択時） */}
+                      {/* テキストラベル（初期表示は第一体育館・本部(高専祭本部)、または選択時） */}
                       {showLabel && (
                         <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
                           {zone.pinLabel}
