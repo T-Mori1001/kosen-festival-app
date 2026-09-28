@@ -724,7 +724,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
     top: "48.0%",
-    left: "53.7%",
+    left: "52.2%", // 左補正 -1.5% (53.7% -> 52.2%)
     desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
@@ -789,8 +789,8 @@ const CAMPUS_ZONES = [
     pinLabel: "8号館",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎷",
-    top: "32.0%",
-    left: "91.0%",
+    top: "30.0%", // 上補正 2% (32.0% -> 30.0%)
+    left: "91.5%", // 右補正 +0.5% (91.0% -> 91.5%)
     desc: "2階の大講義室にて吹奏楽部ミニコンサート（9:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
   },
   {
@@ -898,7 +898,7 @@ export default function Page() {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能
+  // スマホ用ピンチイン・ピンチアウト機能（最大4.0倍まで拡張）
   useEffect(() => {
     if (!isEntered || activeTab !== "map") return;
 
@@ -945,7 +945,7 @@ export default function Page() {
         const currentMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
 
         const scale = currentDist / startDist;
-        const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 3.5);
+        const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 4.0); // 最大400%に拡大可能
 
         if (rafId) cancelAnimationFrame(rafId);
 
@@ -982,14 +982,14 @@ export default function Page() {
     };
   }, [isEntered, activeTab]);
 
-  // ズーム操作ハンドラー
+  // ズーム操作ハンドラー（最大4.0倍 / 400%）
   const handleZoomIn = () => {
     const container = mapContainerRef.current;
     const content = mapContentRef.current;
     if (!container || !content) return;
 
     const prev = zoomLevelRef.current;
-    const next = Math.min(Math.round((prev + 0.25) * 100) / 100, 3.5);
+    const next = Math.min(Math.round((prev + 0.25) * 100) / 100, 4.0); // 400%上限
     if (prev === next) return;
 
     const ratio = next / prev;
@@ -1289,7 +1289,7 @@ export default function Page() {
             @keyframes liveWave {
               0% { transform: scaleY(0.4); }
               50% { transform: scaleY(1); }
-              100% { transform: scaleY(0.4); }
+              100% { transform: scaleY(1); }
             }
             .animate-live-fade { animation: liveFade 1.5s ease-in-out infinite; }
             .animate-live-wave { animation: liveWave 0.8s ease-in-out infinite; transform-origin: bottom; }
@@ -1413,7 +1413,7 @@ export default function Page() {
                 <span className="truncate">指2本で拡大縮小、ドラッグで移動</span>
               </span>
 
-              {/* ズームコントローラー */}
+              {/* ズームコントローラー (最大400%対応) */}
               <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-full p-1 shadow-sm shrink-0">
                 <button
                   onClick={handleZoomOut}
@@ -1428,7 +1428,7 @@ export default function Page() {
                 </span>
                 <button
                   onClick={handleZoomIn}
-                  disabled={zoomLevel >= 3.5}
+                  disabled={zoomLevel >= 4.0}
                   className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
                   title="拡大"
                 >
@@ -1518,9 +1518,9 @@ export default function Page() {
                           )}
                         </div>
 
-                        {/* テキストラベル（ピンの上に横書き配置） */}
+                        {/* テキストラベル（おしゃれなフロストガラス風ピルバッジデザイン） */}
                         {showLabel && (
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 text-[12px] font-extrabold text-slate-900 text-center leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff] pointer-events-none flex flex-col items-center whitespace-nowrap">
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight pointer-events-none flex flex-col items-center whitespace-nowrap">
                             {zone.pinLabel.split("\n").map((line, idx) => (
                               <span key={idx}>{line}</span>
                             ))}
