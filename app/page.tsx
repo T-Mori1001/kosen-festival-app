@@ -651,7 +651,7 @@ const CAMPUS_ZONES = [
     id: "yamazaki",
     name: "ヤマザキショップ 鶴岡高専店",
     subName: "学内売店",
-    pinLabel: "ヤマザキショップ\n鶴岡高専店",
+    pinLabel: "ヤマザキショップ 鶴岡高専店",
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
     top: "45.0%",
@@ -677,7 +677,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
     top: "62.0%",
-    left: "64.8%",
+    left: "64.6%",
     desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
   },
   {
@@ -688,7 +688,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "30.4%",
-    left: "71.6%",
+    left: "71.4%",
     desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
@@ -706,11 +706,11 @@ const CAMPUS_ZONES = [
     id: "ticket",
     name: "高専祭本部（金券販売）",
     subName: "金券本部・案内",
-    pinLabel: "高専祭本部\n（金券販売）",
+    pinLabel: "高専祭本部（金券販売）",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "78.7%",
+    left: "78.5%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -721,7 +721,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
     top: "40.6%",
-    left: "84.6%",
+    left: "84.4%",
     desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
   },
   {
@@ -732,7 +732,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
     top: "55.1%",
-    left: "79.2%",
+    left: "79.0%",
     desc: "学校紹介ブース（高専祭本部）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
   },
   {
@@ -1449,9 +1449,9 @@ export default function Page() {
                           )}
                         </div>
 
-                        {/* テキストラベル（初期表示は第一体育館・本部(高専祭本部)、または選択時） */}
+                        {/* テキストラベル（ピンの上に横書き配置） */}
                         {showLabel && (
-                          <span className="absolute left-full top-1/2 -translate-y-1/2 ml-1.5 text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff] pointer-events-none whitespace-nowrap">
+                          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 text-[12px] font-extrabold text-slate-900 text-center leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff] pointer-events-none whitespace-nowrap">
                             {zone.pinLabel}
                           </span>
                         )}
