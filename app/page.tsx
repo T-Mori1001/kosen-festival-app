@@ -634,7 +634,7 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標（添付画像の刺し位置に準拠）
+// 校内マップのピン座標（全体的に右寄りに修正）
 const CAMPUS_ZONES = [
   {
     id: "gym2",
@@ -644,7 +644,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-slate-50 border-slate-300 text-slate-900",
     icon: "🏃",
     top: "56.0%",
-    left: "5.1%",
+    left: "8.6%",
     desc: "第二体育館エリアです。",
   },
   {
@@ -655,7 +655,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
     top: "45.0%",
-    left: "44.1%",
+    left: "47.6%",
     desc: "総合メディアセンター西側に隣接する学内売店です。",
   },
   {
@@ -666,7 +666,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
     top: "48.0%",
-    left: "52.4%",
+    left: "55.9%",
     desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
@@ -677,7 +677,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
     top: "62.0%",
-    left: "63.1%",
+    left: "66.6%",
     desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
   },
   {
@@ -688,7 +688,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "30.4%",
-    left: "70.3%",
+    left: "73.8%",
     desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
@@ -699,7 +699,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-teal-50 border-teal-300 text-teal-900",
     icon: "🎴",
     top: "9.0%",
-    left: "81.6%",
+    left: "85.1%",
     desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
   },
   {
@@ -710,7 +710,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "77.0%",
+    left: "80.5%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -721,7 +721,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
     top: "40.6%",
-    left: "83.3%",
+    left: "86.8%",
     desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
   },
   {
@@ -732,7 +732,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
     top: "55.1%",
-    left: "77.9%",
+    left: "81.4%",
     desc: "学校紹介ブース（交流ラウンジ）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
   },
   {
@@ -743,7 +743,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-slate-50 border-slate-300 text-slate-900",
     icon: "🅿️",
     top: "84.6%",
-    left: "79.3%",
+    left: "82.8%",
     desc: "構内駐車場です。台数に限りがございます。",
   },
 ];
@@ -1417,24 +1417,32 @@ export default function Page() {
                       style={{ top: zone.top, left: zone.left }}
                       className={`absolute -translate-x-1/2 -translate-y-full transition-all duration-200 z-10 flex items-center gap-1.5 cursor-pointer group ${
                         isSelected
-                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/60 p-0.5 shadow-md"
+                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/80 p-0.5 shadow-md"
                           : "hover:scale-105"
                       }`}
                     >
-                      {/* ピンアイコン（指定色をそのまま保持） */}
+                      {/* ピンアイコン（駐車場のみ青地に白文字のP、その他は標準ピン） */}
                       <div className="relative flex items-center justify-center shrink-0">
                         {isLiveStageZone && (
                           <span className="absolute w-6 h-6 rounded-full bg-rose-500/50 animate-ping" />
                         )}
-                        <div className="w-4 h-4 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
-                          <div className="w-1.5 h-1.5 bg-white rounded-full -rotate-45 shadow-inner" />
-                        </div>
+                        {zone.id === "parking" ? (
+                          <div className="w-5 h-5 bg-blue-600 rounded border-2 border-white shadow-md flex items-center justify-center text-white font-black text-[11px] leading-none shrink-0">
+                            P
+                          </div>
+                        ) : (
+                          <div className="w-4 h-4 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
+                            <div className="w-1.5 h-1.5 bg-white rounded-full -rotate-45 shadow-inner" />
+                          </div>
+                        )}
                       </div>
 
-                      {/* テキストラベル */}
-                      <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
-                        {zone.pinLabel}
-                      </span>
+                      {/* テキストラベル（クリック時のみ表示） */}
+                      {isSelected && (
+                        <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
+                          {zone.pinLabel}
+                        </span>
+                      )}
                     </button>
                   );
                 })}
