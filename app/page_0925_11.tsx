@@ -19,6 +19,9 @@ import {
   AlertTriangle,
   Globe,
   Move,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
 } from "lucide-react";
 
 // Instagramアイコン用SVG
@@ -406,7 +409,7 @@ const STALLS_DATA: StallItem[] = [
     location: "4号館 411教室",
     zoneId: "bldg4",
     description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
-    icon: "🎴",
+    icon: "",
   },
 
   // --- 総合メディアセンター (media_center) ---
@@ -631,7 +634,7 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標（添付画像のピン留め位置に準拠）
+// 校内マップのピン座標
 const CAMPUS_ZONES = [
   {
     id: "yamazaki",
@@ -755,8 +758,15 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // マップコンテナの参照
+  // マップの初期ズーム倍率 2.0倍
+  const [zoomLevel, setZoomLevel] = useState<number>(2.0);
+
+  // マップ表示完了フラグ（初期位置が整うまでの表示チラつき・スライド隠し用）
+  const [isMapReady, setIsMapReady] = useState<boolean>(false);
+
+  // マップコンテナ＆拡大内側要素の参照
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapContentRef = useRef<HTMLDivElement>(null);
 
   // 1号館フロア詳細モーダル用ステート
   const [isBldg1ModalOpen, setIsBldg1ModalOpen] = useState(false);
@@ -773,13 +783,172 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
-  // マップ表示時、初期位置を右側（校内図-1）にセット
+  // マップの初期表示位置を画像右側（学生昇降口〜駐車場エリア付近）に設定する処理
+  const scrollToRightSide = (smooth = false) => {
+    if (!mapContainerRef.current) return;
+    const container = mapContainerRef.current;
+
+    const targetX = container.scrollWidth * 0.80 - container.clientWidth / 2;
+    const targetY = container.scrollHeight * 0.40 - container.clientHeight / 2;
+
+    container.scrollTo({
+      left: Math.max(0, targetX),
+      top: Math.max(0, targetY),
+      behavior: smooth ? "smooth" : "auto",
+    });
+  };
+
+  // タブ切り替え・入場時に右側へ一瞬で移動させたあとフェードイン表示
   useEffect(() => {
-    if (activeTab === "map" && mapContainerRef.current) {
-      const container = mapContainerRef.current;
-      container.scrollLeft = container.scrollWidth;
+    if (isEntered && activeTab === "map") {
+      setIsMapReady(false);
+      const timer = setTimeout(() => {
+        scrollToRightSide(false);
+        requestAnimationFrame(() => {
+          setIsMapReady(true);
+        });
+      }, 50);
+      return () => clearTimeout(timer);
     }
-  }, [activeTab, isEntered]);
+  }, [isEntered, activeTab]);
+
+  // 最新のズームレベルを ref で保持
+  const zoomLevelRef = useRef(zoomLevel);
+  useEffect(() => {
+    zoomLevelRef.current = zoomLevel;
+  }, [zoomLevel]);
+
+  // スマホ用ピンチイン・ピンチアウト機能（即時DOM同期＆滑らか補正版）
+  useEffect(() => {
+    if (!isEntered || activeTab !== "map") return;
+
+    const container = mapContainerRef.current;
+    if (!container) return;
+
+    let startDist = 0;
+    let startZoom = 2.0;
+    let startScrollLeft = 0;
+    let startScrollTop = 0;
+    let startMidX = 0;
+    let startMidY = 0;
+    let rafId: number | null = null;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        if (e.cancelable) e.preventDefault();
+
+        startDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        startZoom = zoomLevelRef.current;
+
+        const rect = container.getBoundingClientRect();
+        startMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        startMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+        startScrollLeft = container.scrollLeft;
+        startScrollTop = container.scrollTop;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2 && startDist > 0) {
+        if (e.cancelable) e.preventDefault();
+
+        const currentDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+
+        const rect = container.getBoundingClientRect();
+        const currentMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        const currentMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+
+        const scale = currentDist / startDist;
+        const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 3.5);
+
+        if (rafId) cancelAnimationFrame(rafId);
+
+        // 同期的にDOM幅を変更してからスクロール位置を追従計算（ブレの根本防止）
+        rafId = requestAnimationFrame(() => {
+          if (mapContentRef.current) {
+            mapContentRef.current.style.width = `${newZoom * 100}%`;
+          }
+          const ratio = newZoom / startZoom;
+          container.scrollLeft = (startScrollLeft + startMidX) * ratio - currentMidX;
+          container.scrollTop = (startScrollTop + startMidY) * ratio - currentMidY;
+          setZoomLevel(newZoom);
+        });
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2) {
+        startDist = 0;
+        if (rafId) cancelAnimationFrame(rafId);
+      }
+    };
+
+    container.addEventListener("touchstart", handleTouchStart, { passive: false });
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
+    container.addEventListener("touchend", handleTouchEnd, { passive: true });
+    container.addEventListener("touchcancel", handleTouchEnd, { passive: true });
+
+    return () => {
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
+      container.removeEventListener("touchcancel", handleTouchEnd);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [isEntered, activeTab]);
+
+  // ズーム操作ハンドラー（画面中央を基点に即時同期ズーム）
+  const handleZoomIn = () => {
+    const container = mapContainerRef.current;
+    const content = mapContentRef.current;
+    if (!container || !content) return;
+
+    const prev = zoomLevelRef.current;
+    const next = Math.min(Math.round((prev + 0.25) * 100) / 100, 3.5);
+    if (prev === next) return;
+
+    const ratio = next / prev;
+    const midX = container.clientWidth / 2;
+    const midY = container.clientHeight / 2;
+
+    content.style.width = `${next * 100}%`;
+    container.scrollLeft = (container.scrollLeft + midX) * ratio - midX;
+    container.scrollTop = (container.scrollTop + midY) * ratio - midY;
+    setZoomLevel(next);
+  };
+
+  const handleZoomOut = () => {
+    const container = mapContainerRef.current;
+    const content = mapContentRef.current;
+    if (!container || !content) return;
+
+    const prev = zoomLevelRef.current;
+    const next = Math.max(Math.round((prev - 0.25) * 100) / 100, 1.0);
+    if (prev === next) return;
+
+    const ratio = next / prev;
+    const midX = container.clientWidth / 2;
+    const midY = container.clientHeight / 2;
+
+    content.style.width = `${next * 100}%`;
+    container.scrollLeft = (container.scrollLeft + midX) * ratio - midX;
+    container.scrollTop = (container.scrollTop + midY) * ratio - midY;
+    setZoomLevel(next);
+  };
+
+  const handleResetZoom = () => {
+    if (mapContentRef.current) {
+      mapContentRef.current.style.width = "200%";
+    }
+    setZoomLevel(2.0);
+    setTimeout(() => scrollToRightSide(true), 50);
+  };
 
   // リアルタイムイベント特定ロジック
   const liveEvents = useMemo(() => {
@@ -1160,35 +1329,73 @@ export default function Page() {
         {/* タブ 1: 校内マップ */}
         {activeTab === "map" && (
           <div className="space-y-4">
-            {/* 上下左右スクロール操作ヒント */}
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
-              <span className="flex items-center gap-1.5 text-slate-700">
-                <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse" />
-                <span>左にスクロールすると「校内図-2」エリアを表示できます</span>
+            {/* 上下左右スクロール＆ピンチ操作コントローラー説明 */}
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1 gap-2">
+              <span className="flex items-center gap-1.5 text-slate-700 truncate">
+                <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse shrink-0" />
+                <span className="truncate">指2本で拡大縮小、ドラッグで移動</span>
               </span>
-              <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-extrabold shrink-0">
-                2分割連動マップ
-              </span>
+
+              {/* ズームコントローラー */}
+              <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-full p-1 shadow-sm shrink-0">
+                <button
+                  onClick={handleZoomOut}
+                  disabled={zoomLevel <= 1.0}
+                  className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
+                  title="縮小"
+                >
+                  <ZoomOut className="w-3.5 h-3.5" />
+                </button>
+                <span className="text-[10px] font-black min-w-[36px] text-center text-slate-700 select-none">
+                  {Math.round(zoomLevel * 100)}%
+                </span>
+                <button
+                  onClick={handleZoomIn}
+                  disabled={zoomLevel >= 3.5}
+                  className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
+                  title="拡大"
+                >
+                  <ZoomIn className="w-3.5 h-3.5" />
+                </button>
+                {zoomLevel !== 2.0 && (
+                  <button
+                    onClick={handleResetZoom}
+                    className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition ml-0.5 border-l border-slate-200"
+                    title="標準位置（初期位置）に戻す"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* スクロール可能キャンパスマップコンテナ */}
+            {/* スクロール＆ピンチ操作対応キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
-              className="w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing custom-map-scrollbar relative"
+              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
+                isMapReady ? "opacity-100" : "opacity-0"
+              }`}
             >
-              <div className="relative min-w-[1200px] aspect-[8/3] select-none flex">
+              <div
+                ref={mapContentRef}
+                style={{
+                  width: `${zoomLevel * 100}%`,
+                  minWidth: "100%",
+                }}
+                className="relative aspect-[2.37/1] select-none"
+              >
+                {/* 校内図画像 */}
                 <img
-                  src="/校内図-2.jpeg"
-                  alt="校内図-2 (西側)"
-                  className="w-1/2 h-full object-cover pointer-events-none"
-                />
-                <img
-                  src="/校内図-1.jpeg"
-                  alt="校内図-1 (東側・正面)"
-                  className="w-1/2 h-full object-cover pointer-events-none"
+                  src="/校内図.jpeg"
+                  alt="校内図"
+                  onLoad={() => {
+                    scrollToRightSide(false);
+                    setIsMapReady(true);
+                  }}
+                  className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 統合マップ座標系上のピン（黒いピンアイコン＋直書きラベル） */}
+                {/* 校内マップのピン */}
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
@@ -1202,21 +1409,21 @@ export default function Page() {
                       style={{ top: zone.top, left: zone.left }}
                       className={`absolute -translate-x-1/2 -translate-y-full transition-all duration-200 z-10 flex items-center gap-1.5 cursor-pointer group ${
                         isSelected
-                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/50 p-0.5 shadow-md"
+                          ? "scale-110 z-30 ring-2 ring-rose-500/80 rounded-lg bg-white/60 p-0.5 shadow-md"
                           : "hover:scale-105"
                       }`}
                     >
-                      {/* 黒いピンアイコン */}
+                      {/* ピンアイコン */}
                       <div className="relative flex items-center justify-center shrink-0">
                         {isLiveStageZone && (
-                          <span className="absolute w-5 h-5 rounded-full bg-red-500/50 animate-ping" />
+                          <span className="absolute w-6 h-6 rounded-full bg-rose-500/50 animate-ping" />
                         )}
-                        <div className="w-3.5 h-3.5 bg-slate-950 rounded-t-full rounded-bl-full rotate-45 border border-slate-900 shadow-sm flex items-center justify-center shrink-0">
-                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                        <div className="w-4 h-4 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0">
+                          <div className="w-1.5 h-1.5 bg-white rounded-full -rotate-45 shadow-inner" />
                         </div>
                       </div>
 
-                      {/* テキストラベル（黒文字＋白縁） */}
+                      {/* テキストラベル */}
                       <span className="text-[12px] font-extrabold text-slate-900 whitespace-pre-line leading-tight text-left drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff]">
                         {zone.pinLabel}
                       </span>

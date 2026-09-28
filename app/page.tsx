@@ -409,7 +409,7 @@ const STALLS_DATA: StallItem[] = [
     location: "4号館 411教室",
     zoneId: "bldg4",
     description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
-    icon: "",
+    icon: "🎴",
   },
 
   // --- 総合メディアセンター (media_center) ---
@@ -634,8 +634,19 @@ const EVENTS_DATA = [
   },
 ];
 
-// 校内マップのピン座標
+// 校内マップのピン座標（添付画像の刺し位置に準拠）
 const CAMPUS_ZONES = [
+  {
+    id: "gym2",
+    name: "第二体育館",
+    subName: "体育館",
+    pinLabel: "第二体育館",
+    lightBg: "bg-slate-50 border-slate-300 text-slate-900",
+    icon: "🏃",
+    top: "56.0%",
+    left: "5.1%",
+    desc: "第二体育館エリアです。",
+  },
   {
     id: "yamazaki",
     name: "ヤマザキショップ 鶴岡高専店",
@@ -643,8 +654,8 @@ const CAMPUS_ZONES = [
     pinLabel: "ヤマザキショップ\n鶴岡高専店",
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
-    top: "76%",
-    left: "9.5%",
+    top: "45.0%",
+    left: "44.1%",
     desc: "総合メディアセンター西側に隣接する学内売店です。",
   },
   {
@@ -654,8 +665,8 @@ const CAMPUS_ZONES = [
     pinLabel: "総合メディアセンター",
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
-    top: "70%",
-    left: "25.0%",
+    top: "48.0%",
+    left: "52.4%",
     desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
@@ -665,8 +676,8 @@ const CAMPUS_ZONES = [
     pinLabel: "第一体育館",
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
-    top: "72%",
-    left: "48.5%",
+    top: "62.0%",
+    left: "63.1%",
     desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
   },
   {
@@ -676,8 +687,8 @@ const CAMPUS_ZONES = [
     pinLabel: "1号館",
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
-    top: "27%",
-    left: "54.5%",
+    top: "30.4%",
+    left: "70.3%",
     desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
@@ -687,19 +698,19 @@ const CAMPUS_ZONES = [
     pinLabel: "4号館",
     lightBg: "bg-teal-50 border-teal-300 text-teal-900",
     icon: "🎴",
-    top: "3.5%",
-    left: "69.0%",
+    top: "9.0%",
+    left: "81.6%",
     desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
   },
   {
     id: "ticket",
-    name: "金券販売",
-    subName: "金券本部",
-    pinLabel: "金券販売",
+    name: "交流ラウンジ（金券販売）",
+    subName: "金券本部・案内",
+    pinLabel: "交流ラウンジ",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
-    top: "28.5%",
-    left: "71.0%",
+    top: "40.6%",
+    left: "77.0%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -709,8 +720,8 @@ const CAMPUS_ZONES = [
     pinLabel: "7号館",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
-    top: "18.0%",
-    left: "86.0%",
+    top: "40.6%",
+    left: "83.3%",
     desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
   },
   {
@@ -720,8 +731,8 @@ const CAMPUS_ZONES = [
     pinLabel: "学生昇降口前広場",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
-    top: "43.0%",
-    left: "78.0%",
+    top: "55.1%",
+    left: "77.9%",
     desc: "学校紹介ブース（交流ラウンジ）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
   },
   {
@@ -731,8 +742,8 @@ const CAMPUS_ZONES = [
     pinLabel: "駐車場",
     lightBg: "bg-slate-50 border-slate-300 text-slate-900",
     icon: "🅿️",
-    top: "75.0%",
-    left: "94.0%",
+    top: "84.6%",
+    left: "79.3%",
     desc: "構内駐車場です。台数に限りがございます。",
   },
 ];
@@ -761,7 +772,7 @@ export default function Page() {
   // マップの初期ズーム倍率 2.0倍
   const [zoomLevel, setZoomLevel] = useState<number>(2.0);
 
-  // マップ表示完了フラグ（初期位置が整うまでの表示チラつき・スライド隠し用）
+  // マップ表示完了フラグ
   const [isMapReady, setIsMapReady] = useState<boolean>(false);
 
   // マップコンテナ＆拡大内側要素の参照
@@ -818,7 +829,7 @@ export default function Page() {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能（即時DOM同期＆滑らか補正版）
+  // スマホ用ピンチイン・ピンチアウト機能
   useEffect(() => {
     if (!isEntered || activeTab !== "map") return;
 
@@ -869,7 +880,6 @@ export default function Page() {
 
         if (rafId) cancelAnimationFrame(rafId);
 
-        // 同期的にDOM幅を変更してからスクロール位置を追従計算（ブレの根本防止）
         rafId = requestAnimationFrame(() => {
           if (mapContentRef.current) {
             mapContentRef.current.style.width = `${newZoom * 100}%`;
@@ -903,7 +913,7 @@ export default function Page() {
     };
   }, [isEntered, activeTab]);
 
-  // ズーム操作ハンドラー（画面中央を基点に即時同期ズーム）
+  // ズーム操作ハンドラー
   const handleZoomIn = () => {
     const container = mapContainerRef.current;
     const content = mapContentRef.current;
@@ -1182,7 +1192,6 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 pb-20 font-sans relative">
       <style>{`
-        /* スクロールバーのスタイル調整 */
         .custom-map-scrollbar::-webkit-scrollbar {
           width: 6px;
           height: 6px;
@@ -1200,7 +1209,7 @@ export default function Page() {
         }
       `}</style>
 
-      {/* リアルタイムLIVEバナー（開催時間内のみ表示） */}
+      {/* リアルタイムLIVEバナー */}
       {primaryLiveEvent && (
         <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-red-600 text-white border-b border-white/20 shadow-xl overflow-hidden">
           <style>{`
@@ -1329,7 +1338,6 @@ export default function Page() {
         {/* タブ 1: 校内マップ */}
         {activeTab === "map" && (
           <div className="space-y-4">
-            {/* 上下左右スクロール＆ピンチ操作コントローラー説明 */}
             <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1 gap-2">
               <span className="flex items-center gap-1.5 text-slate-700 truncate">
                 <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse shrink-0" />
@@ -1369,7 +1377,7 @@ export default function Page() {
               </div>
             </div>
 
-            {/* スクロール＆ピンチ操作対応キャンパスマップコンテナ */}
+            {/* キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
               className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
@@ -1413,7 +1421,7 @@ export default function Page() {
                           : "hover:scale-105"
                       }`}
                     >
-                      {/* ピンアイコン */}
+                      {/* ピンアイコン（指定色をそのまま保持） */}
                       <div className="relative flex items-center justify-center shrink-0">
                         {isLiveStageZone && (
                           <span className="absolute w-6 h-6 rounded-full bg-rose-500/50 animate-ping" />
@@ -1451,7 +1459,6 @@ export default function Page() {
 
                 <p className="text-xs leading-relaxed font-medium opacity-90">{currentZone.desc}</p>
 
-                {/* 1号館の場合はフロアモーダルボタンを表示 */}
                 {selectedZoneId === "bldg1" && (
                   <button
                     onClick={() => setIsBldg1ModalOpen(true)}
@@ -1462,7 +1469,6 @@ export default function Page() {
                   </button>
                 )}
 
-                {/* そのエリアの企画・施設一覧 */}
                 <div className="space-y-2">
                   <h4 className="text-xs font-extrabold text-slate-800 flex items-center gap-1">
                     <span>📍 {currentZone.name} の出展・施設一覧</span>
@@ -1512,7 +1518,6 @@ export default function Page() {
         {/* タブ 2: 企画一覧 */}
         {activeTab === "stalls" && (
           <div className="space-y-4">
-            {/* 検索・フィルター */}
             <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-3">
               <div className="relative">
                 <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -1558,7 +1563,6 @@ export default function Page() {
               </div>
             </div>
 
-            {/* 一覧リスト */}
             <div className="space-y-2">
               <p className="text-xs font-extrabold text-slate-500 px-1">
                 該当件数: {filteredStalls.length}件 （開催時間: 10:00〜15:00）
