@@ -388,6 +388,34 @@ const STALLS_DATA: StallItem[] = [
     icon: "🔬",
   },
 
+  // --- 8号館 (bldg8) ---
+  {
+    id: 308,
+    title: "吹奏楽部 ミニコンサート",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "吹奏楽部",
+    location: "8号館 2F 大講義室",
+    zoneId: "bldg8",
+    floor: "2F",
+    roomNo: "大講義室",
+    description: "吹奏楽部によるミニコンサート（9:00〜11:45）！素敵な演奏をお楽しみください！",
+    icon: "🎷",
+  },
+  {
+    id: 503,
+    title: "学校説明会",
+    category: "校内施設・その他",
+    grade: "案内",
+    dept: "広報・入試",
+    location: "8号館 2F 大講義室",
+    zoneId: "bldg8",
+    floor: "2F",
+    roomNo: "大講義室",
+    description: "中学生・保護者の皆様に向けた学校説明会（13:00〜14:00）。",
+    icon: "🏫",
+  },
+
   // --- 4号館 (bldg4) ---
   {
     id: 306,
@@ -632,6 +660,36 @@ const EVENTS_DATA = [
       },
     ],
   },
+  {
+    stageId: "bldg8",
+    stageName: "8号館 大講義室",
+    location: "8号館 2階 大講義室",
+    locationZoneId: "bldg8",
+    schedule: [
+      {
+        id: "b8_1",
+        time: "09:00 - 11:45",
+        startTime: "09:00",
+        endTime: "11:45",
+        title: "吹奏楽部 ミニコンサート",
+        org: "吹奏楽部",
+        desc: "吹奏楽部によるミニコンサートを開催します！素敵な演奏をお楽しみください！",
+        tag: "演奏",
+        icon: "🎷",
+      },
+      {
+        id: "b8_2",
+        time: "13:00 - 14:00",
+        startTime: "13:00",
+        endTime: "14:00",
+        title: "学校説明会",
+        org: "広報・入試担当",
+        desc: "中学生・保護者の皆様に向けた鶴岡高専の学校説明会です。",
+        tag: "説明会",
+        icon: "🏫",
+      },
+    ],
+  },
 ];
 
 // 校内マップのピン座標
@@ -655,7 +713,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
     top: "45.0%",
-    left: "45.4%",
+    left: "44.6%",
     desc: "総合メディアセンター西側に隣接する学内売店です。",
   },
   {
@@ -677,7 +735,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-rose-50 border-rose-300 text-rose-900",
     icon: "🏟️",
     top: "62.0%",
-    left: "63.8%",
+    left: "63.0%",
     desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）・音楽部ライブ）の会場です。",
   },
   {
@@ -688,7 +746,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "30.4%",
-    left: "70.6%",
+    left: "69.8%",
     desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
@@ -710,7 +768,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "77.7%",
+    left: "76.9%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -725,6 +783,17 @@ const CAMPUS_ZONES = [
     desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
   },
   {
+    id: "bldg8",
+    name: "8号館（大講義室）",
+    subName: "ミニコンサート・学校説明会",
+    pinLabel: "8号館",
+    lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
+    icon: "🎷",
+    top: "32.0%",
+    left: "91.0%",
+    desc: "2階の大講義室にて吹奏楽部ミニコンサート（9:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
+  },
+  {
     id: "entrance",
     name: "学生昇降口前広場",
     subName: "学校紹介・キッチンカー",
@@ -732,7 +801,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🚚",
     top: "55.1%",
-    left: "78.2%",
+    left: "77.4%",
     desc: "学校紹介ブース（高専祭本部）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
   },
   {
@@ -1407,7 +1476,7 @@ export default function Page() {
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
-                  const showLabel = isSelected || zone.id === "gym1" || zone.id === "ticket";
+                  const showLabel = isSelected || zone.id === "gym1" || zone.id === "ticket" || zone.id === "bldg8";
 
                   return (
                     <div
@@ -1451,9 +1520,11 @@ export default function Page() {
 
                         {/* テキストラベル（ピンの上に横書き配置） */}
                         {showLabel && (
-                          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 text-[12px] font-extrabold text-slate-900 text-center leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff] pointer-events-none whitespace-pre-line">
-                            {zone.pinLabel}
-                          </span>
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 text-[12px] font-extrabold text-slate-900 text-center leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,1)] [text-shadow:_1px_1px_2px_#ffffff,_-1px_-1px_2px_#ffffff,_1px_-1px_2px_#ffffff,_-1px_1px_2px_#ffffff] pointer-events-none flex flex-col items-center whitespace-nowrap">
+                            {zone.pinLabel.split("\n").map((line, idx) => (
+                              <span key={idx}>{line}</span>
+                            ))}
+                          </div>
                         )}
                       </button>
                     </div>
