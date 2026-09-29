@@ -768,7 +768,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "76.7%",
+    left: "76.5%", // 左補正 (-0.2%)
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -789,7 +789,7 @@ const CAMPUS_ZONES = [
     pinLabel: "8号館",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎷",
-    top: "28.5%",
+    top: "26.5%", // 上補正 (+2.0%)
     left: "91.5%",
     desc: "2階の大講義室にて吹奏楽部ミニコンサート（9:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
   },
@@ -1446,10 +1446,13 @@ export default function Page() {
               </div>
             </div>
 
-            {/* キャンパスマップコンテナ（枠の大きさを固定: h-[420px] sm:h-[500px]） */}
+            {/* キャンパスマップコンテナ（拡大率200%未満は拡大率依存、200%以上は200%の枠の大きさに固定） */}
             <div
               ref={mapContainerRef}
-              className={`w-full h-[420px] sm:h-[500px] overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
+              style={{
+                aspectRatio: `${2.37 / Math.min(zoomLevel, 2.0)}`,
+              }}
+              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
                 isMapReady ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -1476,8 +1479,10 @@ export default function Page() {
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
-                  // 初期状態では「高専祭本部(ticket)」のみ表示、それ以外はタップ時に表示
-                  const showLabel = isSelected || zone.id === "ticket";
+                  
+                  // 初期状態（何も選択されていない時）は「高専祭本部(ticket)」のみ表示。
+                  // 他のピンが選択されている場合は、選択されたピンのみ表示（本部は消える）。
+                  const showLabel = isSelected || (selectedZoneId === null && zone.id === "ticket");
 
                   return (
                     <div
