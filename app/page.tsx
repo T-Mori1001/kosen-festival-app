@@ -724,7 +724,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-indigo-50 border-indigo-300 text-indigo-900",
     icon: "📚",
     top: "48.0%",
-    left: "52.2%", // 左補正 -1.5% (53.7% -> 52.2%)
+    left: "52.2%",
     desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
   },
   {
@@ -768,7 +768,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "76.7%", // 左補正 -0.2% (76.9% -> 76.7%)
+    left: "76.7%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -789,8 +789,8 @@ const CAMPUS_ZONES = [
     pinLabel: "8号館",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎷",
-    top: "28.5%", // 上補正 +1.5% (30.0% -> 28.5%)
-    left: "91.5%", // 右補正 +0.5% (91.0% -> 91.5%)
+    top: "28.5%",
+    left: "91.5%",
     desc: "2階の大講義室にて吹奏楽部ミニコンサート（9:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
   },
   {
@@ -1446,10 +1446,10 @@ export default function Page() {
               </div>
             </div>
 
-            {/* キャンパスマップコンテナ */}
+            {/* キャンパスマップコンテナ（枠の大きさを固定: h-[420px] sm:h-[500px]） */}
             <div
               ref={mapContainerRef}
-              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 max-h-[68vh] cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
+              className={`w-full h-[420px] sm:h-[500px] overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
                 isMapReady ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -1519,9 +1519,15 @@ export default function Page() {
                           )}
                         </div>
 
-                        {/* テキストラベル（タッチ操作可能なフロストガラス風ピルバッジデザイン） */}
+                        {/* テキストラベル（4号館のみ右側、その他はピンの上に配置） */}
                         {showLabel && (
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight flex flex-col items-center whitespace-nowrap">
+                          <div
+                            className={`absolute bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight flex flex-col items-center whitespace-nowrap px-2.5 py-1 ${
+                              zone.id === "bldg4"
+                                ? "left-full top-1/2 -translate-y-1/2 ml-2"
+                                : "bottom-full left-1/2 -translate-x-1/2 mb-1.5"
+                            }`}
+                          >
                             {zone.pinLabel.split("\n").map((line, idx) => (
                               <span key={idx}>{line}</span>
                             ))}
