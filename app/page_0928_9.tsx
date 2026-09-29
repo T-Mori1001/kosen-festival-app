@@ -768,7 +768,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
-    left: "76.7%", // 左補正 -0.2% (76.9% -> 76.7%)
+    left: "76.9%",
     desc: "模擬店等で使用できる金券の販売を行っています。",
   },
   {
@@ -789,7 +789,7 @@ const CAMPUS_ZONES = [
     pinLabel: "8号館",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎷",
-    top: "28.5%", // 上補正 +1.5% (30.0% -> 28.5%)
+    top: "30.0%", // 上補正 2% (32.0% -> 30.0%)
     left: "91.5%", // 右補正 +0.5% (91.0% -> 91.5%)
     desc: "2階の大講義室にて吹奏楽部ミニコンサート（9:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
   },
@@ -1476,8 +1476,7 @@ export default function Page() {
                 {CAMPUS_ZONES.map((zone) => {
                   const isSelected = selectedZoneId === zone.id;
                   const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
-                  // 初期状態では「高専祭本部(ticket)」のみ表示、それ以外はタップ時に表示
-                  const showLabel = isSelected || zone.id === "ticket";
+                  const showLabel = isSelected || zone.id === "gym1" || zone.id === "ticket" || zone.id === "bldg8";
 
                   return (
                     <div
@@ -1519,9 +1518,9 @@ export default function Page() {
                           )}
                         </div>
 
-                        {/* テキストラベル（タッチ操作可能なフロストガラス風ピルバッジデザイン） */}
+                        {/* テキストラベル（おしゃれなフロストガラス風ピルバッジデザイン） */}
                         {showLabel && (
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight flex flex-col items-center whitespace-nowrap">
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight pointer-events-none flex flex-col items-center whitespace-nowrap">
                             {zone.pinLabel.split("\n").map((line, idx) => (
                               <span key={idx}>{line}</span>
                             ))}
