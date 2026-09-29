@@ -2067,7 +2067,7 @@ export default function Page() {
             {/* フロアレイアウトコンテンツ */}
             <div className="p-4 space-y-3 overflow-y-auto custom-map-scrollbar">
               {currentFloor === "1F" && (
-                /* 1F フロアマップ (半分の太さの廊下: h-[40px], w-[8.333%]) */
+                /* 1F フロアマップ */
                 <div className="space-y-3">
                   <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
@@ -2079,7 +2079,7 @@ export default function Page() {
 
                   <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
                     <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-                      {/* --- 十字路背景構造 (廊下の太さを従来比で半分の40pxに細分化) --- */}
+                      {/* --- 十字路背景構造 --- */}
                       <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
                       <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
                       <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
@@ -2242,7 +2242,7 @@ export default function Page() {
               )}
 
               {currentFloor === "2F" && (
-                /* 2F フロアマップ (手書き図面を正確に反映) */
+                /* 2F フロアマップ */
                 <div className="space-y-3">
                   <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
@@ -2362,7 +2362,7 @@ export default function Page() {
               )}
 
               {currentFloor === "3F" && (
-                /* 3F フロアマップ (手書き図面を正確に反映) */
+                /* 3F フロアマップ */
                 <div className="space-y-3">
                   <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
@@ -2397,83 +2397,81 @@ export default function Page() {
 
                         {/* 南側部屋エリア */}
                         <div className="grid grid-cols-12 gap-1.5 pt-2">
-                          {/* 教室群 (13Fゼミ室, 133, 132, 131) ＆ 大会議室 */}
+                          {/* 教室群 (13Fゼミ室, 131, 132, 133) */}
                           <div className="col-span-6 grid grid-cols-4 gap-1.5">
                             {[
                               { roomNo: "13Fゼミ室", label: "13Fゼミ", title: "天文部", emoji: "🌌" },
-                              { roomNo: "133教室", label: "133", title: "喫茶店", emoji: "☕" },
+                              { roomNo: "131教室", label: "131", title: "カジノ", emoji: "🎲" },
                               { roomNo: "132教室", label: "132", title: "バー", emoji: "🍸" },
-                              { roomNo: "131教室", label: "131", title: "カジノ", emoji: "🎲", hasLargeRoom: true },
+                              { roomNo: "133教室", label: "133", title: "喫茶店", emoji: "☕" },
                             ].map((r) => {
                               const stall = getRoomStall(r.roomNo);
                               const isHighlighted = highlightedRoomNo === r.roomNo;
                               return (
-                                <div key={r.roomNo} className="flex flex-col gap-1">
-                                  <button
-                                    onClick={() => {
-                                      if (stall) setModalItem(stall);
-                                    }}
-                                    className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-20 text-left group ${
-                                      isHighlighted
-                                        ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                        : "bg-white border-blue-200 hover:border-blue-500"
-                                    }`}
-                                  >
-                                    {isHighlighted && (
-                                      <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                                        <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                                      </div>
-                                    )}
-                                    <div className="text-[8px] font-black text-blue-600 bg-blue-50 px-1 py-0.5 rounded w-fit">
-                                      {r.label}
-                                    </div>
-                                    <div className="my-auto text-center">
-                                      <div className="text-sm group-hover:scale-110 transition">{r.emoji}</div>
-                                      <div className="text-[9px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-blue-600">
-                                        {stall ? stall.title : r.title}
-                                      </div>
-                                    </div>
-                                  </button>
-
-                                  {r.hasLargeRoom && (
-                                    <div className="bg-purple-50 border border-purple-300 rounded-xl p-1 text-center h-12 flex flex-col items-center justify-center">
-                                      <span className="text-[9px] font-black text-purple-900">大会議室</span>
+                                <button
+                                  key={r.roomNo}
+                                  onClick={() => {
+                                    if (stall) setModalItem(stall);
+                                  }}
+                                  className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-28 text-left group ${
+                                    isHighlighted
+                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
+                                      : "bg-white border-blue-200 hover:border-blue-500"
+                                  }`}
+                                >
+                                  {isHighlighted && (
+                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
+                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
                                     </div>
                                   )}
-                                </div>
+                                  <div className="text-[8px] font-black text-blue-600 bg-blue-50 px-1 py-0.5 rounded w-fit">
+                                    {r.label}
+                                  </div>
+                                  <div className="my-auto text-center">
+                                    <div className="text-base group-hover:scale-110 transition">{r.emoji}</div>
+                                    <div className="text-[10px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-blue-600">
+                                      {stall ? stall.title : r.title}
+                                    </div>
+                                  </div>
+                                  {stall && (
+                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
+                                      {stall.grade}
+                                    </div>
+                                  )}
+                                </button>
                               );
                             })}
                           </div>
 
-                          {/* 中央設備群 (階段, 女子トイレ, 男子トイレ, 小会議室) */}
+                          {/* 中央設備群 (階段, 女子トイレ, 男子トイレ, 大会議室) */}
                           <div className="col-span-4 grid grid-cols-4 gap-1">
-                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-20">
+                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
                               <svg className="w-4 h-4 text-slate-700 mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 19h4v-4h4v-4h4V7" /></svg>
                               <span className="text-[8px] font-extrabold text-slate-700">階段</span>
                             </div>
-                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-20">
+                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
                               <span className="text-xs leading-none mb-0.5">🚺</span>
                               <span className="text-[8px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
                             </div>
-                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-20">
+                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
                               <span className="text-xs leading-none mb-0.5">🚹</span>
                               <span className="text-[8px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
                             </div>
-                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-20">
-                              <span className="text-xs leading-none mb-0.5">📋</span>
-                              <span className="text-[8px] font-black text-amber-900 [writing-mode:vertical-rl]">小会議室</span>
+                            <div className="bg-purple-50 border border-purple-200 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none mb-0.5">💼</span>
+                              <span className="text-[8px] font-black text-purple-900 [writing-mode:vertical-rl]">大会議室</span>
                             </div>
                           </div>
 
-                          {/* 東端 (7号館へ & 中会議室) */}
-                          <div className="col-span-2 flex flex-col justify-between h-32 pl-1">
+                          {/* 東端 (7号館へ & ゼミ室) */}
+                          <div className="col-span-2 flex flex-col justify-between h-28 pl-1">
                             <div className="bg-slate-100 border border-slate-300 rounded-xl p-1 flex items-center justify-center gap-1 shadow-sm">
                               <span className="text-[9px] font-black text-slate-700">7号館へ</span>
                               <ArrowDown className="w-3.5 h-3.5 text-slate-600 animate-bounce" />
                             </div>
                             <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-1 text-center h-16 flex flex-col items-center justify-center">
-                              <span className="text-xs leading-none mb-0.5">🏛️</span>
-                              <span className="text-[9px] font-black text-indigo-900">中会議室</span>
+                              <span className="text-xs leading-none mb-0.5">📝</span>
+                              <span className="text-[9px] font-black text-indigo-900">ゼミ室</span>
                             </div>
                           </div>
                         </div>
