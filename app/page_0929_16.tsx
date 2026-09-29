@@ -2029,394 +2029,498 @@ export default function Page() {
       )}
 
       {/* モーダル2: 1号館フロア詳細マップ (z-50) */}
-{isBldg1ModalOpen && (
-  <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
-      {/* ヘッダー */}
-      <div className="p-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between shadow-md">
-        <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-orange-400" />
-          <h3 className="font-black text-base">1号館 フロア詳細マップ</h3>
+      {isBldg1ModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
+            <div className="p-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between shadow-md">
+              <div className="flex items-center gap-2">
+                <Layers className="w-5 h-5 text-blue-400" />
+                <h3 className="font-black text-base">1号館 フロア詳細マップ</h3>
+              </div>
+              <button
+                onClick={() => {
+                  setIsBldg1ModalOpen(false);
+                  setHighlightedRoomNo(null);
+                }}
+                className="p-1 text-slate-400 hover:text-white rounded-full transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* フロア切替タブ */}
+            <div className="flex border-b border-slate-200 bg-slate-100 p-1.5 gap-1.5">
+              {(["1F", "2F", "3F"] as const).map((floor) => (
+                <button
+                  key={floor}
+                  onClick={() => setCurrentFloor(floor)}
+                  className={`flex-1 py-2 rounded-xl text-xs font-black transition ${
+                    currentFloor === floor
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {floor}
+                </button>
+              ))}
+            </div>
+
+            {/* フロアレイアウトコンテンツ */}
+            <div className="p-4 space-y-3 overflow-y-auto custom-map-scrollbar">
+              {currentFloor === "1F" && (
+                /* 1F フロアマップ */
+                <div className="space-y-3">
+                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>1号館 1Fフロアマップ</span>
+                    </span>
+                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
+                  </div>
+
+                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
+                      {/* --- 十字路背景構造 --- */}
+                      <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
+                      <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
+                      <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
+                      <div className="absolute top-[116px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
+                      <div className="absolute top-[76px] left-[45.833%] w-[8.333%] h-[40px] bg-slate-200 z-0" />
+
+                      {/* --- コンテンツ配置 --- */}
+                      <div className="relative z-10 space-y-0">
+                        <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
+                          <div className="col-span-5"></div>
+                          <div className="col-span-2 flex flex-col items-center justify-center h-full">
+                            <span className="text-xs font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
+                              4号館
+                            </span>
+                            <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
+                          </div>
+                          <div className="col-span-5 pl-2 flex justify-start">
+                            <button
+                              onClick={() => {
+                                const stall = getRoomStall("本部");
+                                if (stall) setModalItem(stall);
+                              }}
+                              className={`relative w-28 h-12 border-2 rounded-xl shadow-sm text-center font-black transition flex flex-col items-center justify-center ${
+                                highlightedRoomNo === "本部" || highlightedRoomNo === "1F 本部"
+                                  ? "bg-rose-600 text-white border-rose-700 ring-2 ring-rose-400"
+                                  : "bg-rose-500 hover:bg-rose-600 text-white border-rose-600"
+                              }`}
+                            >
+                              {(highlightedRoomNo === "本部" || highlightedRoomNo === "1F 本部") && (
+                                <div className="absolute -top-3 -right-2 z-20 bg-amber-400 text-rose-900 rounded-full p-1 shadow-md animate-bounce">
+                                  <MapPin className="w-4 h-4 fill-amber-400 text-rose-900" />
+                                </div>
+                              )}
+                              <span className="text-[8px] opacity-80 uppercase tracking-wider">Headquarters</span>
+                              <span className="text-xs">🏫 本部</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* 中央横廊下スペース (高さ40px) */}
+                        <div className="h-[40px]" />
+
+                        {/* 下部エリア */}
+                        <div className="grid grid-cols-12 gap-0 pt-2">
+                          <div className="col-span-5 grid grid-cols-3 gap-1.5 pr-2">
+                            {[
+                              { roomNo: "113教室", roomLabel: "113", defaultTitle: "ホスト", emoji: "🌹" },
+                              { roomNo: "112教室", roomLabel: "112", defaultTitle: "ドリンク", emoji: "🍹" },
+                              { roomNo: "111教室", roomLabel: "111", defaultTitle: "ほっとサンド", emoji: "🥪" },
+                            ].map((r) => {
+                              const stall = getRoomStall(r.roomNo);
+                              const isHighlighted = highlightedRoomNo === r.roomNo;
+                              return (
+                                <button
+                                  key={r.roomNo}
+                                  onClick={() => {
+                                    if (stall) setModalItem(stall);
+                                  }}
+                                  className={`relative border-2 p-1.5 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
+                                    isHighlighted
+                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
+                                      : "bg-white border-orange-200 hover:border-orange-500"
+                                  }`}
+                                >
+                                  {isHighlighted && (
+                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
+                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
+                                    </div>
+                                  )}
+                                  <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
+                                    {r.roomLabel}
+                                  </div>
+                                  <div className="my-auto text-center">
+                                    <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
+                                    <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
+                                      {stall ? stall.title : r.defaultTitle}
+                                    </div>
+                                  </div>
+                                  {stall && (
+                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
+                                      {stall.grade}
+                                    </div>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          <div className="col-span-2 flex flex-col items-center justify-end min-h-[160px] pb-2">
+                            <div className="text-center">
+                              <div className="inline-flex items-center gap-1 bg-slate-800 text-white px-2.5 py-1 rounded-full text-[10px] font-black shadow-md whitespace-nowrap">
+                                <Users className="w-3 h-3 text-amber-400" />
+                                <span>学生昇降口</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 修正: 金券販売と交流ラウンジの横幅を半分に調整 (col-span-3) */}
+                          <div className="col-span-5 grid grid-cols-12 gap-1 pl-1">
+                            <div className="col-span-3 flex flex-col gap-1.5">
+                              <button
+                                onClick={() => {
+                                  const stall = STALLS_DATA.find((s) => s.id === 501);
+                                  if (stall) setModalItem(stall);
+                                }}
+                                className={`relative h-20 border-2 rounded-xl shadow-sm p-1 flex flex-col items-center justify-center text-center font-black transition w-full ${
+                                  highlightedRoomNo === "金券販売" || highlightedRoomNo === "1号館 1F 金券販売"
+                                    ? "bg-amber-300 border-rose-500 ring-2 ring-rose-400 text-amber-950"
+                                    : "bg-amber-400 hover:bg-amber-300 border-amber-500 text-amber-950"
+                                }`}
+                              >
+                                {(highlightedRoomNo === "金券販売" || highlightedRoomNo === "1号館 1F 金券販売") && (
+                                  <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
+                                    <MapPin className="w-4 h-4 fill-white text-rose-500" />
+                                  </div>
+                                )}
+                                <Ticket className="w-3.5 h-3.5 mb-0.5 shrink-0" />
+                                <span className="text-[10px] font-black tracking-widest [writing-mode:vertical-rl]">金券販売</span>
+                              </button>
+
+                              <div className="h-20 bg-emerald-50 border-2 border-emerald-300 rounded-xl p-1 text-center flex flex-col items-center justify-center w-full">
+                                <span className="text-base leading-none mb-0.5">🛋️</span>
+                                <span className="text-[9px] font-black text-emerald-900 tracking-wider [writing-mode:vertical-rl]">
+                                  交流ラウンジ
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="col-span-9 grid grid-cols-3 gap-1 h-20">
+                              <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                                <svg
+                                  className="w-4 h-4 text-slate-700 mb-0.5"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path d="M6 19h4v-4h4v-4h4V7" />
+                                </svg>
+                                <span className="text-[8px] font-extrabold text-slate-700">階段</span>
+                              </div>
+
+                              <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                                <span className="text-xs leading-none mb-0.5">🚹</span>
+                                <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
+                              </div>
+
+                              <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                                <span className="text-xs leading-none mb-0.5">🚺</span>
+                                <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentFloor === "2F" && (
+                /* 2F フロアマップ (添付画像に沿って1Fデザインを模倣) */
+                <div className="space-y-3">
+                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>1号館 2Fフロアマップ</span>
+                    </span>
+                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
+                  </div>
+
+                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
+                      {/* --- 十字路背景構造 (1階のスタイルを完全に模倣) --- */}
+                      <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
+                      <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
+                      <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
+                      <div className="absolute top-[116px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
+                      <div className="absolute top-[76px] left-[45.833%] w-[8.333%] h-[40px] bg-slate-200 z-0" />
+
+                      {/* --- コンテンツ配置 --- */}
+                      <div className="relative z-10 space-y-0">
+                        {/* 上部: 4号館へ */}
+                        <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
+                          <div className="col-span-5"></div>
+                          <div className="col-span-2 flex flex-col items-center justify-center h-full">
+                            <span className="text-xs font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
+                              4号館へ
+                            </span>
+                            <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
+                          </div>
+                          <div className="col-span-5"></div>
+                        </div>
+
+                        {/* 中央横廊下スペース (高さ40px) */}
+                        <div className="h-[40px]" />
+
+                        {/* 下部エリア (添付画像の部屋配置) */}
+                        <div className="grid grid-cols-12 gap-0 pt-2">
+                          {/* 左側: 4つの教室 (12Fゼミ室, 123, 122, 121) */}
+                          <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
+                            {[
+                              { roomNo: "12Fゼミ室", roomLabel: "12Fゼミ", defaultTitle: "美術写真部", emoji: "🖼️" },
+                              { roomNo: "123教室", roomLabel: "123", defaultTitle: "ゲームカフェ", emoji: "🎮" },
+                              { roomNo: "122教室", roomLabel: "122", defaultTitle: "クレープ", emoji: "🥞" },
+                              { roomNo: "121教室", roomLabel: "121", defaultTitle: "わたあめ", emoji: "🍥" },
+                            ].map((r) => {
+                              const stall = getRoomStall(r.roomNo);
+                              const isHighlighted = highlightedRoomNo === r.roomNo;
+                              return (
+                                <button
+                                  key={r.roomNo}
+                                  onClick={() => {
+                                    if (stall) setModalItem(stall);
+                                  }}
+                                  className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
+                                    isHighlighted
+                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
+                                      : "bg-white border-blue-200 hover:border-blue-500"
+                                  }`}
+                                >
+                                  {isHighlighted && (
+                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
+                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
+                                    </div>
+                                  )}
+                                  <div className="text-[8px] font-black text-blue-600 bg-blue-50 px-1 py-0.5 rounded w-fit">
+                                    {r.roomLabel}
+                                  </div>
+                                  <div className="my-auto text-center">
+                                    <div className="text-base group-hover:scale-110 transition">{r.emoji}</div>
+                                    <div className="text-[10px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-blue-600">
+                                      {stall ? stall.title : r.defaultTitle}
+                                    </div>
+                                  </div>
+                                  {stall && (
+                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
+                                      {stall.grade}
+                                    </div>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {/* 中央: 通路スペース */}
+                          <div className="col-span-2 flex flex-col items-center justify-end min-h-[160px] pb-2">
+                            <div className="text-center">
+                              <div className="inline-flex items-center gap-1 bg-slate-800/80 text-white px-2.5 py-1 rounded-full text-[10px] font-black shadow-md whitespace-nowrap">
+                                <span>2F 廊下</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 右側: 設備群 (階段, 男子トイレ, 女子トイレ, 小会議室, 中会議室, 7号館へ) */}
+                          <div className="col-span-5 grid grid-cols-6 gap-1 pl-1">
+                            {/* 階段 */}
+                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <svg
+                                className="w-4 h-4 text-slate-700 mb-0.5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M6 19h4v-4h4v-4h4V7" />
+                              </svg>
+                              <span className="text-[8px] font-extrabold text-slate-700">階段</span>
+                            </div>
+
+                            {/* 男子トイレ */}
+                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">🚹</span>
+                              <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
+                            </div>
+
+                            {/* 女子トイレ */}
+                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">🚺</span>
+                              <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
+                            </div>
+
+                            {/* 小会議室 */}
+                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">📋</span>
+                              <span className="text-[9px] font-black text-amber-900 [writing-mode:vertical-rl]">小会議室</span>
+                            </div>
+
+                            {/* 中会議室 */}
+                            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">🏛️</span>
+                              <span className="text-[9px] font-black text-indigo-900 [writing-mode:vertical-rl]">中会議室</span>
+                            </div>
+
+                            {/* 7号館へ */}
+                            <div className="bg-slate-100 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-[8px] font-black text-slate-700 mb-1 [writing-mode:vertical-rl]">7号館へ</span>
+                              <ArrowRight className="w-3.5 h-3.5 text-slate-600 animate-pulse" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentFloor === "3F" && (
+                /* 3F フロアマップ */
+                <div className="space-y-3">
+                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>1号館 3Fフロアマップ</span>
+                    </span>
+                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
+                  </div>
+
+                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
+                      {/* 廊下構造 */}
+                      <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
+                      <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
+                      <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
+                      <div className="absolute top-[116px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
+                      <div className="absolute top-[76px] left-[45.833%] w-[8.333%] h-[40px] bg-slate-200 z-0" />
+
+                      <div className="relative z-10 space-y-0">
+                        <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
+                          <div className="col-span-5"></div>
+                          <div className="col-span-2 flex flex-col items-center justify-center h-full">
+                            <span className="text-xs font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
+                              4号館へ
+                            </span>
+                            <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
+                          </div>
+                          <div className="col-span-5"></div>
+                        </div>
+
+                        <div className="h-[40px]" />
+
+                        <div className="grid grid-cols-12 gap-0 pt-2">
+                          <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
+                            {[
+                              { roomNo: "13Fゼミ室", roomLabel: "13Fゼミ", defaultTitle: "天文部", emoji: "🌌" },
+                              { roomNo: "133教室", roomLabel: "133", defaultTitle: "喫茶店", emoji: "☕" },
+                              { roomNo: "132教室", roomLabel: "132", defaultTitle: "バー", emoji: "🍸" },
+                              { roomNo: "131教室", roomLabel: "131", defaultTitle: "カジノ", emoji: "🎲" },
+                            ].map((r) => {
+                              const stall = getRoomStall(r.roomNo);
+                              const isHighlighted = highlightedRoomNo === r.roomNo;
+                              return (
+                                <button
+                                  key={r.roomNo}
+                                  onClick={() => {
+                                    if (stall) setModalItem(stall);
+                                  }}
+                                  className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
+                                    isHighlighted
+                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
+                                      : "bg-white border-indigo-200 hover:border-indigo-500"
+                                  }`}
+                                >
+                                  {isHighlighted && (
+                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
+                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
+                                    </div>
+                                  )}
+                                  <div className="text-[8px] font-black text-indigo-600 bg-indigo-50 px-1 py-0.5 rounded w-fit">
+                                    {r.roomLabel}
+                                  </div>
+                                  <div className="my-auto text-center">
+                                    <div className="text-base group-hover:scale-110 transition">{r.emoji}</div>
+                                    <div className="text-[10px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-indigo-600">
+                                      {stall ? stall.title : r.defaultTitle}
+                                    </div>
+                                  </div>
+                                  {stall && (
+                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
+                                      {stall.grade}
+                                    </div>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          <div className="col-span-2 flex flex-col items-center justify-end min-h-[160px] pb-2">
+                            <div className="text-center">
+                              <div className="inline-flex items-center gap-1 bg-slate-800/80 text-white px-2.5 py-1 rounded-full text-[10px] font-black shadow-md whitespace-nowrap">
+                                <span>3F 廊下</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-span-5 grid grid-cols-4 gap-1 pl-1">
+                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <svg
+                                className="w-4 h-4 text-slate-700 mb-0.5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M6 19h4v-4h4v-4h4V7" />
+                              </svg>
+                              <span className="text-[8px] font-extrabold text-slate-700">階段</span>
+                            </div>
+
+                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">🚹</span>
+                              <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
+                            </div>
+
+                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">🚺</span>
+                              <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
+                            </div>
+
+                            <div className="bg-purple-50 border border-purple-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                              <span className="text-xs leading-none mb-0.5">📦</span>
+                              <span className="text-[9px] font-black text-purple-900 [writing-mode:vertical-rl]">準備室</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <button
-          onClick={() => {
-            setIsBldg1ModalOpen(false);
-            setHighlightedRoomNo(null);
-          }}
-          className="p-1 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* フロア切り替えタブ */}
-      <div className="bg-slate-100 p-2 border-b border-slate-200 flex items-center justify-center gap-2">
-        {(["1F", "2F", "3F"] as const).map((fl) => (
-          <button
-            key={fl}
-            onClick={() => setCurrentFloor(fl)}
-            className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${
-              currentFloor === fl
-                ? "bg-orange-500 text-white shadow-md scale-105"
-                : "bg-white text-slate-600 hover:bg-slate-200 border border-slate-200"
-            }`}
-          >
-            {fl}
-          </button>
-        ))}
-      </div>
-
-      {/* フロアマップ表示エリア */}
-      <div className="p-4 overflow-y-auto space-y-4">
-        <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-          {/* 十字路・廊下背景 */}
-          <div className="absolute inset-x-0 top-[42%] bottom-[42%] bg-slate-200/60 pointer-events-none" />
-
-          {/* --- 1F フロアマップ --- */}
-          {currentFloor === "1F" && (
-            <div className="space-y-2 relative">
-              {/* 上部 */}
-              <div className="grid grid-cols-12 gap-0 pb-2">
-                <div className="col-span-5" />
-                <div className="col-span-2 flex flex-col items-center justify-center text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg py-1">
-                  <ArrowUp className="w-3 h-3 animate-bounce" />
-                  <span>4号館へ</span>
-                </div>
-                <div className="col-span-5 pl-1">
-                  {(() => {
-                    const stall = getRoomStall("本部");
-                    return (
-                      <button
-                        onClick={() => stall && setModalItem(stall)}
-                        className="w-full h-12 bg-rose-100 border-2 border-rose-300 rounded-xl p-1 flex items-center justify-center gap-2 text-rose-900 font-black text-xs shadow-sm hover:border-rose-500 transition"
-                      >
-                        <span className="text-base">🏫</span>
-                        <span>本部 (1F)</span>
-                      </button>
-                    );
-                  })()}
-                </div>
-              </div>
-
-              {/* 中央廊下 */}
-              <div className="h-[40px] relative my-1 bg-slate-200 rounded-lg flex items-center justify-between px-3 border border-slate-300 text-[10px] font-black text-slate-500">
-                <span>← 西側 廊下</span>
-                <span className="text-slate-400">1F 中央廊下</span>
-                <span>東側 廊下 →</span>
-              </div>
-
-              {/* 下部 */}
-              <div className="grid grid-cols-12 gap-0 pt-2">
-                {/* 左教室 (113, 112, 111) */}
-                <div className="col-span-5 grid grid-cols-3 gap-1.5 pr-2">
-                  {[
-                    { no: "113教室", label: "113", defaultTitle: "ホスト", emoji: "🌹" },
-                    { no: "112教室", label: "112", defaultTitle: "ドリンク", emoji: "🍹" },
-                    { no: "111教室", label: "111", defaultTitle: "ほっとサンド", emoji: "🥪" },
-                  ].map((r) => {
-                    const stall = getRoomStall(r.no);
-                    const isHighlighted = highlightedRoomNo === r.no || (stall && highlightedRoomNo === stall.title);
-                    return (
-                      <button
-                        key={r.no}
-                        onClick={() => stall && setModalItem(stall)}
-                        className={`relative border-2 p-1.5 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
-                          isHighlighted
-                            ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                            : "bg-white border-orange-200 hover:border-orange-500"
-                        }`}
-                      >
-                        {isHighlighted && (
-                          <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                            <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                          </div>
-                        )}
-                        <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
-                          {r.label}
-                        </div>
-                        <div className="my-auto text-center">
-                          <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
-                          <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
-                            {stall ? stall.title : r.defaultTitle}
-                          </div>
-                        </div>
-                        {stall && <div className="text-[8px] font-extrabold text-slate-400 text-center">{stall.grade}</div>}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* 中央昇降口 */}
-                <div className="col-span-2 flex flex-col items-center justify-end min-h-[128px]">
-                  <div className="w-full h-24 bg-amber-100 border-2 border-amber-300 rounded-xl p-1.5 flex flex-col items-center justify-center text-center font-black text-amber-900">
-                    <span className="text-lg">🚪</span>
-                    <span className="text-[10px]">学生昇降口</span>
-                    <span className="text-[8px] text-amber-700 font-bold">(案内・金券)</span>
-                  </div>
-                </div>
-
-                {/* 右エリア */}
-                <div className="col-span-5 grid grid-cols-12 gap-1 pl-1">
-                  <div className="col-span-3">
-                    {(() => {
-                      const stall = getRoomStall("金券販売");
-                      return (
-                        <button
-                          onClick={() => stall && setModalItem(stall)}
-                          className="w-full h-full bg-amber-50 border-2 border-amber-300 rounded-xl p-1 flex flex-col items-center justify-center text-center hover:border-amber-500 transition"
-                        >
-                          <span className="text-base">🎟️</span>
-                          <span className="text-[9px] font-black text-amber-900 mt-0.5">金券販売</span>
-                        </button>
-                      );
-                    })()}
-                  </div>
-                  <div className="col-span-3 bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                    <svg className="w-4 h-4 text-slate-700 mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M6 19h4v-4h4v-4h4V7" />
-                    </svg>
-                    <span className="text-[8px] font-extrabold text-slate-700">階段</span>
-                  </div>
-                  <div className="col-span-3 bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                    <span className="text-xs leading-none mb-0.5">🚹</span>
-                    <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
-                  </div>
-                  <div className="col-span-3 bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                    <span className="text-xs leading-none mb-0.5">🚺</span>
-                    <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* --- 2F フロアマップ --- */}
-          {currentFloor === "2F" && (
-            <div className="space-y-2 relative">
-              {/* 上部: 左から 123教室，12Fゼミ室，122教室，121教室 */}
-              <div className="grid grid-cols-12 gap-0 pb-2">
-                <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
-                  {[
-                    { no: "123教室", label: "123", defaultTitle: "ゲームカフェ", emoji: "🎮" },
-                    { no: "12Fゼミ室", label: "12Fゼミ", defaultTitle: "美術写真部", emoji: "🖼️" },
-                    { no: "122教室", label: "122", defaultTitle: "クレープ", emoji: "🥞" },
-                    { no: "121教室", label: "121", defaultTitle: "わたあめ", emoji: "🍥" },
-                  ].map((r) => {
-                    const stall = getRoomStall(r.no);
-                    const isHighlighted = highlightedRoomNo === r.no || (stall && highlightedRoomNo === stall.title);
-                    return (
-                      <button
-                        key={r.no}
-                        onClick={() => stall && setModalItem(stall)}
-                        className={`relative border-2 p-1.5 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
-                          isHighlighted
-                            ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                            : "bg-white border-orange-200 hover:border-orange-500"
-                        }`}
-                      >
-                        {isHighlighted && (
-                          <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                            <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                          </div>
-                        )}
-                        <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
-                          {r.label}
-                        </div>
-                        <div className="my-auto text-center">
-                          <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
-                          <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
-                            {stall ? stall.title : r.defaultTitle}
-                          </div>
-                        </div>
-                        {stall && <div className="text-[8px] font-extrabold text-slate-400 text-center">{stall.grade}</div>}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="col-span-2 flex flex-col items-center justify-center text-[10px] font-black text-slate-500">
-                  <span>2F 廊下</span>
-                </div>
-
-                <div className="col-span-5" />
-              </div>
-
-              {/* 中央廊下 */}
-              <div className="h-[40px] relative my-1 bg-slate-200 rounded-lg flex items-center justify-between px-3 border border-slate-300 text-[10px] font-black text-slate-500">
-                <span>← 西側 廊下</span>
-                <span className="text-slate-400">2F 中央廊下</span>
-                <span>東側 廊下 →</span>
-              </div>
-
-              {/* 下部: 廊下の下に合同講義室，階段右に男子トイレ，女子トイレ，7号館への接続ろうか */}
-              <div className="grid grid-cols-12 gap-0 pt-2">
-                <div className="col-span-5" />
-
-                {/* 廊下の下に合同講義室 */}
-                <div className="col-span-2 flex flex-col items-center justify-end min-h-[128px]">
-                  {(() => {
-                    const stall = getRoomStall("合同講義室") || STALLS_DATA.find(s => s.id === 401);
-                    const isHighlighted = highlightedRoomNo === "合同講義室" || (stall && highlightedRoomNo === stall.title);
-                    return (
-                      <button
-                        onClick={() => stall && setModalItem(stall)}
-                        className={`w-full h-28 border-2 rounded-xl p-1.5 flex flex-col items-center justify-center text-center font-black shadow-sm transition ${
-                          isHighlighted
-                            ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                            : "bg-orange-100 border-orange-300 hover:border-orange-500 text-orange-950"
-                        }`}
-                      >
-                        <span className="text-xl">🎮</span>
-                        <span className="text-[10px] font-black mt-1">合同講義室</span>
-                        <span className="text-[8px] text-orange-700 font-bold mt-0.5 line-clamp-1">
-                          {stall ? stall.title : "ゲーム企画"}
-                        </span>
-                      </button>
-                    );
-                  })()}
-                </div>
-
-                {/* 階段右に男子トイレ，女子トイレ，7号館への接続廊下 */}
-                <div className="col-span-5 flex flex-col justify-between pl-1 gap-1">
-                  <div className="grid grid-cols-3 gap-1 h-20">
-                    <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <svg className="w-4 h-4 text-slate-700 mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M6 19h4v-4h4v-4h4V7" />
-                      </svg>
-                      <span className="text-[8px] font-extrabold text-slate-700">階段</span>
-                    </div>
-
-                    <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <span className="text-xs leading-none mb-0.5">🚹</span>
-                      <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
-                    </div>
-
-                    <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <span className="text-xs leading-none mb-0.5">🚺</span>
-                      <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-purple-100 border-2 border-purple-300 rounded-xl p-1.5 text-center flex items-center justify-center gap-1 text-purple-900 font-black">
-                    <span className="text-xs">🚶‍♂️</span>
-                    <span className="text-[10px]">7号館への接続廊下</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* --- 3F フロアマップ --- */}
-          {currentFloor === "3F" && (
-            <div className="space-y-2 relative">
-              {/* 上部: 左から 13Fゼミ室，133教室，132教室，131教室 */}
-              <div className="grid grid-cols-12 gap-0 pb-2">
-                <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
-                  {[
-                    { no: "13Fゼミ室", label: "13Fゼミ", defaultTitle: "天文部", emoji: "🌌" },
-                    { no: "133教室", label: "133", defaultTitle: "喫茶店", emoji: "☕" },
-                    { no: "132教室", label: "132", defaultTitle: "バー", emoji: "🍸" },
-                    { no: "131教室", label: "131", defaultTitle: "カジノ", emoji: "🎲" },
-                  ].map((r) => {
-                    const stall = getRoomStall(r.no);
-                    const isHighlighted = highlightedRoomNo === r.no || (stall && highlightedRoomNo === stall.title);
-                    return (
-                      <button
-                        key={r.no}
-                        onClick={() => stall && setModalItem(stall)}
-                        className={`relative border-2 p-1.5 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
-                          isHighlighted
-                            ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                            : "bg-white border-orange-200 hover:border-orange-500"
-                        }`}
-                      >
-                        {isHighlighted && (
-                          <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                            <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                          </div>
-                        )}
-                        <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
-                          {r.label}
-                        </div>
-                        <div className="my-auto text-center">
-                          <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
-                          <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
-                            {stall ? stall.title : r.defaultTitle}
-                          </div>
-                        </div>
-                        {stall && <div className="text-[8px] font-extrabold text-slate-400 text-center">{stall.grade}</div>}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="col-span-2 flex flex-col items-center justify-center text-[10px] font-black text-slate-500">
-                  <span>3F 廊下</span>
-                </div>
-
-                <div className="col-span-5" />
-              </div>
-
-              {/* 中央廊下 */}
-              <div className="h-[40px] relative my-1 bg-slate-200 rounded-lg flex items-center justify-between px-3 border border-slate-300 text-[10px] font-black text-slate-500">
-                <span>← 西側 廊下</span>
-                <span className="text-slate-400">3F 中央廊下</span>
-                <span>東側 廊下 →</span>
-              </div>
-
-              {/* 下部: 廊下の下に大会議室，階段右に女子トイレ，男子トイレ，小会議室，ろうか突き当りに中会議室，下に7号館への接続廊下 */}
-              <div className="grid grid-cols-12 gap-0 pt-2">
-                <div className="col-span-5" />
-
-                {/* 廊下の下に大会議室 */}
-                <div className="col-span-2 flex flex-col items-center justify-end min-h-[128px]">
-                  <div className="w-full h-28 bg-indigo-50 border-2 border-indigo-200 rounded-xl p-1.5 flex flex-col items-center justify-center text-center font-black text-indigo-900 shadow-sm">
-                    <span className="text-xl">🏛️</span>
-                    <span className="text-[10px] mt-1">大会議室</span>
-                  </div>
-                </div>
-
-                {/* 階段右に女子トイレ，男子トイレ，小会議室，ろうか突き当りに中会議室，下に7号館への接続廊下 */}
-                <div className="col-span-5 flex flex-col justify-between pl-1 gap-1">
-                  <div className="grid grid-cols-5 gap-1 h-20">
-                    <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <svg className="w-4 h-4 text-slate-700 mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M6 19h4v-4h4v-4h4V7" />
-                      </svg>
-                      <span className="text-[8px] font-extrabold text-slate-700">階段</span>
-                    </div>
-
-                    <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <span className="text-xs leading-none mb-0.5">🚺</span>
-                      <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
-                    </div>
-
-                    <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <span className="text-xs leading-none mb-0.5">🚹</span>
-                      <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
-                    </div>
-
-                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                      <span className="text-xs leading-none mb-0.5">📋</span>
-                      <span className="text-[9px] font-black text-amber-900 [writing-mode:vertical-rl]">小会議室</span>
-                    </div>
-
-                    <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-1 flex flex-col items-center justify-center text-center relative">
-                      <span className="text-xs leading-none mb-0.5">🏛️</span>
-                      <span className="text-[9px] font-black text-indigo-900 [writing-mode:vertical-rl]">中会議室</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-purple-100 border-2 border-purple-300 rounded-xl p-1.5 text-center flex items-center justify-center gap-1 text-purple-900 font-black">
-                    <span className="text-xs">🚶‍♂️</span>
-                    <span className="text-[10px]">7号館への接続廊下</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
-  </div>
-)}
+  );
+}
