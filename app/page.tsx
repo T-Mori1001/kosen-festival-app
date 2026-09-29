@@ -2178,7 +2178,7 @@ export default function Page() {
                             </div>
                           </div>
 
-                          {/* 金券販売と交流ラウンジ (col-span-3) */}
+                          {/* 金券販売と交流ラウンジ (col-span-5) */}
                           <div className="col-span-5 grid grid-cols-12 gap-1 pl-1">
                             <div className="col-span-3 flex flex-col gap-1.5">
                               <button
@@ -2282,11 +2282,11 @@ export default function Page() {
 
                         {/* 下部エリア */}
                         <div className="grid grid-cols-12 gap-0 pt-2">
-                          {/* 左側: 4つの教室 (12Fゼミ室, 123, 122, 121) */}
+                          {/* 左側: 123教室 → 12Fゼミ室 → 122教室 → 121教室 */}
                           <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
                             {[
-                              { roomNo: "12Fゼミ室", roomLabel: "12Fゼミ", defaultTitle: "美術写真部", emoji: "🖼️" },
                               { roomNo: "123教室", roomLabel: "123", defaultTitle: "ゲームカフェ", emoji: "🎮" },
+                              { roomNo: "12Fゼミ室", roomLabel: "12Fゼミ", defaultTitle: "美術写真部", emoji: "🖼️" },
                               { roomNo: "122教室", roomLabel: "122", defaultTitle: "クレープ", emoji: "🥞" },
                               { roomNo: "121教室", roomLabel: "121", defaultTitle: "わたあめ", emoji: "🍥" },
                             ].map((r) => {
@@ -2301,7 +2301,7 @@ export default function Page() {
                                   className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
                                     isHighlighted
                                       ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                      : "bg-white border-blue-200 hover:border-blue-500"
+                                      : "bg-white border-orange-200 hover:border-orange-500"
                                   }`}
                                 >
                                   {isHighlighted && (
@@ -2309,12 +2309,12 @@ export default function Page() {
                                       <MapPin className="w-4 h-4 fill-white text-rose-500" />
                                     </div>
                                   )}
-                                  <div className="text-[8px] font-black text-blue-600 bg-blue-50 px-1 py-0.5 rounded w-fit">
+                                  <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
                                     {r.roomLabel}
                                   </div>
                                   <div className="my-auto text-center">
-                                    <div className="text-base group-hover:scale-110 transition">{r.emoji}</div>
-                                    <div className="text-[10px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-blue-600">
+                                    <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
+                                    <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
                                       {stall ? stall.title : r.defaultTitle}
                                     </div>
                                   </div>
@@ -2328,19 +2328,42 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 中央: 通路スペース */}
-                          <div className="col-span-2 flex flex-col items-center justify-end min-h-[160px] pb-2">
-                            <div className="text-center">
-                              <div className="inline-flex items-center gap-1 bg-slate-800/80 text-white px-2.5 py-1 rounded-full text-[10px] font-black shadow-md whitespace-nowrap">
-                                <span>2F 廊下</span>
+                          {/* 中央 (廊下の下): 合同講義室 */}
+                          <div className="col-span-2 flex flex-col items-center justify-start min-h-[128px]">
+                            <button
+                              onClick={() => {
+                                const jointStall = STALLS_DATA.find((s) => s.id === 401);
+                                if (jointStall) setModalItem(jointStall);
+                              }}
+                              className={`relative w-full h-32 border-2 p-1.5 rounded-xl shadow-sm hover:shadow transition flex flex-col items-center justify-between group ${
+                                highlightedRoomNo === "合同講義室" || highlightedRoomNo === "今日、ゲームになりました。"
+                                  ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
+                                  : "bg-orange-50 hover:bg-orange-100/80 border-orange-200 hover:border-orange-400"
+                              }`}
+                            >
+                              {(highlightedRoomNo === "合同講義室" || highlightedRoomNo === "今日、ゲームになりました。") && (
+                                <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
+                                  <MapPin className="w-4 h-4 fill-white text-rose-500" />
+                                </div>
+                              )}
+                              <div className="text-[9px] font-black text-orange-600 bg-white/80 px-1.5 py-0.5 rounded border border-orange-200">
+                                合同講義室
                               </div>
-                            </div>
+                              <div className="my-auto text-center">
+                                <div className="text-xl group-hover:scale-110 transition">🎮</div>
+                                <div className="text-[10px] font-black text-slate-800 mt-0.5 line-clamp-2 leading-tight group-hover:text-orange-600">
+                                  今日、ゲームになりました。
+                                </div>
+                              </div>
+                              <div className="text-[8px] font-extrabold text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded-full">
+                                実行委員会企画
+                              </div>
+                            </button>
                           </div>
 
-                          {/* 右側: 設備群 */}
-                          <div className="col-span-5 grid grid-cols-6 gap-1 pl-1">
-                            {/* 階段 */}
-                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
+                          {/* 右側エリア (階段右): 階段 → 男子トイレ → 女子トイレ → 7号館への接続廊下 */}
+                          <div className="col-span-5 grid grid-cols-4 gap-1.5 pl-2 h-32">
+                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
                               <svg
                                 className="w-4 h-4 text-slate-700 mb-0.5"
                                 viewBox="0 0 24 24"
@@ -2352,37 +2375,22 @@ export default function Page() {
                               >
                                 <path d="M6 19h4v-4h4v-4h4V7" />
                               </svg>
-                              <span className="text-[8px] font-extrabold text-slate-700">階段</span>
+                              <span className="text-[9px] font-extrabold text-slate-700 [writing-mode:vertical-rl]">階段</span>
                             </div>
 
-                            {/* 男子トイレ */}
-                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">🚹</span>
+                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-sm leading-none mb-1">🚹</span>
                               <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
                             </div>
 
-                            {/* 女子トイレ */}
-                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">🚺</span>
+                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-sm leading-none mb-1">🚺</span>
                               <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
                             </div>
 
-                            {/* 小会議室 */}
-                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">📋</span>
-                              <span className="text-[9px] font-black text-amber-900 [writing-mode:vertical-rl]">小会議室</span>
-                            </div>
-
-                            {/* 中会議室 */}
-                            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">🏛️</span>
-                              <span className="text-[9px] font-black text-indigo-900 [writing-mode:vertical-rl]">中会議室</span>
-                            </div>
-
-                            {/* 7号館へ */}
-                            <div className="bg-slate-100 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-[8px] font-black text-slate-700 mb-1 [writing-mode:vertical-rl]">7号館へ</span>
-                              <ArrowRight className="w-3.5 h-3.5 text-slate-600 animate-pulse" />
+                            <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-1 flex flex-col items-center justify-center text-center text-purple-900 font-black">
+                              <ArrowRight className="w-4 h-4 text-purple-600 mb-1 animate-pulse" />
+                              <span className="text-[9px] font-black [writing-mode:vertical-rl] tracking-wider">7号館への接続廊下</span>
                             </div>
                           </div>
                         </div>
@@ -2414,7 +2422,7 @@ export default function Page() {
 
                       {/* --- コンテンツ配置 --- */}
                       <div className="relative z-10 space-y-0">
-                        {/* 上部: 4号館へ */}
+                        {/* 上部エリア (高さ60px): 中央 4号館へ / 右上 階段 → 女子トイレ → 男子トイレ → 小会議室 → 中会議室 */}
                         <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
                           <div className="col-span-5"></div>
                           <div className="col-span-2 flex flex-col items-center justify-center h-full">
@@ -2423,7 +2431,40 @@ export default function Page() {
                             </span>
                             <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
                           </div>
-                          <div className="col-span-5"></div>
+                          <div className="col-span-5 grid grid-cols-5 gap-1 pl-2 h-full">
+                            <div className="bg-slate-200 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
+                              <svg
+                                className="w-3.5 h-3.5 text-slate-700 mb-0.5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M6 19h4v-4h4v-4h4V7" />
+                              </svg>
+                              <span className="text-[8px] font-extrabold text-slate-700">階段</span>
+                            </div>
+
+                            <div className="bg-pink-100 border border-pink-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none">🚺</span>
+                              <span className="text-[8px] font-black text-pink-800 mt-0.5">女子</span>
+                            </div>
+
+                            <div className="bg-sky-100 border border-sky-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none">🚹</span>
+                              <span className="text-[8px] font-black text-sky-800 mt-0.5">男子</span>
+                            </div>
+
+                            <div className="bg-slate-100 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
+                              <span className="text-[8px] font-black text-slate-700 leading-tight">小会議室</span>
+                            </div>
+
+                            <div className="bg-slate-100 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
+                              <span className="text-[8px] font-black text-slate-700 leading-tight">中会議室</span>
+                            </div>
+                          </div>
                         </div>
 
                         {/* 中央横廊下スペース (高さ40px) */}
@@ -2431,7 +2472,7 @@ export default function Page() {
 
                         {/* 下部エリア */}
                         <div className="grid grid-cols-12 gap-0 pt-2">
-                          {/* 左側: 4つの教室 (13Fゼミ室, 133, 132, 131) */}
+                          {/* 左側: 13Fゼミ室 → 133教室 → 132教室 → 131教室 */}
                           <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
                             {[
                               { roomNo: "13Fゼミ室", roomLabel: "13Fゼミ", defaultTitle: "天文部", emoji: "🌌" },
@@ -2450,7 +2491,7 @@ export default function Page() {
                                   className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
                                     isHighlighted
                                       ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                      : "bg-white border-purple-200 hover:border-purple-500"
+                                      : "bg-white border-orange-200 hover:border-orange-500"
                                   }`}
                                 >
                                   {isHighlighted && (
@@ -2458,12 +2499,12 @@ export default function Page() {
                                       <MapPin className="w-4 h-4 fill-white text-rose-500" />
                                     </div>
                                   )}
-                                  <div className="text-[8px] font-black text-purple-600 bg-purple-50 px-1 py-0.5 rounded w-fit">
+                                  <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
                                     {r.roomLabel}
                                   </div>
                                   <div className="my-auto text-center">
-                                    <div className="text-base group-hover:scale-110 transition">{r.emoji}</div>
-                                    <div className="text-[10px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-purple-600">
+                                    <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
+                                    <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
                                       {stall ? stall.title : r.defaultTitle}
                                     </div>
                                   </div>
@@ -2477,61 +2518,19 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 中央: 通路スペース */}
-                          <div className="col-span-2 flex flex-col items-center justify-end min-h-[160px] pb-2">
-                            <div className="text-center">
-                              <div className="inline-flex items-center gap-1 bg-slate-800/80 text-white px-2.5 py-1 rounded-full text-[10px] font-black shadow-md whitespace-nowrap">
-                                <span>3F 廊下</span>
-                              </div>
+                          {/* 中央 (廊下の下): 大会議室 */}
+                          <div className="col-span-2 flex flex-col items-center justify-start min-h-[128px]">
+                            <div className="w-full h-32 bg-slate-100 border-2 border-slate-300 rounded-xl p-1.5 flex flex-col items-center justify-center text-center shadow-sm">
+                              <span className="text-xl mb-1">💼</span>
+                              <span className="text-xs font-black text-slate-800">大会議室</span>
                             </div>
                           </div>
 
-                          {/* 右側: 設備群 */}
-                          <div className="col-span-5 grid grid-cols-6 gap-1 pl-1">
-                            {/* 階段 */}
-                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <svg
-                                className="w-4 h-4 text-slate-700 mb-0.5"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path d="M6 19h4v-4h4v-4h4V7" />
-                              </svg>
-                              <span className="text-[8px] font-extrabold text-slate-700">階段</span>
-                            </div>
-
-                            {/* 男子トイレ */}
-                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">🚹</span>
-                              <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
-                            </div>
-
-                            {/* 女子トイレ */}
-                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">🚺</span>
-                              <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
-                            </div>
-
-                            {/* 演習室 */}
-                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">📋</span>
-                              <span className="text-[9px] font-black text-amber-900 [writing-mode:vertical-rl]">演習室</span>
-                            </div>
-
-                            {/* 大講義室 */}
-                            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-xs leading-none mb-0.5">🏛️</span>
-                              <span className="text-[9px] font-black text-indigo-900 [writing-mode:vertical-rl]">大講義室</span>
-                            </div>
-
-                            {/* 7号館へ */}
-                            <div className="bg-slate-100 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center h-32">
-                              <span className="text-[8px] font-black text-slate-700 mb-1 [writing-mode:vertical-rl]">7号館へ</span>
-                              <ArrowRight className="w-3.5 h-3.5 text-slate-600 animate-pulse" />
+                          {/* 右側エリア 下部: 7号館への接続廊下 */}
+                          <div className="col-span-5 pl-2 h-32">
+                            <div className="w-full h-full bg-purple-50 border-2 border-purple-300 rounded-xl p-2 flex flex-col items-center justify-center text-center text-purple-900 font-black">
+                              <ArrowRight className="w-5 h-5 text-purple-600 mb-1 animate-pulse" />
+                              <span className="text-xs font-black tracking-wider">7号館への接続廊下</span>
                             </div>
                           </div>
                         </div>
