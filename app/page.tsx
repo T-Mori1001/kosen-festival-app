@@ -2397,13 +2397,13 @@ export default function Page() {
 
                         {/* 南側部屋エリア */}
                         <div className="grid grid-cols-12 gap-1.5 pt-2">
-                          {/* 教室群 (13Fゼミ室, 131, 132, 133) */}
+                          {/* 教室群 (13Fゼミ室, 133, 132, 131) */}
                           <div className="col-span-6 grid grid-cols-4 gap-1.5">
                             {[
                               { roomNo: "13Fゼミ室", label: "13Fゼミ", title: "天文部", emoji: "🌌" },
-                              { roomNo: "131教室", label: "131", title: "カジノ", emoji: "🎲" },
-                              { roomNo: "132教室", label: "132", title: "バー", emoji: "🍸" },
                               { roomNo: "133教室", label: "133", title: "喫茶店", emoji: "☕" },
+                              { roomNo: "132教室", label: "132", title: "バー", emoji: "🍸" },
+                              { roomNo: "131教室", label: "131", title: "カジノ", emoji: "🎲" },
                             ].map((r) => {
                               const stall = getRoomStall(r.roomNo);
                               const isHighlighted = highlightedRoomNo === r.roomNo;
@@ -2443,7 +2443,7 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 中央設備群 (階段, 女子トイレ, 男子トイレ, 大会議室) */}
+                          {/* 中央設備群 (階段, 女子トイレ, 男子トイレ, 準備室) */}
                           <div className="col-span-4 grid grid-cols-4 gap-1">
                             <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
                               <svg className="w-4 h-4 text-slate-700 mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 19h4v-4h4v-4h4V7" /></svg>
@@ -2457,21 +2457,21 @@ export default function Page() {
                               <span className="text-xs leading-none mb-0.5">🚹</span>
                               <span className="text-[8px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
                             </div>
-                            <div className="bg-purple-50 border border-purple-200 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                              <span className="text-xs leading-none mb-0.5">💼</span>
-                              <span className="text-[8px] font-black text-purple-900 [writing-mode:vertical-rl]">大会議室</span>
+                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none mb-0.5">📦</span>
+                              <span className="text-[8px] font-black text-amber-900 [writing-mode:vertical-rl]">準備室</span>
                             </div>
                           </div>
 
-                          {/* 東端 (7号館へ & ゼミ室) */}
+                          {/* 東端 (7号館へ & 講義室) */}
                           <div className="col-span-2 flex flex-col justify-between h-28 pl-1">
                             <div className="bg-slate-100 border border-slate-300 rounded-xl p-1 flex items-center justify-center gap-1 shadow-sm">
                               <span className="text-[9px] font-black text-slate-700">7号館へ</span>
                               <ArrowDown className="w-3.5 h-3.5 text-slate-600 animate-bounce" />
                             </div>
                             <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-1 text-center h-16 flex flex-col items-center justify-center">
-                              <span className="text-xs leading-none mb-0.5">📝</span>
-                              <span className="text-[9px] font-black text-indigo-900">ゼミ室</span>
+                              <span className="text-xs leading-none mb-0.5">🏫</span>
+                              <span className="text-[9px] font-black text-indigo-900">講義室</span>
                             </div>
                           </div>
                         </div>
