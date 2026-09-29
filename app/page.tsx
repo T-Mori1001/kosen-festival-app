@@ -1,3 +1,4 @@
+[cite: 19]
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
@@ -25,6 +26,7 @@ import {
   Users,
   Ticket,
   Sparkles,
+  ArrowUp,
 } from "lucide-react";
 
 // Instagramアイコン用SVG
@@ -431,7 +433,7 @@ const STALLS_DATA: StallItem[] = [
     location: "4号館 LL教室",
     zoneId: "bldg4",
     description: "E.S.S.部員による活動紹介・英語文化に関する展示。",
-    icon: "🔤",
+    icon: "𔢤",
   },
   {
     id: 307,
@@ -544,6 +546,19 @@ const STALLS_DATA: StallItem[] = [
     location: "学生昇降口 高専祭本部（金券販売）",
     zoneId: "ticket",
     description: "鶴岡高専の学校案内、学科紹介、入試相談などを行っている特設ブースです。",
+    icon: "🏫",
+  },
+  {
+    id: 504,
+    title: "本部",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "実行委員会",
+    location: "1号館 1F 本部",
+    zoneId: "bldg1",
+    floor: "1F",
+    roomNo: "本部",
+    description: "高専祭実行委員会本部です。落とし物やご案内はこちらまでお越しください。",
     icon: "🏫",
   },
   {
@@ -1115,9 +1130,9 @@ export default function Page() {
   // 現在選択中のゾーン情報
   const currentZone = CAMPUS_ZONES.find((z) => z.id === selectedZoneId);
 
-  // 111〜113教室の個別出展取得ヘルパー
+  // 111〜113教室・各ブースの個別出展取得ヘルパー
   const getRoomStall = (roomNo: string) => {
-    return STALLS_DATA.find((s) => s.zoneId === "bldg1" && s.roomNo === roomNo);
+    return STALLS_DATA.find((s) => s.zoneId === "bldg1" && (s.roomNo === roomNo || s.title === roomNo));
   };
 
   // タイトルアニメーション文字
@@ -2000,11 +2015,11 @@ export default function Page() {
         </div>
       )}
 
-      {/* モーダル2: 1号館フロア詳細（手書き図面を再現したモダンなグラフィックフロアマップ） */}
+      {/* モーダル2: 1号館フロア詳細（添付の手書き図面通りに横長配置・可視化したインタラクティブマップ） */}
       {isBldg1ModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
-            <div className="p-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex items-center justify-between shadow-md">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
+            <div className="p-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between shadow-md">
               <div className="flex items-center gap-2">
                 <Layers className="w-5 h-5 text-blue-400" />
                 <h3 className="font-black text-base">1号館 フロア詳細マップ</h3>
@@ -2035,135 +2050,166 @@ export default function Page() {
             </div>
 
             {/* フロアレイアウトコンテンツ */}
-            <div className="p-4 space-y-4 overflow-y-auto">
+            <div className="p-4 space-y-3 overflow-y-auto custom-map-scrollbar">
               {currentFloor === "1F" ? (
-                /* 1F 手書き画像を再現したインタラクティブ・フロアマップ */
+                /* 1F 添付手書き画像を精密再現した横長インタラクティブ・フロアマップ */
                 <div className="space-y-3">
-                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-3 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
+                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600" />
-                      <span>1号館 1階 インタラクティブフロア構造</span>
+                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>手書き図面再現 1Fフロアマップ (横長構造)</span>
                     </span>
-                    <span className="text-blue-600 font-bold">※タップで詳細表示</span>
+                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
                   </div>
 
-                  {/* 1階グラフィックマップ本体 */}
-                  <div className="relative w-full bg-slate-900/5 border-2 border-slate-300 rounded-2xl p-4 overflow-hidden space-y-3">
-                    
-                    {/* 奥への通路（北矢印） */}
-                    <div className="flex flex-col items-center justify-center py-1">
-                      <span className="text-lg animate-bounce text-slate-400">↑</span>
-                      <span className="text-[10px] font-black text-slate-400 tracking-wider">奥の校舎へ</span>
-                    </div>
+                  {/* 横長フロアマップ外枠 */}
+                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="min-w-[620px] bg-slate-100 border-2 border-slate-300 rounded-2xl p-4 relative space-y-2 select-none">
+                      
+                      {/* 【北側（上部）】奥への通路 ＆ 本部 */}
+                      <div className="grid grid-cols-12 gap-2 items-end">
+                        {/* 中央北側へ抜ける通路（矢印） */}
+                        <div className="col-span-6 flex items-center justify-center gap-1.5 py-1">
+                          <ArrowUp className="w-5 h-5 text-slate-600 animate-bounce" />
+                          <span className="text-[11px] font-black text-slate-600 tracking-wider">奥の校舎へ</span>
+                        </div>
 
-                    {/* 北側行・十字路の北東（本部） */}
-                    <div className="grid grid-cols-12 gap-2 items-center">
-                      <div className="col-span-6" />
-                      <div className="col-span-6">
-                        <div className="bg-rose-500 text-white border-2 border-rose-600 rounded-xl p-2.5 shadow-sm text-center font-black">
-                          <div className="text-[10px] opacity-80 uppercase tracking-widest">Headquarters</div>
-                          <div className="text-xs flex items-center justify-center gap-1">
-                            <span>🏫 本部</span>
-                          </div>
+                        {/* 北東側（矢印の右側）: 本部 */}
+                        <div className="col-span-6 flex justify-start pl-4">
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("本部");
+                              if (stall) {
+                                setIsBldg1ModalOpen(false);
+                                setModalItem(stall);
+                              }
+                            }}
+                            className="w-32 bg-rose-500 hover:bg-rose-600 text-white border-2 border-rose-600 rounded-xl p-2 shadow-sm text-center font-black transition group"
+                          >
+                            <div className="text-[9px] opacity-80 uppercase tracking-widest">Headquarters</div>
+                            <div className="text-xs flex items-center justify-center gap-1 mt-0.5">
+                              <span>🏫 本部</span>
+                            </div>
+                          </button>
                         </div>
                       </div>
-                    </div>
 
-                    {/* 十字路中央通路 */}
-                    <div className="w-full bg-slate-200 border-y border-slate-300 py-1.5 text-center text-[10px] font-black text-slate-500 tracking-widest">
-                      ─── メイン通路 ───
-                    </div>
+                      {/* 【中央】メイン横廊下 */}
+                      <div className="w-full bg-slate-300 border-y-2 border-slate-400 py-2 text-center text-xs font-black text-slate-700 tracking-widest shadow-inner rounded-xs">
+                        ─── メ イン 通 路 ───
+                      </div>
 
-                    {/* 南側行（左：113/112/111教室、右：金券/階段/トイレ/ラウンジ） */}
-                    <div className="grid grid-cols-12 gap-2">
-                      {/* 左ブロック: 113, 112, 111教室 */}
-                      <div className="col-span-6 space-y-2">
-                        {[
-                          { room: "111教室", name: "ほっとサンド", emoji: "🥪" },
-                          { room: "112教室", name: "ドリンク", emoji: "🍹" },
-                          { room: "113教室", name: "ホスト", emoji: "🌹" },
-                        ].map((r) => {
-                          const stall = getRoomStall(r.room);
-                          return (
+                      {/* 【南側（下部）】各教室・通路・ブース配置 */}
+                      <div className="grid grid-cols-12 gap-2 items-start">
+
+                        {/* 左エリア（西側）: メイン廊下南側に左から 113教室, 112教室, 111教室 */}
+                        <div className="col-span-6 grid grid-cols-3 gap-1.5 pr-2 border-r-2 border-slate-300">
+                          {[
+                            { roomNo: "113教室", roomLabel: "113教室", defaultTitle: "ホスト", emoji: "🌹" },
+                            { roomNo: "112教室", roomLabel: "112教室", defaultTitle: "ドリンク", emoji: "🍹" },
+                            { roomNo: "111教室", roomLabel: "111教室", defaultTitle: "ほっとサンド", emoji: "🥪" },
+                          ].map((r) => {
+                            const stall = getRoomStall(r.roomNo);
+                            return (
+                              <button
+                                key={r.roomNo}
+                                onClick={() => {
+                                  if (stall) {
+                                    setIsBldg1ModalOpen(false);
+                                    setModalItem(stall);
+                                  }
+                                }}
+                                className="bg-white border-2 border-orange-200 hover:border-orange-500 p-2 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-28 text-left group"
+                              >
+                                <div className="text-[10px] font-black text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded w-fit">
+                                  {r.roomLabel}
+                                </div>
+                                <div className="my-auto text-center">
+                                  <div className="text-xl group-hover:scale-110 transition">{r.emoji}</div>
+                                  <div className="text-xs font-black text-slate-800 mt-1 line-clamp-1 group-hover:text-orange-600">
+                                    {stall ? stall.title : r.defaultTitle}
+                                  </div>
+                                </div>
+                                {stall && (
+                                  <div className="text-[9px] font-extrabold text-slate-400 text-center">
+                                    {stall.grade}
+                                  </div>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* 右エリア（東側）: 縦通路・金券販売・階段・トイレ・交流ラウンジ */}
+                        <div className="col-span-6 grid grid-cols-12 gap-1.5 pl-1">
+                          
+                          {/* 中央縦通路の東壁沿い: 金券販売 (縦長) */}
+                          <div className="col-span-3">
                             <button
-                              key={r.room}
                               onClick={() => {
+                                const stall = STALLS_DATA.find((s) => s.id === 501);
                                 if (stall) {
                                   setIsBldg1ModalOpen(false);
                                   setModalItem(stall);
                                 }
                               }}
-                              className="w-full bg-white border-2 border-orange-200 hover:border-orange-500 p-2.5 rounded-xl shadow-sm hover:shadow transition text-left group"
+                              className="w-full h-28 bg-amber-400 hover:bg-amber-300 text-amber-950 border-2 border-amber-500 rounded-xl shadow-sm p-1 flex flex-col items-center justify-center text-center font-black transition"
                             >
-                              <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-black text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded">
-                                  {r.room}
-                                </span>
-                                <span className="text-base">{r.emoji}</span>
-                              </div>
-                              <div className="text-xs font-black text-slate-800 mt-1 group-hover:text-orange-600 transition truncate">
-                                {r.name}
-                              </div>
-                              {stall && (
-                                <div className="text-[10px] font-extrabold text-slate-400 mt-0.5">
-                                  {stall.grade}
-                                </div>
-                              )}
+                              <Ticket className="w-4 h-4 mb-1" />
+                              <span className="text-[11px] leading-tight writing-mode-vertical">金券販売</span>
                             </button>
-                          );
-                        })}
-                      </div>
-
-                      {/* 右ブロック: 金券販売, 階段, トイレ, 交流ラウンジ */}
-                      <div className="col-span-6 space-y-2 flex flex-col justify-between">
-                        {/* 金券販売 */}
-                        <button
-                          onClick={() => {
-                            const stall = STALLS_DATA.find((s) => s.id === 501);
-                            if (stall) {
-                              setIsBldg1ModalOpen(false);
-                              setModalItem(stall);
-                            }
-                          }}
-                          className="w-full bg-amber-400 text-amber-950 border-2 border-amber-500 p-2 rounded-xl shadow-sm hover:bg-amber-300 transition text-center"
-                        >
-                          <div className="text-xs font-black flex items-center justify-center gap-1">
-                            <Ticket className="w-3.5 h-3.5" />
-                            <span>金券販売</span>
                           </div>
-                        </button>
 
-                        {/* 階段 & トイレ */}
-                        <div className="grid grid-cols-2 gap-1.5">
-                          <div className="bg-slate-200 border border-slate-300 p-1.5 rounded-lg text-center">
-                            <div className="text-[10px] font-black text-slate-600">🪜 階段</div>
-                          </div>
-                          <div className="bg-sky-50 border border-sky-200 p-1.5 rounded-lg text-center">
-                            <div className="text-[10px] font-black text-sky-800">🚹🚺 トイレ</div>
-                          </div>
-                        </div>
+                          {/* 金券販売の右側エリア: 階段・トイレ・交流ラウンジ */}
+                          <div className="col-span-9 space-y-1.5">
+                            {/* 上段: 階段 ＆ 男子トイレ ＆ 女子トイレ */}
+                            <div className="grid grid-cols-3 gap-1">
+                              {/* 階段 (三 二 一) */}
+                              <div className="bg-slate-200 border border-slate-300 rounded-lg p-1 text-center flex flex-col items-center justify-center h-12">
+                                <span className="text-[9px] font-black text-slate-500 leading-none mb-0.5">三 二 一</span>
+                                <span className="text-[10px] font-extrabold text-slate-700">階段</span>
+                              </div>
 
-                        {/* 交流ラウンジ */}
-                        <div className="bg-emerald-50 border-2 border-emerald-300 p-2.5 rounded-xl text-center flex-1 flex flex-col items-center justify-center">
-                          <div className="text-lg">🛋️</div>
-                          <div className="text-xs font-black text-emerald-900 mt-0.5">交流ラウンジ</div>
-                          <div className="text-[9px] font-bold text-emerald-600">休憩スペース</div>
+                              {/* 男子トイレ */}
+                              <div className="bg-sky-100 border border-sky-300 rounded-lg p-1 text-center flex flex-col items-center justify-center h-12">
+                                <span className="text-[10px] font-black text-sky-800">男子</span>
+                                <span className="text-[9px] font-bold text-sky-600">トイレ</span>
+                              </div>
+
+                              {/* 女子トイレ */}
+                              <div className="bg-pink-100 border border-pink-300 rounded-lg p-1 text-center flex flex-col items-center justify-center h-12">
+                                <span className="text-[10px] font-black text-pink-800">女子</span>
+                                <span className="text-[9px] font-bold text-pink-600">トイレ</span>
+                              </div>
+                            </div>
+
+                            {/* 下段: 交流ラウンジ */}
+                            <div className="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-2 text-center flex items-center justify-center gap-2 h-14">
+                              <span className="text-xl">🛋️</span>
+                              <div className="text-left">
+                                <div className="text-xs font-black text-emerald-900">交流ラウンジ</div>
+                                <div className="text-[9px] font-bold text-emerald-600">休憩・談話エリア</div>
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
                       </div>
-                    </div>
 
-                    {/* 学生昇降口 (南側中央) */}
-                    <div className="pt-2 border-t-2 border-dashed border-slate-300 text-center">
-                      <div className="inline-flex items-center gap-1.5 bg-slate-800 text-white px-4 py-1.5 rounded-full text-xs font-black shadow-sm">
-                        <Users className="w-3.5 h-3.5 text-amber-400" />
-                        <span>学生昇降口（メインエントランス）</span>
+                      {/* 【南側中央（下部最下段）】学生昇降口 */}
+                      <div className="pt-2 border-t-2 border-dashed border-slate-300 text-center">
+                        <div className="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-1.5 rounded-full text-xs font-black shadow-md">
+                          <Users className="w-4 h-4 text-amber-400" />
+                          <span>学生昇降口 (メインエントランス)</span>
+                        </div>
                       </div>
+
                     </div>
                   </div>
                 </div>
               ) : (
                 /* 2F / 3F のグリッド表示 */
-                <div className="relative w-full bg-slate-100 border-2 border-slate-300 rounded-2xl p-4 min-h-[160px] flex flex-col justify-center space-y-3">
+                <div className="relative w-full bg-slate-100 border-2 border-slate-300 rounded-2xl p-4 min-h-[180px] flex flex-col justify-center space-y-3">
                   <div className="text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">
                     1号館 {currentFloor} 配置イメージ
                   </div>
@@ -2178,7 +2224,7 @@ export default function Page() {
                         }}
                         className="p-3 bg-white border border-blue-200 rounded-xl shadow-sm hover:border-blue-500 hover:shadow transition flex flex-col items-center text-center space-y-1"
                       >
-                        <span className="text-xl">{stall.icon}</span>
+                        <span className="text-2xl">{stall.icon}</span>
                         <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
                           {stall.roomNo}
                         </span>
