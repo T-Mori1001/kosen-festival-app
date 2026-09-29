@@ -2093,7 +2093,7 @@ export default function Page() {
                           <div className="col-span-5"></div>
                           <div className="col-span-2 flex flex-col items-center justify-center h-full">
                             <span className="text-xs font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
-                              4号館
+                              4号館へ
                             </span>
                             <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
                           </div>
@@ -2256,12 +2256,14 @@ export default function Page() {
 
                   <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
                     <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-                      {/* --- 十字路背景構造 --- */}
+                      {/* --- 十字路 ＆ 右端接続廊下背景構造 --- */}
                       <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
                       <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
                       <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
                       <div className="absolute top-[116px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
                       <div className="absolute top-[76px] left-[45.833%] w-[8.333%] h-[40px] bg-slate-200 z-0" />
+                      {/* 右端下へ続く廊下背景 */}
+                      <div className="absolute top-[116px] right-6 w-[12%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
 
                       {/* --- コンテンツ配置 --- */}
                       <div className="relative z-10 space-y-0">
@@ -2328,7 +2330,7 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 中央 (廊下の下): 合同講義室 */}
+                          {/* 中央: 合同講義室 */}
                           <div className="col-span-2 flex flex-col items-center justify-start min-h-[128px]">
                             <button
                               onClick={() => {
@@ -2361,7 +2363,7 @@ export default function Page() {
                             </button>
                           </div>
 
-                          {/* 右側エリア (階段右): 階段 → 男子トイレ → 女子トイレ → 7号館への接続廊下 */}
+                          {/* 右側エリア: 階段 → 男子トイレ → 女子トイレ → 7号館への接続廊下 */}
                           <div className="col-span-5 grid grid-cols-4 gap-1.5 pl-2 h-32">
                             <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
                               <svg
@@ -2388,9 +2390,12 @@ export default function Page() {
                               <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
                             </div>
 
-                            <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-1 flex flex-col items-center justify-center text-center text-purple-900 font-black">
-                              <ArrowRight className="w-4 h-4 text-purple-600 mb-1 animate-pulse" />
-                              <span className="text-[9px] font-black [writing-mode:vertical-rl] tracking-wider">7号館への接続廊下</span>
+                            {/* 7号館への下向き廊下・案内表示 */}
+                            <div className="flex flex-col items-center justify-center text-center h-full pt-1">
+                              <span className="text-[10px] font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-1.5 py-0.5 rounded-full border border-slate-300 shadow-sm whitespace-nowrap">
+                                7号館へ
+                              </span>
+                              <ArrowDown className="w-4 h-4 text-slate-600 animate-bounce" />
                             </div>
                           </div>
                         </div>
@@ -2413,16 +2418,14 @@ export default function Page() {
 
                   <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
                     <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-                      {/* --- 十字路背景構造 --- */}
+                      {/* --- 十字路 ＆ 右端接続廊下背景構造 --- */}
                       <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
-                      <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
-                      <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
-                      <div className="absolute top-[116px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
-                      <div className="absolute top-[76px] left-[45.833%] w-[8.333%] h-[40px] bg-slate-200 z-0" />
+                      <div className="absolute top-[76px] left-4 right-4 h-[40px] bg-slate-200 border-y-2 border-slate-300 rounded-lg z-0" />
+                      <div className="absolute top-[116px] right-6 w-[10%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
 
                       {/* --- コンテンツ配置 --- */}
                       <div className="relative z-10 space-y-0">
-                        {/* 上部エリア (高さ60px): 中央 4号館へ / 右上 階段 → 女子トイレ → 男子トイレ → 小会議室 → 中会議室 */}
+                        {/* 上部: 4号館へ */}
                         <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
                           <div className="col-span-5"></div>
                           <div className="col-span-2 flex flex-col items-center justify-center h-full">
@@ -2431,54 +2434,25 @@ export default function Page() {
                             </span>
                             <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
                           </div>
-                          <div className="col-span-5 grid grid-cols-5 gap-1 pl-2 h-full">
-                            <div className="bg-slate-200 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                              <svg
-                                className="w-3.5 h-3.5 text-slate-700 mb-0.5"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path d="M6 19h4v-4h4v-4h4V7" />
-                              </svg>
-                              <span className="text-[8px] font-extrabold text-slate-700">階段</span>
-                            </div>
+                          <div className="col-span-5"></div>
+                        </div>
 
-                            <div className="bg-pink-100 border border-pink-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                              <span className="text-xs leading-none">🚺</span>
-                              <span className="text-[8px] font-black text-pink-800 mt-0.5">女子</span>
-                            </div>
-
-                            <div className="bg-sky-100 border border-sky-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                              <span className="text-xs leading-none">🚹</span>
-                              <span className="text-[8px] font-black text-sky-800 mt-0.5">男子</span>
-                            </div>
-
-                            <div className="bg-slate-100 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                              <span className="text-[8px] font-black text-slate-700 leading-tight">小会議室</span>
-                            </div>
-
-                            <div className="bg-slate-100 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                              <span className="text-[8px] font-black text-slate-700 leading-tight">中会議室</span>
-                            </div>
+                        {/* 中央横廊下スペース (高さ40px) ＆ 右端突き当り「中会議室」 */}
+                        <div className="h-[40px] relative flex items-center justify-end pr-2">
+                          <div className="bg-purple-100 border-2 border-purple-300 rounded-xl px-2.5 py-1 text-center shadow-sm z-10">
+                            <span className="text-[10px] font-black text-purple-900 whitespace-nowrap">中会議室</span>
                           </div>
                         </div>
 
-                        {/* 中央横廊下スペース (高さ40px) */}
-                        <div className="h-[40px]" />
-
-                        {/* 下部エリア */}
+                        {/* 下部エリア (廊下の下側 / 南側) */}
                         <div className="grid grid-cols-12 gap-0 pt-2">
-                          {/* 左側: 13Fゼミ室 → 133教室 → 132教室 → 131教室 */}
+                          {/* 左側: 131教室 → 132教室 → 133教室 → 13Fゼミ室 */}
                           <div className="col-span-5 grid grid-cols-4 gap-1.5 pr-2">
                             {[
-                              { roomNo: "13Fゼミ室", roomLabel: "13Fゼミ", defaultTitle: "天文部", emoji: "🌌" },
-                              { roomNo: "133教室", roomLabel: "133", defaultTitle: "喫茶店", emoji: "☕" },
-                              { roomNo: "132教室", roomLabel: "132", defaultTitle: "バー", emoji: "🍸" },
                               { roomNo: "131教室", roomLabel: "131", defaultTitle: "カジノ", emoji: "🎲" },
+                              { roomNo: "132教室", roomLabel: "132", defaultTitle: "バー", emoji: "🍸" },
+                              { roomNo: "133教室", roomLabel: "133", defaultTitle: "喫茶店", emoji: "☕" },
+                              { roomNo: "13Fゼミ室", roomLabel: "13Fゼミ", defaultTitle: "天文部", emoji: "🌌" },
                             ].map((r) => {
                               const stall = getRoomStall(r.roomNo);
                               const isHighlighted = highlightedRoomNo === r.roomNo;
@@ -2518,19 +2492,52 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 中央 (廊下の下): 大会議室 */}
-                          <div className="col-span-2 flex flex-col items-center justify-start min-h-[128px]">
-                            <div className="w-full h-32 bg-slate-100 border-2 border-slate-300 rounded-xl p-1.5 flex flex-col items-center justify-center text-center shadow-sm">
-                              <span className="text-xl mb-1">💼</span>
-                              <span className="text-xs font-black text-slate-800">大会議室</span>
+                          {/* 中央: 吹抜エリア */}
+                          <div className="col-span-2 flex flex-col items-center justify-center min-h-[128px]">
+                            <div className="bg-slate-100 border border-slate-300 rounded-xl p-2 text-center w-full h-32 flex flex-col items-center justify-center">
+                              <span className="text-lg mb-1">🏛️</span>
+                              <span className="text-[10px] font-extrabold text-slate-600">吹抜エリア</span>
                             </div>
                           </div>
 
-                          {/* 右側エリア 下部: 7号館への接続廊下 */}
-                          <div className="col-span-5 pl-2 h-32">
-                            <div className="w-full h-full bg-purple-50 border-2 border-purple-300 rounded-xl p-2 flex flex-col items-center justify-center text-center text-purple-900 font-black">
-                              <ArrowRight className="w-5 h-5 text-purple-600 mb-1 animate-pulse" />
-                              <span className="text-xs font-black tracking-wider">7号館への接続廊下</span>
+                          {/* 右側エリア (廊下の下側/南側): 階段 → 女子トイレ → 男子トイレ → 小会議室 → 7号館へ */}
+                          <div className="col-span-5 grid grid-cols-5 gap-1 pl-2 h-32">
+                            <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <svg
+                                className="w-3.5 h-3.5 text-slate-700 mb-0.5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M6 19h4v-4h4v-4h4V7" />
+                              </svg>
+                              <span className="text-[9px] font-extrabold text-slate-700 [writing-mode:vertical-rl]">階段</span>
+                            </div>
+
+                            <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none mb-1">🚺</span>
+                              <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
+                            </div>
+
+                            <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none mb-1">🚹</span>
+                              <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
+                            </div>
+
+                            <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
+                              <span className="text-xs leading-none mb-1">💼</span>
+                              <span className="text-[9px] font-black text-emerald-800 [writing-mode:vertical-rl]">小会議室</span>
+                            </div>
+
+                            {/* 7号館への下向き廊下・案内表示 */}
+                            <div className="flex flex-col items-center justify-center text-center h-full pt-1">
+                              <span className="text-[10px] font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-1 py-0.5 rounded-full border border-slate-300 shadow-sm whitespace-nowrap">
+                                7号館へ
+                              </span>
+                              <ArrowDown className="w-4 h-4 text-slate-600 animate-bounce" />
                             </div>
                           </div>
                         </div>
