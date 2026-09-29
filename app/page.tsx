@@ -1,4 +1,3 @@
-[cite: 19]
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
