@@ -23,6 +23,7 @@ import {
   ZoomOut,
   RotateCcw,
   Ticket,
+  Image as ImageIcon,
 } from "lucide-react";
 
 // --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS） ---
@@ -106,9 +107,13 @@ interface StallItem {
   icon: string;
   instagram?: string;
   menu?: string[];
+  imageUrl?: string;
+  bannerTitle?: string;
+  bannerSub?: string;
+  bannerColor?: string;
 }
 
-// 全出店・企画・施設・その他データ
+// 全出店・企画・施設・その他データ（パンフレットPDFを基に構成）
 const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 1F ---
   {
@@ -123,7 +128,10 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "111教室",
     description: "1-1による熱々で外はサクッ、中はジュワッ！香ばしい絶品ほっとサンド！",
     icon: "🥪",
-    menu: ["ほっとサンド"],
+    menu: ["チョコ", "ハムサンド", "ピザ"],
+    bannerTitle: "1-1 ホットサンド",
+    bannerSub: "MENU: チョコ・ハムサンド・ピザ",
+    bannerColor: "from-amber-500 to-orange-600",
   },
   {
     id: 2,
@@ -135,13 +143,16 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "1F",
     roomNo: "112教室",
-    description: "1-2がお届けする冷たくてシュワっと美味しい各種ソフトドリンク！",
+    description: "平成カフェ♡ タピオカ＆1-2がお届けする冷たくてシュワっと美味しい各種ソフトドリンク！",
     icon: "🍹",
-    menu: ["ソフトドリンク各種"],
+    menu: ["タピオカ", "ソフトドリンク各種"],
+    bannerTitle: "1年2組 平成カフェ",
+    bannerSub: "タピオカ＆ドリンク カワイイょ♡",
+    bannerColor: "from-pink-400 to-rose-500",
   },
   {
     id: 13,
-    title: "ホスト",
+    title: "ホスト (CLUB CROWN)",
     category: "クラス企画",
     grade: "4M",
     dept: "4年 機械コース (4M)",
@@ -149,8 +160,12 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "1F",
     roomNo: "113教室",
-    description: "4Mのメンバーが華麗にお出迎え！？非日常の最高のおもてなし空間！",
+    description: "CLUB CROWNへようこそ！ハマりすぎ注意！？沼る覚悟でお越しください･･･",
     icon: "🌹",
+    menu: ["ブルーハワイソーダ", "メロンソーダ", "いちごソーダ", "カルピス"],
+    bannerTitle: "CLUB CROWN (4M)",
+    bannerSub: "ハマりすぎ注意!? 沼る覚悟でお越しください･･･",
+    bannerColor: "from-slate-900 via-purple-950 to-slate-900",
   },
 
   // --- 1号館 (bldg1) 2F ---
@@ -164,9 +179,12 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "2F",
     roomNo: "121教室",
-    description: "1-3作！フワフワ甘くて可愛いビッグわたあめ！",
+    description: "1-3作！フワフワ甘くて可愛いビッグわたあめ♡",
     icon: "🍥",
     menu: ["わたあめ"],
+    bannerTitle: "1-3 わたあめ♡",
+    bannerSub: "フワフワ甘くて可愛いビッグわたあめ！",
+    bannerColor: "from-pink-300 to-purple-400",
   },
   {
     id: 4,
@@ -178,9 +196,12 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "2F",
     roomNo: "122教室",
-    description: "1-4手作り生地のボリューム満点トッピングクレープ！",
+    description: "1の4が新しい風吹かすッ！極上のクレープを味わいたい方は1号館122教室へ･･･",
     icon: "🥞",
     menu: ["手作りクレープ"],
+    bannerTitle: "1-4 クレープ",
+    bannerSub: "1の4が新しい風吹かすッ！極上のクレープ！",
+    bannerColor: "from-amber-400 to-yellow-500",
   },
   {
     id: 10,
@@ -192,8 +213,12 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "2F",
     roomNo: "123教室",
-    description: "3Eみんなでワイワイ楽しめる対戦ゲーム＆レトロゲームが揃ったゲームカフェ！",
+    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンク（ジュース1杯100円）でリフレッシュ！",
     icon: "🎮",
+    menu: ["ジュース各種 (100円)"],
+    bannerTitle: "3E ゲームカフェ",
+    bannerSub: "ゲームカフェへようこそ！ドリンク100円",
+    bannerColor: "from-cyan-500 to-blue-600",
   },
   {
     id: 302,
@@ -207,12 +232,15 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "12Fゼミ室",
     description: "絵画・写真作品や高専祭を彩る各種看板作品の展示。",
     icon: "🖼️",
+    bannerTitle: "美術写真部 展示",
+    bannerSub: "絵画・写真作品＆高専祭看板展示",
+    bannerColor: "from-indigo-500 to-purple-600",
   },
 
   // --- 1号館 (bldg1) 3F ---
   {
     id: 15,
-    title: "カジノ",
+    title: "カジノ (CASINO)",
     category: "クラス企画",
     grade: "4I",
     dept: "4年 情報コース (4I)",
@@ -220,12 +248,16 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "131教室",
-    description: "4I特製カジノ！本格的なテーブルゲームでスリリングな心理戦を楽しもう！",
+    description: "4I特製カジノ！トランプ、UNO、ダーツ、人狼（WERE WOLF）など本格的なゲームでスリリングな心理戦を楽しもう！※ワンドリンク制・景品あり",
     icon: "🎲",
+    menu: ["トランプ", "UNO", "ダーツ", "人狼ゲーム"],
+    bannerTitle: "4I CASINO",
+    bannerSub: "TRUMP / UNO / DARTS / WERE WOLF",
+    bannerColor: "from-red-700 to-slate-900",
   },
   {
     id: 12,
-    title: "喫茶店",
+    title: "喫茶店 (3B)",
     category: "クラス企画",
     grade: "3B",
     dept: "3年 生物・化学コース (3B)",
@@ -233,12 +265,15 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "132教室",
-    description: "3Bによるゆったり寛げる特製喫茶店！こだわりのドリンクでおもてなし。",
+    description: "3B喫茶店✿ たくさんのご来店お待ちしております！ゆったり寛げる空間でこだわりのドリンクをお届け。",
     icon: "☕",
+    bannerTitle: "3B 喫茶店 ✿",
+    bannerSub: "たくさんのご来店お待ちしております✿",
+    bannerColor: "from-emerald-500 to-teal-700",
   },
   {
     id: 11,
-    title: "バー",
+    title: "バー (3I Bar)",
     category: "クラス企画",
     grade: "3I",
     dept: "3年 情報コース (3I)",
@@ -246,8 +281,11 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "133教室",
-    description: "3Iがお届けするおしゃれで落ち着いた雰囲気のノンアルコールバー！",
+    description: "喉が渇いたときや休憩したいときにはぜひ来てください！おしゃれな雰囲気が魅力のノンアルコールバー！",
     icon: "🍸",
+    bannerTitle: "3I Bar",
+    bannerSub: "喉が渇いたときや休憩したいときにぜひ！",
+    bannerColor: "from-amber-700 to-yellow-900",
   },
   {
     id: 301,
@@ -255,12 +293,15 @@ const STALLS_DATA: StallItem[] = [
     category: "部活動企画",
     grade: "部活",
     dept: "天文部",
-    location: "1号館 3F 13Fゼミ室",
+    location: "1号館 3F 13Fゼミ室・小会議室",
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "13Fゼミ室",
-    description: "天体写真展示および手作りドームによる幻想的なプラネタリウム上映！",
+    description: "プラネタリウム（13Fゼミ室）で星空を体験！小会議室では天体写真の展示＆パンフレット配布を実施中！",
     icon: "🌌",
+    bannerTitle: "天文部 Astronomy Club",
+    bannerSub: "プラネタリウム & 天体写真展示",
+    bannerColor: "from-slate-900 via-indigo-950 to-blue-900",
   },
 
   // --- 合同講義室（1号館内） ---
@@ -274,78 +315,101 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
     icon: "🎮",
+    bannerTitle: "今日、ゲームになりました。",
+    bannerSub: "大画面ゲームトーナメント＆対戦企画",
+    bannerColor: "from-violet-600 to-indigo-800",
   },
 
   // --- 第一体育館 (gym1) ---
   {
     id: 5,
-    title: "餃子",
+    title: "餃子 (餃子 木村屋)",
     category: "模擬店",
     grade: "2M",
     dept: "2年 機械コース (2M)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "2M特製！鉄板で一気に焼き上げるパリッとジューシーな絶品焼き餃子！",
+    description: "2M特製！餃子 木村屋 100円！鉄板で一気に焼き上げるパリッとジューシーな絶品焼き餃子！",
     icon: "🥟",
-    menu: ["特製焼き餃子"],
+    menu: ["特製焼き餃子 (100円)"],
+    bannerTitle: "餃子 木村屋 (2M)",
+    bannerSub: "100円！鉄板で一気に焼き上げる絶品餃子！",
+    bannerColor: "from-red-600 to-amber-600",
   },
   {
     id: 6,
-    title: "ポップコーン",
+    title: "ポップコーン (2-E)",
     category: "模擬店",
     grade: "2E",
     dept: "2年 電気・電子コース (2E)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "2Eがお届けする弾ける香ばしさ！選べるフレーバーポップコーン！",
+    description: "2-E はじめました ポップコーン！これ食べて高専祭、はじけてみない？おいしい間食にどうぞ！",
     icon: "🍿",
     menu: ["フレーバーポップコーン"],
+    bannerTitle: "2-E ポップコーン",
+    bannerSub: "これ食べて高専祭、はじけてみない？",
+    bannerColor: "from-yellow-400 to-orange-500",
   },
   {
     id: 7,
-    title: "玉こん",
+    title: "玉こん (2I)",
     category: "模擬店",
     grade: "2I",
     dept: "2年 情報コース (2I)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "2I秘伝の出汁がしっかり染み込んだ熱々の山形名物・玉こんにゃく！",
+    description: "小腹が空いたら2I玉こん！秘伝の出汁がしっかり染み込んだ熱々の山形名物・玉こんにゃく！",
     icon: "🍡",
     menu: ["山形名物 玉こんにゃく"],
+    bannerTitle: "2I 玉こん",
+    bannerSub: "小腹が空いたら出汁の染みたあつあつ玉こん！",
+    bannerColor: "from-amber-600 to-orange-700",
   },
   {
     id: 8,
-    title: "焼き鳥",
+    title: "焼き鳥 (2B)",
     category: "模擬店",
     grade: "2B",
     dept: "2年 生物・化学コース (2B)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "2B香ばしく焼き上げる秘伝タレ＆塩のやみつき焼き鳥！",
+    description: "2B香ばしく焼き上げる秘伝タレ＆塩のやみつき焼き鳥！串もも・つくね・とりかわ！",
     icon: "🍢",
-    menu: ["やみつき焼き鳥"],
+    menu: ["串もも", "つくね", "とりかわ"],
+    bannerTitle: "2B やきとり",
+    bannerSub: "串もも・つくね・とりかわ 香ばしいやみつき味！",
+    bannerColor: "from-orange-600 to-red-700",
   },
+
+  // --- ステージ企画 ---
   {
     id: 402,
-    title: "2026KOSEN歌謡祭 秋",
+    title: "2026 KOSEN 歌謡祭 秋",
     category: "実行委員会企画",
     grade: "企画",
     dept: "実行委員会",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "高専生の自慢の歌声を競う熱いカラオケステージ！",
+    description: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
     icon: "🎤",
+    bannerTitle: "2026 KOSEN 歌謡祭 秋",
+    bannerSub: "青春の1ページに、忘れられない思い出を。",
+    bannerColor: "from-pink-600 to-purple-600",
   },
   {
     id: 403,
-    title: "あつまれ きんにくの森",
+    title: "あつまれ きんにくの森 (腕立て選手権)",
     category: "実行委員会企画",
     grade: "企画",
     dept: "実行委員会",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
+    description: "試されるのは、筋力と精神力。己の限界に挑み、最後まで立ち向かえ!",
     icon: "💪",
+    bannerTitle: "あつまれ きんにくの森",
+    bannerSub: "試されるのは、筋力と精神力。己の限界に挑め!",
+    bannerColor: "from-orange-600 to-red-600",
   },
   {
     id: 404,
@@ -353,10 +417,13 @@ const STALLS_DATA: StallItem[] = [
     category: "実行委員会企画",
     grade: "企画",
     dept: "実行委員会",
-    location: "第一体育館",
+    location: "第一体育館周辺",
     zoneId: "gym1",
-    description: "何を引き当てるか分からない！？大興奮のクラス対抗リレー！",
+    description: "勝負を決めるのは、走力とひらめき。仲間とつなぐバトン、最後に笑うのはどのクラスか?",
     icon: "🏃",
+    bannerTitle: "カリモノ競争",
+    bannerSub: "勝負を決めるのは、走力とひらめき。",
+    bannerColor: "from-yellow-500 to-amber-600",
   },
   {
     id: 405,
@@ -366,8 +433,11 @@ const STALLS_DATA: StallItem[] = [
     dept: "実行委員会",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
+    description: "高専祭史上初の漫才企画! 笑いの準備はできているか? 個性豊かなコンビたちが繰り広げる!",
     icon: "🎙️",
+    bannerTitle: "鶴専-1グランプリ",
+    bannerSub: "高専祭史上初の漫才企画! 笑いの準備はできているか?",
+    bannerColor: "from-amber-500 to-red-500",
   },
   {
     id: 406,
@@ -377,39 +447,48 @@ const STALLS_DATA: StallItem[] = [
     dept: "実行委員会",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
+    description: "高専祭の最後を締めくくるダンス企画! 音楽にのせて最高のパフォーマンスを!",
     icon: "💃",
+    bannerTitle: "DoKa Project",
+    bannerSub: "高専祭の最後を締めくくるダンス企画!",
+    bannerColor: "from-purple-600 to-pink-500",
   },
 
   // --- 音楽部プレハブ (prefab) ---
   {
     id: 303,
-    title: "音楽部（音楽ライブ）",
+    title: "音部ライブ（音楽部）",
     category: "部活動企画",
     grade: "部活",
     dept: "音楽部",
-    location: "音楽部プレハブ",
+    location: "音楽部プレハブ / 第一体育館",
     zoneId: "prefab",
-    description: "バンド演奏による熱いロック＆ポップスサウンドをお届け！（10:00〜15:00）",
+    description: "音が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください!（YOUTH RIOT FES VOL.4）",
     icon: "🎸",
+    bannerTitle: "YOUTH RIOT FES VOL.4",
+    bannerSub: "音が重なれば、楽しさも広がる。音楽部ライブ!",
+    bannerColor: "from-red-600 via-purple-700 to-slate-900",
   },
 
   // --- 7号館 (bldg7) ---
   {
     id: 9,
-    title: "お化け屋敷",
+    title: "お化け屋敷 (3M)",
     category: "クラス企画",
     grade: "3M",
     dept: "3年 機械コース (3M)",
     location: "7号館 (711・712教室)",
     zoneId: "bldg7",
     roomNo: "711",
-    description: "3Mギミック満載！機械コースの技術を結集した本格的な恐怖があなたを襲う…！",
+    description: "その教室に入ってはいけなかった。呪われた教室。教室から、逃げられるか。3M教室で恐怖の扉を、開け。",
     icon: "👻",
+    bannerTitle: "呪われた教室 お化け屋敷 (3M)",
+    bannerSub: "その教室に入ってはいけなかった。恐怖の扉を開け。",
+    bannerColor: "from-purple-900 via-slate-900 to-red-950",
   },
   {
     id: 14,
-    title: "キッキングスナイパー",
+    title: "キッキングスナイパー (4E)",
     category: "クラス企画",
     grade: "4E",
     dept: "4年 電気・電子コース (4E)",
@@ -418,18 +497,24 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "722",
     description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！",
     icon: "⚽",
+    bannerTitle: "キッキングスナイパー (4E)",
+    bannerSub: "動くターゲットを狙ってシュート！豪華景品をゲット！",
+    bannerColor: "from-emerald-600 to-green-700",
   },
   {
     id: 304,
-    title: "AMデザイン部（作品展示・3Dプリンタ体験）",
+    title: "AMデザイン部（3Dプリンタ体験・展示）",
     category: "部活動企画",
     grade: "部活",
     dept: "AMデザイン部",
     location: "7号館 731教室",
     zoneId: "bldg7",
     roomNo: "731",
-    description: "3Dプリンタの実演・造形体験およびデザイン作品の展示。",
+    description: "AM DESIGN CLUB TRIAL SESSION！デザコン出場歴代作品展示、3DCAD＆3Dプリンタ体験！ミニオブジェのプレゼントも！",
     icon: "𖤤",
+    bannerTitle: "AM DESIGN CLUB",
+    bannerSub: "3DCAD & 3Dプリンタ体験！ミニオブジェプレゼント！",
+    bannerColor: "from-sky-600 to-blue-700",
   },
   {
     id: 305,
@@ -442,6 +527,9 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "721",
     description: "5Bによる先進的な研究成果のポスター発表展示。",
     icon: "🔬",
+    bannerTitle: "5B 研究発表ポスター",
+    bannerSub: "生物・化学コース先進研究展示",
+    bannerColor: "from-teal-600 to-cyan-800",
   },
 
   // --- 8号館 (bldg8) ---
@@ -455,8 +543,11 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg8",
     floor: "2F",
     roomNo: "大講義室",
-    description: "吹奏楽部によるミニコンサート（10:00〜11:45）！素敵な演奏をお楽しみください！",
+    description: "吹奏楽部によるオープニング演奏（感電等）＆ミニコンサート（嵐メドレー等）！素敵な演奏をお楽しみください！",
     icon: "🎷",
+    bannerTitle: "吹奏楽部 ミニコンサート",
+    bannerSub: "感電 / 嵐メドレー等 素敵な演奏をお届け！",
+    bannerColor: "from-amber-500 to-yellow-600",
   },
   {
     id: 503,
@@ -468,56 +559,71 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg8",
     floor: "2F",
     roomNo: "大講義室",
-    description: "中学生・保護者の皆様に向けた学校説明会（13:00〜14:00）。",
+    description: "中学生・保護者の皆様に向けた学校説明会（10/24 13:00受付開始）。高専生活や入試など何でもご相談ください。",
     icon: "🏫",
+    bannerTitle: "中学生向け 学校説明会",
+    bannerSub: "高専での学び・寮生活・入試相談コーナー",
+    bannerColor: "from-blue-600 to-indigo-700",
   },
 
   // --- 4号館 (bldg4) ---
   {
     id: 306,
-    title: "E.S.S.（展示）",
+    title: "E.S.S. (Little World)",
     category: "部活動企画",
     grade: "部活",
     dept: "E.S.S.",
-    location: "4号館 LL教室",
+    location: "7号館 732教室 / 4号館",
     zoneId: "bldg4",
-    description: "E.S.S.部員による活動紹介・英語文化に関する展示。",
+    description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
     icon: "𔢤",
+    bannerTitle: "E.S.S. Little World",
+    bannerSub: "留学生紹介ポスター & 海外生活Vlog展示",
+    bannerColor: "from-sky-500 to-teal-600",
   },
   {
     id: 307,
-    title: "かるた体験（見学・体験）",
+    title: "競技かるた愛好会（畳の上の格闘技）",
     category: "部活動企画",
     grade: "有志",
-    dept: "かるた体験",
-    location: "4号館 412教室",
+    dept: "競技かるた愛好会",
+    location: "4号館 411教室",
     zoneId: "bldg4",
-    description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
-    icon: "",
+    description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
+    icon: "🎴",
+    bannerTitle: "競技かるた愛好会",
+    bannerSub: "畳の上の格闘技！ガチ試合見学 & 初心者体験会",
+    bannerColor: "from-emerald-700 to-green-900",
   },
 
   // --- 総合メディアセンター (media_center) ---
   {
     id: 16,
-    title: "格付けチェック",
+    title: "格付けチェック (4B)",
     category: "クラス企画",
     grade: "4B",
     dept: "4年 生物・化学コース (4B)",
     location: "総合メディアセンター マルチメディア教室",
     zoneId: "media_center",
-    description: "4Bあなたの一流度が試される！高級品と激安品を見破れるか！？",
+    description: "4B格付けチェック！あなたは本物をみぬけるか？一流！味覚・視覚・知識に挑戦！",
     icon: "🍷",
+    bannerTitle: "4B 格付けチェック",
+    bannerSub: "あなたは本物を見抜けるか？一流を目指せ！",
+    bannerColor: "from-purple-800 to-amber-600",
   },
   {
     id: 309,
-    title: "ロボット研究部（ロボット展示）",
+    title: "ロボット研究部（高専ロボコン展示＆体験）",
     category: "部活動企画",
     grade: "部活",
     dept: "ロボット研究部",
     location: "総合メディアセンター 多目的交流室",
     zoneId: "media_center",
-    description: "自作ロボットのデモ実演および操縦体験コーナー！",
+    description: "高専ロボコン「ぞうきんとうてきせんしゅけん」優勝ロボット展示！さらにスイカ割りミニゲームロボットの操作体験もあります！",
     icon: "🤖",
+    bannerTitle: "高専ロボコン ロボ展示 & 操作体験",
+    bannerSub: "NHK高専ロボコン出場機展示 & スイカ割り体験",
+    bannerColor: "from-green-600 to-emerald-800",
   },
 
   // --- 学生昇降口・広場 (entrance) ---
@@ -529,23 +635,29 @@ const STALLS_DATA: StallItem[] = [
     dept: "実行委員会",
     location: "学生昇降口",
     zoneId: "entrance",
-    description: "高専生が日頃の思いや愛を大声で叫ぶ伝統の大人気企画！",
+    description: "胸に秘めた思いを、ここで大放出! 普段は言えない熱い思いを、今こそ叫べ",
     icon: "📢",
+    bannerTitle: "高専生の主張",
+    bannerSub: "胸に秘めた思いを、ここで大放出! 今こそ叫べ!",
+    bannerColor: "from-rose-500 to-orange-500",
   },
 
   // --- キッチンカー (entrance) ---
   {
     id: 101,
-    title: "ラーメン もっけだの",
+    title: "中華そば雲ノ糸 / ラーメンもっけだの",
     category: "キッチンカー",
     grade: "外部",
     dept: "キッチンカー",
     location: "学生昇降口前ロータリー",
     zoneId: "entrance",
-    description: "スープと麺にこだわり抜いた自慢の本格ラーメン！高専祭で味わう極上の一杯！",
+    description: "山形で行列ができる人気ラーメン店2台が同時出店！「雲ノ糸」の煮干しラーメン＆「もっけだの」のこだわりラーメンをお楽しみください！",
     icon: "🍜",
     instagram: "https://www.instagram.com/mokkedanonoodle/",
-    menu: ["ラーメン"],
+    menu: ["煮干しラーメン", "こだわりラーメン"],
+    bannerTitle: "中華そば雲ノ糸 / ラーメンもっけだの",
+    bannerSub: "山形の行列人気ラーメン店がキッチンカーで登場！",
+    bannerColor: "from-blue-600 to-slate-800",
   },
   {
     id: 102,
@@ -555,10 +667,13 @@ const STALLS_DATA: StallItem[] = [
     dept: "キッチンカー",
     location: "学生昇降口前ロータリー",
     zoneId: "entrance",
-    description: "とろける口溶けの本格本わらび餅や、出来立てふわふわのベビーカステラ！",
-    icon: "🍡",
+    description: "ゆめかわで世界一可愛い♡ユニコーンベビーカステラ「coco Claire」登場！山形県産つや姫米粉使用で冷めても“ふわっふわ＆もちもち”！",
+    icon: "🧁",
     instagram: "https://www.instagram.com/gion_hannari_cafe/",
-    menu: ["本わらび餅", "ベビーカステラ等"],
+    menu: ["ユニコーンベビーカステラ", "本わらび餅"],
+    bannerTitle: "祇園はんなりCafé",
+    bannerSub: "つや姫米粉使用♡ふわっふわユニコーンベビーカステラ",
+    bannerColor: "from-pink-400 to-purple-500",
   },
   {
     id: 103,
@@ -568,16 +683,19 @@ const STALLS_DATA: StallItem[] = [
     dept: "キッチンカー",
     location: "学生昇降口前ロータリー",
     zoneId: "entrance",
-    description: "フルーツたっぷりのフレッシュスムージー＆スパイシーで食欲をそそる本格ガパオライス！",
+    description: "「腸活」テーマのヘルシーメニュー！白砂糖・無添加濃厚スムージー、大豆ミート本格ガパオライス、罪悪感なし人気スイーツ！",
     icon: "🥤",
     instagram: "https://www.instagram.com/felicitaplus.sakata/",
-    menu: ["スムージー", "ガパオライス等"],
+    menu: ["濃厚スムージー", "ガパオライス", "スイーツ"],
+    bannerTitle: "フェリチタプラス",
+    bannerSub: "腸活テーマ♡無添加スムージー＆本格ガパオライス",
+    bannerColor: "from-emerald-500 to-teal-700",
   },
 
   // --- 金券販売 (ticket) ---
   {
     id: 501,
-    title: "金券販売",
+    title: "金券販売（高専銀行券）",
     category: "校内施設・その他",
     grade: "本部",
     dept: "実行委員会",
@@ -585,8 +703,11 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "ticket",
     floor: "1F",
     roomNo: "金券販売",
-    description: "模擬店等で使用できる金券の販売を行っています。お買い求めはこちらでどうぞ！",
+    description: "模擬店等で使用できる100円金券の販売を行っています（1回上限3000円分）。払い戻しは10/24 15:00まで！",
     icon: "🎟️",
+    bannerTitle: "金券販売（100円券）",
+    bannerSub: "1回につき上限3000円分まで購入可能です",
+    bannerColor: "from-amber-600 to-yellow-700",
   },
   {
     id: 502,
@@ -647,7 +768,7 @@ const STALLS_DATA: StallItem[] = [
   },
 ];
 
-// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土))
+// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土)) - パンフレットMAIN EVENTSのコメントに完全準拠
 const EVENTS_DATA = [
   {
     day: 1,
@@ -669,7 +790,7 @@ const EVENTS_DATA = [
             endTime: "10:30",
             title: "オープニング",
             org: "実行委員会",
-            desc: "高専祭の開会セレモニー！",
+            desc: "吹奏楽部の演奏で高専祭の幕が上がる! OPムービーで何かが起きるかも!?",
             tag: "セレモニー",
             icon: "🎉",
           },
@@ -678,9 +799,9 @@ const EVENTS_DATA = [
             time: "11:00 - 12:30",
             startTime: "11:00",
             endTime: "12:30",
-            title: "カラオケ企画 2026KOSEN歌謡祭 秋",
+            title: "2026 KOSEN 歌謡祭 秋",
             org: "実行委員会",
-            desc: "高専生の自慢の歌声を競う熱いカラオケステージ！",
+            desc: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
             tag: "歌謡祭",
             icon: "🎤",
           },
@@ -689,9 +810,9 @@ const EVENTS_DATA = [
             time: "13:30 - 15:00",
             startTime: "13:30",
             endTime: "15:00",
-            title: "音部（音楽部ライブ）",
+            title: "音部ライブ",
             org: "音楽部",
-            desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
+            desc: "音が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください!",
             tag: "ライブ",
             icon: "🎸",
           },
@@ -708,9 +829,9 @@ const EVENTS_DATA = [
             time: "13:00 - 15:00",
             startTime: "13:00",
             endTime: "15:00",
-            title: "クラス対抗リレー カリモノ競争",
+            title: "カリモノ競争",
             org: "実行委員会",
-            desc: "何を引き当てるか分からない！？大興奮のクラス対抗リレー！",
+            desc: "勝負を決めるのは、走力とひらめき。仲間とつなぐバトン、最後に笑うのはどのクラスか?",
             tag: "競技・企画",
             icon: "🏃",
           },
@@ -729,7 +850,7 @@ const EVENTS_DATA = [
             endTime: "12:00",
             title: "高専生の主張",
             org: "実行委員会",
-            desc: "高専生が日頃の思いや愛を大声で叫ぶ伝統の大人気企画！",
+            desc: "胸に秘めた思いを、ここで大放出! 普段は言えない熱い思いを、今こそ叫べ",
             tag: "ステージ企画",
             icon: "📢",
           },
@@ -776,7 +897,7 @@ const EVENTS_DATA = [
             endTime: "11:00",
             title: "腕立て選手権 あつまれ きんにくの森",
             org: "実行委員会",
-            desc: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
+            desc: "試されるのは、筋力と精神力。己の限界に挑み、最後まで立ち向かえ!",
             tag: "競技・企画",
             icon: "💪",
           },
@@ -785,9 +906,9 @@ const EVENTS_DATA = [
             time: "12:00 - 13:00",
             startTime: "12:00",
             endTime: "13:00",
-            title: "漫才 鶴専-1グランプリ",
+            title: "鶴専-1グランプリ",
             org: "有志企画",
-            desc: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
+            desc: "高専祭史上初の漫才企画! 笑いの準備はできているか? 個性豊かなコンビたちが繰り広げる!",
             tag: "お笑い",
             icon: "🎙",
           },
@@ -796,9 +917,9 @@ const EVENTS_DATA = [
             time: "13:30 - 14:30",
             startTime: "13:30",
             endTime: "14:30",
-            title: "ダンス DoKa Project",
+            title: "DoKa Project",
             org: "ダンス部・有志",
-            desc: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
+            desc: "高専祭の最後を締めくくるダンス企画! 音楽にのせて最高のパフォーマンスを!",
             tag: "ダンス",
             icon: "💃",
           },
@@ -809,7 +930,7 @@ const EVENTS_DATA = [
             endTime: "15:30",
             title: "エンディング",
             org: "全校・実行委員会",
-            desc: "高専祭の感動のフィナーレ！",
+            desc: "EDムービーでOPの謎が明らかに! 最高の文化祭を締めくくろう!",
             tag: "セレモニー",
             icon: "🎆",
           },
@@ -858,7 +979,7 @@ const EVENTS_DATA = [
             endTime: "11:45",
             title: "吹奏楽部 ミニコンサート",
             org: "吹奏楽部",
-            desc: "吹奏楽部によるミニコンサートを開催します！素敵な演奏をお楽しみください！",
+            desc: "吹奏楽部によるミニコンサート（嵐メドレー等）を開催します！素敵な演奏をお楽しみください！",
             tag: "演奏",
             icon: "🎷",
           },
@@ -875,9 +996,9 @@ const EVENTS_DATA = [
             time: "10:00 - 15:00",
             startTime: "10:00",
             endTime: "15:00",
-            title: "音楽部 ライブ",
+            title: "音部ライブ（音楽部）",
             org: "音楽部",
-            desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
+            desc: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください! (YOUTH RIOT FES VOL.4)",
             tag: "ライブ",
             icon: "🎸",
           },
@@ -1276,7 +1397,7 @@ export default function Page() {
     }, 50);
   };
 
-  // リアルタイムLIVEイベント特定ロジック（日付一致のみで判定）
+  // リアルタイムLIVEイベント特定ロジック
   const liveEvents = useMemo(() => {
     if (!currentTime) return [];
 
@@ -1416,7 +1537,7 @@ export default function Page() {
             TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
-          {/* 大きく表示変更した「熱狂のカニバル 高専祭」アニメーション */}
+          {/* 「熱狂のカーニバル 高専祭」アニメーション */}
           <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans scale-110 sm:scale-125 my-2">
             <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-md">
               <div className="text-5xl sm:text-7xl flex">
@@ -1759,7 +1880,7 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* 音楽部プレハブ選択時に表示される直線＆斜め線の移動経路（隙間あり矢印セグメント） */}
+                {/* 音楽部プレハブ選択時に表示される移動経路（校内図-通行止め_6.jpeg完全忠実再現） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-35">
                     <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
@@ -1772,25 +1893,28 @@ export default function Page() {
                         </filter>
                       </defs>
 
-                      {/* 画像（校内図-通行止め_5.jpeg）と同じ正確な経路（垂直・水平・斜め直線） */}
+                      {/* 添付画像（校内図-通行止め_6.jpeg）の黒線通りに完全再現した連続経路（セグメント） */}
                       {[
-                        // 1. 右側道路の北上セグメント (垂直)
-                        { x1: 575, y1: 215, x2: 575, y2: 165 },
-                        { x1: 575, y1: 155, x2: 575, y2: 112 },
-                        // 2. 北側道路の東側西進セグメント (水平)
-                        { x1: 568, y1: 112, x2: 505, y2: 112 },
-                        { x1: 495, y1: 112, x2: 435, y2: 112 },
-                        // 3. クランク部の斜め直線セグメント
-                        { x1: 425, y1: 112, x2: 380, y2: 128 },
-                        // 4. 北側道路の西側西進セグメント (水平)
-                        { x1: 370, y1: 128, x2: 305, y2: 128 },
-                        { x1: 295, y1: 128, x2: 230, y2: 128 },
-                        { x1: 220, y1: 128, x2: 155, y2: 128 },
-                        { x1: 145, y1: 128, x2: 100, y2: 128 },
-                        // 5. 体育館西側の南下セグメント (垂直・先端矢印)
-                        { x1: 94, y1: 138, x2: 94, y2: 190 },
-                        { x1: 94, y1: 200, x2: 94, y2: 255 },
-                        { x1: 94, y1: 265, x2: 94, y2: 318 },
+                        // 1. 東側道路を北上 (y:215 -> y:72)
+                        { x1: 575, y1: 215, x2: 575, y2: 140 },
+                        { x1: 575, y1: 130, x2: 575, y2: 72 },
+
+                        // 2. 北側道路を西進 (x:575 -> x:385, y:72)
+                        { x1: 568, y1: 72, x2: 480, y2: 72 },
+                        { x1: 470, y1: 72, x2: 385, y2: 72 },
+
+                        // 3. クランク部分（斜め南西へ下る） (x:385, y:72 -> x:360, y:92)
+                        { x1: 385, y1: 72, x2: 360, y2: 92 },
+
+                        // 4. 北側道路西エリアを西進 (x:360 -> x:112, y:92)
+                        { x1: 352, y1: 92, x2: 270, y2: 92 },
+                        { x1: 260, y1: 92, x2: 180, y2: 92 },
+                        { x1: 170, y1: 92, x2: 112, y2: 92 },
+
+                        // 5. 体育館西側を南下してプレハブへ (y:92 -> y:300, 矢印)
+                        { x1: 112, y1: 100, x2: 112, y2: 165 },
+                        { x1: 112, y1: 175, x2: 112, y2: 240 },
+                        { x1: 112, y1: 250, x2: 112, y2: 300 },
                       ].map((seg, i) => (
                         <g key={i} filter="url(#glowShadow)">
                           {/* 下地白枠線 */}
@@ -1818,8 +1942,8 @@ export default function Page() {
                       ))}
                     </svg>
 
-                    {/* 移動経路バッジ */}
-                    <div className="absolute top-[18%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
+                    {/* 移動経路バッジ (要望により5%上へ移動: top-[18%] -> top-[13%]) */}
+                    <div className="absolute top-[13%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
                       <span>🚶‍♂️</span>
                       <span>移動経路</span>
                     </div>
@@ -2168,7 +2292,7 @@ export default function Page() {
 
                             <h3 className="font-black text-base text-slate-900">{event.title}</h3>
                             <p className="text-xs text-slate-500 font-bold">主催・担当: {event.org}</p>
-                            <p className="text-xs text-slate-600 leading-relaxed pt-1">{event.desc}</p>
+                            <p className="text-xs text-slate-600 leading-relaxed pt-1 font-medium">{event.desc}</p>
                           </div>
                         </div>
                       </div>
@@ -2330,14 +2454,14 @@ export default function Page() {
         )}
       </main>
 
-      {/* モーダル1: 出店・施設詳細 */}
+      {/* モーダル1: 出店・施設詳細（パンフレット画像・PRカード対応） */}
       {modalItem && (
-        <div className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-5 space-y-4">
+        <div className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white w-full max-w-sm sm:max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+            <div className="p-5 space-y-4 overflow-y-auto custom-map-scrollbar">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl p-3 bg-orange-50 rounded-2xl">{modalItem.icon}</span>
+                  <span className="text-4xl p-3 bg-orange-50 rounded-2xl shrink-0">{modalItem.icon}</span>
                   <div>
                     <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
                       {modalItem.grade}
@@ -2348,10 +2472,26 @@ export default function Page() {
                 </div>
                 <button
                   onClick={() => setModalItem(null)}
-                  className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition"
+                  className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition shrink-0"
                 >
                   <X className="w-5 h-5" />
                 </button>
+              </div>
+
+              {/* パンフレットPR画像 / ポスターカードグラフィック表示 */}
+              <div className={`w-full rounded-2xl p-4 bg-gradient-to-br ${modalItem.bannerColor || "from-slate-800 to-slate-900"} text-white shadow-md relative overflow-hidden flex flex-col items-center text-center justify-center min-h-[120px] border border-white/20 select-none`}>
+                <div className="absolute top-2 left-2.5 flex items-center gap-1 text-[10px] font-black tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded-full text-white/90">
+                  <ImageIcon className="w-3 h-3" />
+                  <span>パンフレット掲載 PR</span>
+                </div>
+                <div className="pt-4 space-y-1">
+                  <h4 className="font-black text-lg sm:text-xl drop-shadow-sm tracking-wide">
+                    {modalItem.bannerTitle || modalItem.title}
+                  </h4>
+                  <p className="text-xs text-white/90 font-bold tracking-normal leading-tight px-2">
+                    {modalItem.bannerSub || modalItem.description}
+                  </p>
+                </div>
               </div>
 
               <div className="space-y-2 text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
@@ -2376,7 +2516,7 @@ export default function Page() {
 
               <div className="space-y-2 pt-2 border-t border-slate-100">
                 <div className="flex items-center gap-2 text-xs font-extrabold text-slate-600">
-                  <MapPin className="w-4 h-4 text-orange-500" />
+                  <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
                   <span>{modalItem.location}</span>
                 </div>
 
