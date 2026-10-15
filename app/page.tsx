@@ -896,9 +896,9 @@ const CAMPUS_ZONES = [
     pinLabel: "音楽部プレハブ",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "🎸",
-    top: "81.0%",
+    top: "76.0%", // 上方向に5%移動 (81.0% -> 76.0%)
     left: "11.4%",
-    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに指定通行順路と通行禁止エリアが表示されます。",
+    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに移動経路と通行禁止エリアが表示されます。",
   },
   {
     id: "yamazaki",
@@ -1749,21 +1749,21 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 音楽部プレハブ選択時の見栄え良い順路＆通行禁止オーバーレイ */}
+                {/* 音楽部プレハブ選択時の見栄え良い移動経路＆通行禁止オーバーレイ */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
                       <defs>
-                        <marker id="routeArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <marker id="routeArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
                           <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
                         </marker>
                         <filter id="glowShadow" x="-20%" y="-20%" width="140%" height="140%">
                           <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.3"/>
                         </filter>
                       </defs>
-                      {/* 外枠白線 */}
+                      {/* 外枠白線（添付画像の北側道路の折れ曲がりに忠実に沿うパス） */}
                       <path
-                        d="M 575 220 L 575 112 L 114 112 L 114 330"
+                        d="M 575 220 L 575 112 L 380 112 L 360 132 L 100 132 L 100 330"
                         fill="none"
                         stroke="#FFFFFF"
                         strokeWidth="8"
@@ -1772,7 +1772,7 @@ export default function Page() {
                       />
                       {/* メイン青線 */}
                       <path
-                        d="M 575 220 L 575 112 L 114 112 L 114 330"
+                        d="M 575 220 L 575 112 L 380 112 L 360 132 L 100 132 L 100 330"
                         fill="none"
                         stroke="#2563EB"
                         strokeWidth="4"
@@ -1781,28 +1781,33 @@ export default function Page() {
                         markerEnd="url(#routeArrow)"
                         filter="url(#glowShadow)"
                       />
-                      {/* アニメーション内側点線 */}
+                      {/* アニメーション内側破線 */}
                       <path
-                        d="M 575 220 L 575 112 L 114 112 L 114 330"
+                        d="M 575 220 L 575 112 L 380 112 L 360 132 L 100 132 L 100 330"
                         fill="none"
                         stroke="#93C5FD"
-                        strokeWidth="2"
-                        strokeDasharray="6 6"
+                        strokeWidth="2.5"
+                        strokeDasharray="4 4"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
+                      {/* 経路上の細かいスパンでの矢印配置 */}
+                      <polygon points="572,165 575,155 578,165" fill="#2563EB" />
+                      <polygon points="480,109 470,112 480,115" fill="#2563EB" />
+                      <polygon points="250,129 240,132 250,135" fill="#2563EB" />
+                      <polygon points="97,230 100,240 103,230" fill="#2563EB" />
                     </svg>
 
-                    {/* 指定順路ラベル */}
+                    {/* 移動経路バッジ */}
                     <div className="absolute top-[8%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
                       <span>🚶‍♂️</span>
-                      <span>指定順路</span>
+                      <span>移動経路</span>
                     </div>
 
-                    {/* 通行禁止バッジ */}
-                    <div className="absolute top-[73%] left-[23.5%] -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-lg shadow-lg border-2 border-white flex items-center gap-1 select-none">
-                      <span className="text-sm font-black">✕</span>
-                      <span>通行禁止</span>
+                    {/* 通行禁止バッジ（上方向に3%移動、左方向基点で拡大表示） */}
+                    <div className="absolute top-[70%] left-[21%] -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs sm:text-sm font-black px-3 py-1.5 rounded-xl shadow-xl border-2 border-white flex items-center gap-1.5 select-none scale-125 origin-right">
+                      <span className="text-base font-black">✕</span>
+                      <span className="text-xs sm:text-sm font-black tracking-wider">通行禁止</span>
                     </div>
                   </div>
                 )}
@@ -1861,6 +1866,8 @@ export default function Page() {
                             className={`absolute bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight flex flex-col items-center whitespace-nowrap px-2.5 py-1 ${
                               zone.id === "bldg4"
                                 ? "left-full top-1/2 -translate-y-1/2 ml-2"
+                                : zone.id === "prefab"
+                                ? "top-full left-1/2 -translate-x-1/2 mt-1.5" // プレハブの表示をピンの下に配置
                                 : "bottom-full left-1/2 -translate-x-1/2 mb-1.5"
                             }`}
                           >
@@ -2173,7 +2180,19 @@ export default function Page() {
               </div>
 
               <div className="space-y-3 text-xs leading-relaxed font-bold">
-                {/* お車のご利用について */}
+                {/* 校内での注意事項（「ご来場時のお車のご利用について」の上に配置） */}
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
+                    <Info className="w-4 h-4 text-slate-600 shrink-0" />
+                    <span>校内での注意事項</span>
+                  </div>
+                  <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                    <li>校内は<strong className="font-black underline">全面禁煙</strong>です。</li>
+                    <li><strong className="font-black underline">酒類の持ち込み・飲酒は厳禁</strong>となっております。</li>
+                  </ul>
+                </div>
+
+                {/* ご来場時のお車のご利用について */}
                 <div className="bg-amber-50/80 p-3.5 rounded-2xl border border-amber-200/80 space-y-1.5">
                   <div className="flex items-center gap-2 text-xs font-black text-amber-900">
                     <Car className="w-4 h-4 text-amber-600 shrink-0" />
@@ -2182,18 +2201,6 @@ export default function Page() {
                   <p className="text-xs text-amber-800 font-medium leading-relaxed">
                     校内の指定駐車場は駐車台数に大変限りがございます。ご来校の際は可能な限り公共交通機関（路線バス等）のご利用にご協力をお願いいたします。
                   </p>
-                </div>
-
-                {/* その他の注意事項 */}
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                    <Info className="w-4 h-4 text-slate-600 shrink-0" />
-                    <span>校内での注意事項</span>
-                  </div>
-                  <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
-                    <li>校内は全面禁煙です。</li>
-                    <li>酒類の持ち込み・飲酒は厳禁となっております。</li>
-                  </ul>
                 </div>
               </div>
             </div>
