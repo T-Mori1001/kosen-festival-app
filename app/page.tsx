@@ -648,136 +648,351 @@ const STALLS_DATA: StallItem[] = [
   },
 ];
 
-// ステージ・タイムスケジュールデータ
+// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土))
 const EVENTS_DATA = [
   {
-    stageId: "gym2",
-    stageName: "第二体育館",
-    location: "第二体育館",
-    locationZoneId: "gym2",
-    schedule: [
+    day: 1,
+    dateLabel: "1日目：10/23（金）",
+    dateStr: "10/23",
+    month: 10,
+    dayOfMonth: 23,
+    stages: [
       {
-        id: "g2_1",
-        time: "10:00 - 15:00",
-        startTime: "10:00",
-        endTime: "15:00",
-        title: "音楽部 ライブステージ",
-        org: "音楽部",
-        desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
-        tag: "ライブ",
-        icon: "🎸",
+        stageId: "gym1",
+        stageName: "第一体育館",
+        location: "第一体育館",
+        locationZoneId: "gym1",
+        schedule: [
+          {
+            id: "d1_g1_1",
+            time: "10:00 - 10:30",
+            startTime: "10:00",
+            endTime: "10:30",
+            title: "オープニング",
+            org: "実行委員会",
+            desc: "高専祭の開会セレモニー！",
+            tag: "セレモニー",
+            icon: "🎉",
+          },
+          {
+            id: "d1_g1_2",
+            time: "10:30 - 11:00",
+            startTime: "10:30",
+            endTime: "11:00",
+            title: "カラオケ企画準備",
+            org: "実行委員会",
+            desc: "カラオケ大会の事前セッティング・音響チェック",
+            tag: "準備",
+            icon: "🛠️",
+          },
+          {
+            id: "d1_g1_3",
+            time: "11:00 - 12:30",
+            startTime: "11:00",
+            endTime: "12:30",
+            title: "カラオケ企画 2026KOSEN歌謡祭 秋",
+            org: "実行委員会",
+            desc: "高専生の自慢の歌声を競う熱いカラオケステージ！",
+            tag: "歌謡祭",
+            icon: "🎤",
+          },
+          {
+            id: "d1_g1_4",
+            time: "12:30 - 13:00",
+            startTime: "12:30",
+            endTime: "13:00",
+            title: "休憩",
+            org: "全校",
+            desc: "お昼休憩・ステージメンテナンス",
+            tag: "休憩",
+            icon: "🍱",
+          },
+          {
+            id: "d1_g1_5",
+            time: "13:00 - 13:30",
+            startTime: "13:00",
+            endTime: "13:30",
+            title: "音部準備",
+            org: "音楽部",
+            desc: "音楽部ライブの機材搬入・セッティング",
+            tag: "準備",
+            icon: "🎸",
+          },
+          {
+            id: "d1_g1_6",
+            time: "13:30 - 15:00",
+            startTime: "13:30",
+            endTime: "15:00",
+            title: "音部（音楽部ライブ）",
+            org: "音楽部",
+            desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
+            tag: "ライブ",
+            icon: "🎸",
+          },
+        ],
+      },
+      {
+        stageId: "gym_around",
+        stageName: "体育館の周り",
+        location: "体育館周辺",
+        locationZoneId: "gym1",
+        schedule: [
+          {
+            id: "d1_ga_1",
+            time: "13:00 - 15:00",
+            startTime: "13:00",
+            endTime: "15:00",
+            title: "クラス対抗リレー カリモノ競争",
+            org: "実行委員会",
+            desc: "何を引き当てるか分からない！？大興奮のクラス対抗リレー！",
+            tag: "競技・企画",
+            icon: "🏃",
+          },
+        ],
+      },
+      {
+        stageId: "entrance_balcony",
+        stageName: "昇降口前バルコニー",
+        location: "学生昇降口",
+        locationZoneId: "entrance",
+        schedule: [
+          {
+            id: "d1_eb_1",
+            time: "11:00 - 12:00",
+            startTime: "11:00",
+            endTime: "12:00",
+            title: "高専生の主張",
+            org: "実行委員会",
+            desc: "高専生が日頃の思いや愛を大声で叫ぶ伝統の大人気企画！",
+            tag: "ステージ企画",
+            icon: "📢",
+          },
+        ],
+      },
+      {
+        stageId: "joint",
+        stageName: "1号館 合同講義室",
+        location: "合同講義室",
+        locationZoneId: "bldg1",
+        schedule: [
+          {
+            id: "d1_j_1",
+            time: "08:30 - 10:00",
+            startTime: "08:30",
+            endTime: "10:00",
+            title: "出欠確認・各自準備",
+            org: "実行委員会",
+            desc: "1日目の出欠確認および企画準備",
+            tag: "準備",
+            icon: "📋",
+          },
+          {
+            id: "d1_j_2",
+            time: "10:00 - 10:30",
+            startTime: "10:00",
+            endTime: "10:30",
+            title: "参加者募集",
+            org: "ゲーム企画運営",
+            desc: "ゲーム大会参加者の受付およびルール説明を行います。",
+            tag: "受付",
+            icon: "📝",
+          },
+          {
+            id: "d1_j_3",
+            time: "10:30 - 15:30",
+            startTime: "10:30",
+            endTime: "15:30",
+            title: "ゲーム企画 今日、ゲームになりました。",
+            org: "実行委員会",
+            desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
+            tag: "eスポーツ",
+            icon: "🎮",
+          },
+        ],
       },
     ],
   },
   {
-    stageId: "gym1",
-    stageName: "第一体育館",
-    location: "第一体育館",
-    locationZoneId: "gym1",
-    schedule: [
+    day: 2,
+    dateLabel: "2日目：10/24（土）",
+    dateStr: "10/24",
+    month: 10,
+    dayOfMonth: 24,
+    stages: [
       {
-        id: "g1_1",
-        time: "10:00 - 11:00",
-        startTime: "10:00",
-        endTime: "11:00",
-        title: "腕立て選手権 あつまれ きんにくの森",
-        org: "実行委員会",
-        desc: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
-        tag: "競技・企画",
-        icon: "💪",
+        stageId: "gym1",
+        stageName: "第一体育館",
+        location: "第一体育館",
+        locationZoneId: "gym1",
+        schedule: [
+          {
+            id: "d2_g1_1",
+            time: "10:00 - 11:00",
+            startTime: "10:00",
+            endTime: "11:00",
+            title: "腕立て選手権 あつまれ きんにくの森",
+            org: "実行委員会",
+            desc: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
+            tag: "競技・企画",
+            icon: "💪",
+          },
+          {
+            id: "d2_g1_2",
+            time: "11:00 - 11:30",
+            startTime: "11:00",
+            endTime: "11:30",
+            title: "休憩",
+            org: "全校",
+            desc: "ステージメンテナンス・休憩",
+            tag: "休憩",
+            icon: "☕",
+          },
+          {
+            id: "d2_g1_3",
+            time: "11:30 - 12:00",
+            startTime: "11:30",
+            endTime: "12:00",
+            title: "漫才企画準備",
+            org: "有志・実行委員会",
+            desc: "鶴専-1グランプリの準備・マイクチェック",
+            tag: "準備",
+            icon: "🎤",
+          },
+          {
+            id: "d2_g1_4",
+            time: "12:00 - 13:00",
+            startTime: "12:00",
+            endTime: "13:00",
+            title: "漫才 鶴専-1グランプリ",
+            org: "有志企画",
+            desc: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
+            tag: "お笑い",
+            icon: "🎙",
+          },
+          {
+            id: "d2_g1_5",
+            time: "13:00 - 13:30",
+            startTime: "13:00",
+            endTime: "13:30",
+            title: "ダンス企画準備",
+            org: "ダンス部・有志",
+            desc: "ダンスステージの準備・リハーサル",
+            tag: "準備",
+            icon: "💃",
+          },
+          {
+            id: "d2_g1_6",
+            time: "13:30 - 14:30",
+            startTime: "13:30",
+            endTime: "14:30",
+            title: "ダンス DoKa Project",
+            org: "ダンス部・有志",
+            desc: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
+            tag: "ダンス",
+            icon: "💃",
+          },
+          {
+            id: "d2_g1_7",
+            time: "14:30 - 15:30",
+            startTime: "14:30",
+            endTime: "15:30",
+            title: "エンディング",
+            org: "全校・実行委員会",
+            desc: "高専祭の感動のフィナーレ！（ダンス企画からの移行時間含む）",
+            tag: "セレモニー",
+            icon: "🎆",
+          },
+        ],
       },
       {
-        id: "g1_2",
-        time: "12:00 - 13:00",
-        startTime: "12:00",
-        endTime: "13:00",
-        title: "漫才 鶴専-1グランプリ",
-        org: "有志企画",
-        desc: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
-        tag: "お笑い",
-        icon: "🎙",
+        stageId: "joint",
+        stageName: "1号館 合同講義室",
+        location: "合同講義室",
+        locationZoneId: "bldg1",
+        schedule: [
+          {
+            id: "d2_j_1",
+            time: "08:30 - 10:00",
+            startTime: "08:30",
+            endTime: "10:00",
+            title: "出欠確認・各自準備",
+            org: "実行委員会",
+            desc: "2日目の出欠確認および企画準備",
+            tag: "準備",
+            icon: "📋",
+          },
+          {
+            id: "d2_j_2",
+            time: "10:00 - 10:30",
+            startTime: "10:00",
+            endTime: "10:30",
+            title: "参加者募集",
+            org: "ゲーム企画運営",
+            desc: "ゲーム大会参加者の受付およびルール説明を行います。",
+            tag: "受付",
+            icon: "📝",
+          },
+          {
+            id: "d2_j_3",
+            time: "10:30 - 15:00",
+            startTime: "10:30",
+            endTime: "15:00",
+            title: "ゲーム企画 今日、ゲームになりました。",
+            org: "実行委員会",
+            desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
+            tag: "eスポーツ",
+            icon: "🎮",
+          },
+        ],
       },
       {
-        id: "g1_3",
-        time: "13:30 - 14:30",
-        startTime: "13:30",
-        endTime: "14:30",
-        title: "ダンス DoKa Project",
-        org: "ダンス部・有志",
-        desc: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
-        tag: "ダンス",
-        icon: "💃",
+        stageId: "gym2",
+        stageName: "第二体育館",
+        location: "第二体育館",
+        locationZoneId: "gym2",
+        schedule: [
+          {
+            id: "d2_g2_1",
+            time: "10:00 - 15:00",
+            startTime: "10:00",
+            endTime: "15:00",
+            title: "★音楽部 体育館ライブ",
+            org: "音楽部",
+            desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
+            tag: "ライブ",
+            icon: "🎸",
+          },
+        ],
       },
       {
-        id: "g1_4",
-        time: "14:30 - 15:30",
-        startTime: "14:30",
-        endTime: "15:30",
-        title: "エンディング",
-        org: "全校・実行委員会",
-        desc: "高専祭の感動のフィナーレ！",
-        tag: "セレモニー",
-        icon: "🎆",
-      },
-    ],
-  },
-  {
-    stageId: "joint",
-    stageName: "1号館 合同講義室",
-    location: "合同講義室",
-    locationZoneId: "bldg1",
-    schedule: [
-      {
-        id: "j_1",
-        time: "10:00 - 10:30",
-        startTime: "10:00",
-        endTime: "10:30",
-        title: "参加者募集",
-        org: "ゲーム企画運営",
-        desc: "ゲーム大会参加者の受付およびルール説明を行います。",
-        tag: "受付",
-        icon: "📝",
-      },
-      {
-        id: "j_2",
-        time: "10:30 - 15:00",
-        startTime: "10:30",
-        endTime: "15:00",
-        title: "今日、ゲームになりました。",
-        org: "実行委員会",
-        desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
-        tag: "eスポーツ",
-        icon: "🎮",
-      },
-    ],
-  },
-  {
-    stageId: "bldg8",
-    stageName: "8号館 大講義室",
-    location: "8号館 2階 大講義室",
-    locationZoneId: "bldg8",
-    schedule: [
-      {
-        id: "b8_1",
-        time: "09:00 - 11:45",
-        startTime: "09:00",
-        endTime: "11:45",
-        title: "吹奏楽部 ミニコンサート",
-        org: "吹奏楽部",
-        desc: "吹奏楽部によるミニコンサートを開催します！素敵な演奏をお楽しみください！",
-        tag: "演奏",
-        icon: "🎷",
-      },
-      {
-        id: "b8_2",
-        time: "13:00 - 14:00",
-        startTime: "13:00",
-        endTime: "14:00",
-        title: "学校説明会",
-        org: "広報・入試担当",
-        desc: "中学生・保護者の皆様に向けた鶴岡高専の学校説明会です。",
-        tag: "説明会",
-        icon: "🏫",
+        stageId: "bldg8",
+        stageName: "8号館 2階 大講義室",
+        location: "8号館 2階 大講義室",
+        locationZoneId: "bldg8",
+        schedule: [
+          {
+            id: "d2_b8_1",
+            time: "09:00 - 11:45",
+            startTime: "09:00",
+            endTime: "11:45",
+            title: "★吹奏楽部 ミニコンサート",
+            org: "吹奏楽部",
+            desc: "吹奏楽部によるミニコンサートを開催します！素敵な演奏をお楽しみください！",
+            tag: "演奏",
+            icon: "🎷",
+          },
+          {
+            id: "d2_b8_2",
+            time: "13:00 - 14:00",
+            startTime: "13:00",
+            endTime: "14:00",
+            title: "学校説明会",
+            org: "広報・入試担当",
+            desc: "中学生・保護者の皆様に向けた鶴岡高専の学校説明会です。",
+            tag: "説明会",
+            icon: "🏫",
+          },
+        ],
       },
     ],
   },
@@ -928,6 +1143,9 @@ export default function Page() {
   const [selectedCategory, setSelectedCategory] = useState<string>("すべて");
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
+
+  // 選択中のスケジュール日 (1: 10/23金, 2: 10/24土)
+  const [selectedDay, setSelectedDay] = useState<1 | 2>(1);
 
   // マップの初期ズーム倍率 3.0倍 (300%)
   const [zoomLevel, setZoomLevel] = useState<number>(3.0);
@@ -1120,17 +1338,30 @@ export default function Page() {
     setTimeout(() => scrollToRightSide(true), 50);
   };
 
-  // リアルタイムイベント特定ロジック
+  // リアルタイムイベント特定ロジック（日付・時刻考慮）
   const liveEvents = useMemo(() => {
     if (!currentTime) return [];
 
+    const currentMonth = currentTime.getMonth() + 1; // 1-12
+    const currentDate = currentTime.getDate(); // 1-31
     const currentHours = currentTime.getHours();
     const currentMinutes = currentTime.getMinutes();
     const currentTotalMinutes = currentHours * 60 + currentMinutes;
 
+    // 現在の日付が10/23か10/24か判定。それ以外の日の場合は選択中のタブ（selectedDay）を参照
+    let targetDayNumber = selectedDay;
+    if (currentMonth === 10 && currentDate === 23) {
+      targetDayNumber = 1;
+    } else if (currentMonth === 10 && currentDate === 24) {
+      targetDayNumber = 2;
+    }
+
+    const dayData = EVENTS_DATA.find((d) => d.day === targetDayNumber);
+    if (!dayData) return [];
+
     const list: Array<any> = [];
 
-    for (const stage of EVENTS_DATA) {
+    for (const stage of dayData.stages) {
       for (const event of stage.schedule) {
         const [startHour, startMin] = event.startTime.split(":").map(Number);
         const [endHour, endMin] = event.endTime.split(":").map(Number);
@@ -1143,12 +1374,14 @@ export default function Page() {
             ...event,
             stageName: stage.stageName,
             locationZoneId: stage.locationZoneId,
+            day: dayData.day,
+            dateStr: dayData.dateStr,
           });
         }
       }
     }
     return list;
-  }, [currentTime]);
+  }, [currentTime, selectedDay]);
 
   const primaryLiveEvent = liveEvents[0] || null;
 
@@ -1289,7 +1522,7 @@ export default function Page() {
           <div className="bg-white/95 border border-slate-200/80 shadow-md rounded-full px-5 py-2.5 flex items-center justify-center gap-2 text-xs font-extrabold text-slate-700">
             <span className="text-rose-600">高専祭</span>
             <span className="text-slate-300">|</span>
-            <span>10:00〜15:00</span>
+            <span>10/23(金)・10/24(土)</span>
             <span className="text-slate-400 font-normal">@鶴岡高専</span>
           </div>
 
@@ -1395,7 +1628,7 @@ export default function Page() {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 text-xs sm:text-sm font-black tracking-widest uppercase mb-1 opacity-90">
                 <Radio className="w-4 h-4 animate-live-fade" />
-                <span>ただいま実施中の企画 ({liveEvents.length}件)</span>
+                <span>ただいま実施中の企画 ({liveEvents.length}件 - {primaryLiveEvent.dateStr})</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 text-[13px] sm:text-base font-bold">
                 <span className="flex items-center gap-1 truncate">
@@ -1418,6 +1651,9 @@ export default function Page() {
 
             <button
               onClick={() => {
+                if (primaryLiveEvent.day) {
+                  setSelectedDay(primaryLiveEvent.day);
+                }
                 setActiveTab("events");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
@@ -1441,7 +1677,7 @@ export default function Page() {
             <img src="/高専ロゴ.jpg" alt="高専ロゴ" className="w-9 h-9 object-contain" />
             <div className="flex flex-col">
               <span className="font-black text-base text-slate-800 leading-tight">高専祭</span>
-              <span className="text-[10px] font-extrabold text-orange-600">10:00〜15:00</span>
+              <span className="text-[10px] font-extrabold text-orange-600">10/23(金)・10/24(土)</span>
             </div>
           </button>
 
@@ -1763,7 +1999,7 @@ export default function Page() {
 
             <div className="space-y-2">
               <p className="text-xs font-extrabold text-slate-500 px-1">
-                該当件数: {filteredStalls.length}件 （開催時間: 10:00〜15:00）
+                該当件数: {filteredStalls.length}件 （開催日程: 10/23[金]・10/24[土]）
               </p>
 
               {filteredStalls.length > 0 ? (
@@ -1822,14 +2058,40 @@ export default function Page() {
         {/* タブ 3: ステージ・タイムスケジュール */}
         {activeTab === "events" && (
           <div className="space-y-6">
+            {/* 1日目 / 2日目 切替タブ */}
+            <div className="flex bg-slate-200 p-1 rounded-2xl gap-1 shadow-inner">
+              <button
+                onClick={() => setSelectedDay(1)}
+                className={`flex-1 py-2.5 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 ${
+                  selectedDay === 1
+                    ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white shadow"
+                    : "text-slate-700 hover:bg-slate-300"
+                }`}
+              >
+                <Calendar className="w-4 h-4" />
+                <span>1日目：10/23（金）</span>
+              </button>
+              <button
+                onClick={() => setSelectedDay(2)}
+                className={`flex-1 py-2.5 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 ${
+                  selectedDay === 2
+                    ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white shadow"
+                    : "text-slate-700 hover:bg-slate-300"
+                }`}
+              >
+                <Calendar className="w-4 h-4" />
+                <span>2日目：10/24（土）</span>
+              </button>
+            </div>
+
             <div className="bg-orange-50 border border-orange-200 p-3.5 rounded-2xl text-xs font-bold text-orange-900 flex items-center justify-between">
-              <span>📅 高専祭 タイムスケジュール</span>
+              <span>📅 高専祭 {selectedDay === 1 ? "1日目 (10/23 金)" : "2日目 (10/24 土)"} タイムスケジュール</span>
               <span className="bg-orange-200 text-orange-900 px-2 py-0.5 rounded font-black text-[10px]">
-                10:00〜15:00
+                {selectedDay === 1 ? "10:00〜15:30" : "09:00〜15:30"}
               </span>
             </div>
 
-            {EVENTS_DATA.map((stage) => (
+            {EVENTS_DATA.find((d) => d.day === selectedDay)?.stages.map((stage) => (
               <div key={stage.stageId} className="space-y-3">
                 <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 rounded-3xl shadow-md flex items-center justify-between">
                   <div className="flex items-center gap-3">
