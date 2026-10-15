@@ -763,7 +763,7 @@ export default function Page() {
           setIsMapReady(true);
         });
       }, 50);
-      return () => (clearImmediate ? clearImmediate(timer) : clearTimeout(timer));
+      return () => clearTimeout(timer);
     }
   }, [isEntered, activeTab]);
 
