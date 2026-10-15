@@ -896,8 +896,8 @@ const CAMPUS_ZONES = [
     pinLabel: "音楽部プレハブ",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "🎸",
-    top: "76.0%", // 上方向に5%移動 (81.0% -> 76.0%)
-    left: "11.4%",
+    top: "76.0%",
+    left: "9.4%", // 2%左へ移動 (11.4% -> 9.4%)
     desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに移動経路と通行禁止エリアが表示されます。",
   },
   {
@@ -1749,65 +1749,76 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 音楽部プレハブ選択時の見栄え良い移動経路＆通行禁止オーバーレイ */}
+                {/* 音楽部プレハブ選択時の複数矢印（隙間あり）移動経路 ＆ 通行禁止オーバーレイ */}
                 {selectedZoneId === "prefab" && (
-                  <div className="absolute inset-0 pointer-events-none z-20">
+                  <div className="absolute inset-0 pointer-events-none z-35">
                     <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
                       <defs>
-                        <marker id="routeArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                        <marker id="blueArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                           <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
                         </marker>
                         <filter id="glowShadow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.3"/>
+                          <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.3"/>
                         </filter>
                       </defs>
-                      {/* 外枠白線（添付画像の北側道路の折れ曲がりに忠実に沿うパス） */}
-                      <path
-                        d="M 575 220 L 575 112 L 380 112 L 360 132 L 100 132 L 100 330"
-                        fill="none"
-                        stroke="#FFFFFF"
-                        strokeWidth="8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {/* メイン青線 */}
-                      <path
-                        d="M 575 220 L 575 112 L 380 112 L 360 132 L 100 132 L 100 330"
-                        fill="none"
-                        stroke="#2563EB"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        markerEnd="url(#routeArrow)"
-                        filter="url(#glowShadow)"
-                      />
-                      {/* アニメーション内側破線 */}
-                      <path
-                        d="M 575 220 L 575 112 L 380 112 L 360 132 L 100 132 L 100 330"
-                        fill="none"
-                        stroke="#93C5FD"
-                        strokeWidth="2.5"
-                        strokeDasharray="4 4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {/* 経路上の細かいスパンでの矢印配置 */}
-                      <polygon points="572,165 575,155 578,165" fill="#2563EB" />
-                      <polygon points="480,109 470,112 480,115" fill="#2563EB" />
-                      <polygon points="250,129 240,132 250,135" fill="#2563EB" />
-                      <polygon points="97,230 100,240 103,230" fill="#2563EB" />
+
+                      {/* 隙間を空けた複数の進行矢印セグメント群（白フチ＋青線＋矢印） */}
+                      {[
+                        // 1. 右側道路の北上セグメント
+                        { x1: 575, y1: 215, x2: 575, y2: 170 },
+                        { x1: 575, y1: 160, x2: 575, y2: 118 },
+                        // 2. 北側道路の西進セグメント（東側）
+                        { x1: 568, y1: 112, x2: 505, y2: 112 },
+                        { x1: 495, y1: 112, x2: 435, y2: 112 },
+                        // 3. クランク状の斜めセグメント
+                        { x1: 425, y1: 114, x2: 385, y2: 126 },
+                        // 4. 北側道路の西進セグメント（西側）
+                        { x1: 375, y1: 128, x2: 310, y2: 128 },
+                        { x1: 300, y1: 128, x2: 235, y2: 128 },
+                        { x1: 225, y1: 128, x2: 160, y2: 128 },
+                        { x1: 150, y1: 128, x2: 100, y2: 128 },
+                        // 5. 体育館西側の南下セグメント（プレハブピンの上へ到達）
+                        { x1: 94, y1: 138, x2: 94, y2: 190 },
+                        { x1: 94, y1: 200, x2: 94, y2: 255 },
+                        { x1: 94, y1: 265, x2: 94, y2: 318 }, // ピンの真上に重なる最終矢印
+                      ].map((seg, i) => (
+                        <g key={i} filter="url(#glowShadow)">
+                          {/* 下地白枠線 */}
+                          <line
+                            x1={seg.x1}
+                            y1={seg.y1}
+                            x2={seg.x2}
+                            y2={seg.y2}
+                            stroke="#FFFFFF"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                          />
+                          {/* メイン青矢印線 */}
+                          <line
+                            x1={seg.x1}
+                            y1={seg.y1}
+                            x2={seg.x2}
+                            y2={seg.y2}
+                            stroke="#2563EB"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            markerEnd="url(#blueArrow)"
+                          />
+                        </g>
+                      ))}
                     </svg>
 
-                    {/* 移動経路バッジ */}
-                    <div className="absolute top-[8%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
+                    {/* 移動経路バッジ（10%下に移動: top-[18%]） */}
+                    <div className="absolute top-[18%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
                       <span>🚶‍♂️</span>
                       <span>移動経路</span>
                     </div>
 
-                    {/* 通行禁止バッジ（上方向に3%移動、左方向基点で拡大表示） */}
-                    <div className="absolute top-[70%] left-[21%] -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs sm:text-sm font-black px-3 py-1.5 rounded-xl shadow-xl border-2 border-white flex items-center gap-1.5 select-none scale-125 origin-right">
-                      <span className="text-base font-black">✕</span>
+                    {/* 通行禁止バッジ（黄色背景・赤文字・赤枠、両側に🚧絵文字） */}
+                    <div className="absolute top-[70%] left-[21%] -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-red-700 text-xs sm:text-sm font-black px-3 py-1.5 rounded-xl shadow-xl border-2 border-red-600 flex items-center gap-1.5 select-none scale-125 origin-right">
+                      <span>🚧</span>
                       <span className="text-xs sm:text-sm font-black tracking-wider">通行禁止</span>
+                      <span>🚧</span>
                     </div>
                   </div>
                 )}
@@ -1867,7 +1878,7 @@ export default function Page() {
                               zone.id === "bldg4"
                                 ? "left-full top-1/2 -translate-y-1/2 ml-2"
                                 : zone.id === "prefab"
-                                ? "top-full left-1/2 -translate-x-1/2 mt-1.5" // プレハブの表示をピンの下に配置
+                                ? "top-full left-1/2 -translate-x-1/2 mt-1.5"
                                 : "bottom-full left-1/2 -translate-x-1/2 mb-1.5"
                             }`}
                           >
@@ -2180,7 +2191,7 @@ export default function Page() {
               </div>
 
               <div className="space-y-3 text-xs leading-relaxed font-bold">
-                {/* 校内での注意事項（「ご来場時のお車のご利用について」の上に配置） */}
+                {/* 校内での注意事項 */}
                 <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
                   <div className="flex items-center gap-2 text-xs font-black text-slate-800">
                     <Info className="w-4 h-4 text-slate-600 shrink-0" />
