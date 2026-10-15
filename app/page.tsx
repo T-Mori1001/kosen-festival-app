@@ -493,7 +493,7 @@ const STALLS_DATA: StallItem[] = [
     location: "4号館 412教室",
     zoneId: "bldg4",
     description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
-    icon: "🎴",
+    icon: "",
   },
 
   // --- 総合メディアセンター (media_center) ---
@@ -737,8 +737,8 @@ const EVENTS_DATA = [
       },
       {
         stageId: "joint",
-        stageName: "1号館 合同講義室",
-        location: "合同講義室",
+        stageName: "合同講義室",
+        location: "1号館 2階",
         locationZoneId: "bldg1",
         schedule: [
           {
@@ -817,8 +817,8 @@ const EVENTS_DATA = [
       },
       {
         stageId: "joint",
-        stageName: "1号館 合同講義室",
-        location: "合同講義室",
+        stageName: "合同講義室",
+        location: "1号館 2階",
         locationZoneId: "bldg1",
         schedule: [
           {
@@ -847,8 +847,8 @@ const EVENTS_DATA = [
       },
       {
         stageId: "bldg8",
-        stageName: "8号館 2階 大講義室",
-        location: "8号館 2階 大講義室",
+        stageName: "大講義室",
+        location: "8号館 2階",
         locationZoneId: "bldg8",
         schedule: [
           {
@@ -896,8 +896,8 @@ const CAMPUS_ZONES = [
     pinLabel: "音楽部プレハブ",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "🎸",
-    top: "61.0%",
-    left: "6.4%",
+    top: "81.0%",
+    left: "11.4%",
     desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに指定通行順路と通行禁止エリアが表示されます。",
   },
   {
@@ -1749,14 +1749,63 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 通行止め・順路案内画像 (音楽部プレハブ選択時のみ重ねて表示) */}
-                <img
-                  src="/校内図-通行止め.jpeg"
-                  alt="校内図 通行止め・順路案内"
-                  className={`absolute inset-0 w-full h-full object-contain pointer-events-none rounded-2xl transition-opacity duration-300 ${
-                    selectedZoneId === "prefab" ? "opacity-100 z-1" : "opacity-0"
-                  }`}
-                />
+                {/* 音楽部プレハブ選択時の見栄え良い順路＆通行禁止オーバーレイ */}
+                {selectedZoneId === "prefab" && (
+                  <div className="absolute inset-0 pointer-events-none z-20">
+                    <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
+                      <defs>
+                        <marker id="routeArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+                        </marker>
+                        <filter id="glowShadow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.3"/>
+                        </filter>
+                      </defs>
+                      {/* 外枠白線 */}
+                      <path
+                        d="M 575 220 L 575 112 L 114 112 L 114 330"
+                        fill="none"
+                        stroke="#FFFFFF"
+                        strokeWidth="8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      {/* メイン青線 */}
+                      <path
+                        d="M 575 220 L 575 112 L 114 112 L 114 330"
+                        fill="none"
+                        stroke="#2563EB"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        markerEnd="url(#routeArrow)"
+                        filter="url(#glowShadow)"
+                      />
+                      {/* アニメーション内側点線 */}
+                      <path
+                        d="M 575 220 L 575 112 L 114 112 L 114 330"
+                        fill="none"
+                        stroke="#93C5FD"
+                        strokeWidth="2"
+                        strokeDasharray="6 6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+
+                    {/* 指定順路ラベル */}
+                    <div className="absolute top-[8%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
+                      <span>🚶‍♂️</span>
+                      <span>指定順路</span>
+                    </div>
+
+                    {/* 通行禁止バッジ */}
+                    <div className="absolute top-[73%] left-[23.5%] -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-lg shadow-lg border-2 border-white flex items-center gap-1 select-none">
+                      <span className="text-sm font-black">✕</span>
+                      <span>通行禁止</span>
+                    </div>
+                  </div>
+                )}
 
                 {/* 校内マップのピン */}
                 {CAMPUS_ZONES.map((zone) => {
@@ -2110,139 +2159,151 @@ export default function Page() {
           </div>
         )}
 
-        {/* タブ 4: その他（金券案内 ＆ 交通・アクセス） */}
+        {/* タブ 4: その他（ご来場にあたってのお願い ＆ 金券案内 ＆ 鶴岡高専へのアクセス） */}
         {activeTab === "other" && (
           <div className="space-y-6">
-            {/* ① 金券について */}
-            <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 text-white p-5 rounded-3xl shadow-md space-y-4 relative overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-white/20 pb-3">
-                <Ticket className="w-7 h-7 text-amber-200 shrink-0" />
+            {/* ① ご来場にあたってのお願い */}
+            <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <span className="text-3xl p-2.5 bg-amber-50 rounded-2xl text-amber-600">⚠️</span>
                 <div>
-                  <h2 className="font-black text-xl tracking-wide">金券について</h2>
-                  <p className="text-xs text-amber-100 font-bold">模擬店・各種企画での支払い案内</p>
+                  <h2 className="font-black text-lg text-slate-900">ご来場にあたってのお願い</h2>
+                  <p className="text-xs text-slate-500 font-bold">快適・安全にご参加いただくための注意事項</p>
                 </div>
               </div>
 
               <div className="space-y-3 text-xs leading-relaxed font-bold">
-                <div className="bg-white/10 backdrop-blur-sm p-3.5 rounded-2xl border border-white/20 space-y-2">
-                  <div className="flex items-center gap-2 text-sm font-black text-amber-100">
-                    <span>💵 支払い・購入ルール</span>
+                {/* お車のご利用について */}
+                <div className="bg-amber-50/80 p-3.5 rounded-2xl border border-amber-200/80 space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-amber-900">
+                    <Car className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>ご来場時のお車のご利用について</span>
                   </div>
-                  <ul className="space-y-1.5 list-disc list-inside text-white/90">
-                    <li>模擬店や企画での支払い方法は<strong className="text-amber-200 underline">金券のみ</strong>です。</li>
-                    <li>キッチンカーでは<strong className="text-amber-200">金券の使用は不可</strong>となります。</li>
-                    <li className="text-amber-100 font-black">※1度につき金券の購入上限は3000円分です。</li>
+                  <p className="text-xs text-amber-800 font-medium leading-relaxed">
+                    校内の指定駐車場は駐車台数に大変限りがございます。ご来校の際は可能な限り公共交通機関（路線バス等）のご利用にご協力をお願いいたします。
+                  </p>
+                </div>
+
+                {/* その他の注意事項 */}
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
+                    <Info className="w-4 h-4 text-slate-600 shrink-0" />
+                    <span>校内での注意事項</span>
+                  </div>
+                  <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                    <li>校内は全面禁煙です。</li>
+                    <li>酒類の持ち込み・飲酒は厳禁となっております。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* ② 金券について */}
+            <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <span className="text-3xl p-2.5 bg-amber-50 rounded-2xl text-amber-600">🎟️</span>
+                <div>
+                  <h2 className="font-black text-lg text-slate-900">金券について</h2>
+                  <p className="text-xs text-slate-500 font-bold">模擬店・各種企画での支払い案内</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 text-xs leading-relaxed">
+                <div className="bg-amber-50/80 p-3.5 rounded-2xl border border-amber-200/80 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-black text-amber-900">
+                    <Ticket className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>支払い・購入ルール</span>
+                  </div>
+                  <ul className="space-y-1.5 list-disc list-inside text-amber-900/90 font-medium">
+                    <li>模擬店や企画での支払い方法は<strong className="text-amber-950 underline">金券のみ</strong>です。</li>
+                    <li>キッチンカーでは<strong className="text-amber-950">金券の使用は不可</strong>となります。</li>
+                    <li className="text-amber-900 font-black">※1度につき金券の購入上限は3000円分です。</li>
                     <li>1号館玄関付近の交流ラウンジで購入可能です。</li>
                   </ul>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm p-3.5 rounded-2xl border border-white/20 space-y-2">
-                  <div className="flex items-center gap-2 text-sm font-black text-amber-100">
-                    <span>🔄 払い戻しについて</span>
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
+                    <RotateCcw className="w-4 h-4 text-slate-600 shrink-0" />
+                    <span>払い戻しについて</span>
                   </div>
-                  <p className="text-white/90">
+                  <p className="text-slate-600 font-medium">
                     使いきれなかった金券は下記の有効期限内に払い戻し手続きをよろしくお願いします。
                   </p>
-                  <div className="bg-black/20 p-2.5 rounded-xl space-y-1 text-amber-100 font-extrabold text-[11px]">
+                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 space-y-1 text-slate-800 font-extrabold text-[11px]">
                     <p>・一般来場者：10/24(土) 15:00まで</p>
                     <p>・学生・教職員：後日昼休み</p>
                   </div>
-                  <p className="text-[11px] text-amber-200 font-black">※以降の払い戻しはできません。</p>
+                  <p className="text-[11px] text-rose-600 font-black">※以降の払い戻しはできません。</p>
                 </div>
               </div>
 
               <button
                 onClick={() => handleGoToMapPin("ticket")}
-                className="w-full py-3 bg-white text-orange-900 rounded-2xl font-black text-xs shadow-md hover:bg-amber-50 transition flex items-center justify-center gap-2 mt-2"
+                className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-xs shadow-md transition flex items-center justify-center gap-2"
               >
-                <MapPin className="w-4 h-4 text-orange-600" />
+                <MapPin className="w-4 h-4 text-orange-400" />
                 <span>金券販売（高専祭本部）の場所をマップで確認</span>
               </button>
             </div>
 
-            {/* ② アクセスガイド */}
-            <div className="space-y-4">
-              <div className="bg-amber-50 border border-amber-200 p-4 rounded-3xl shadow-sm flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <h3 className="text-xs font-black text-amber-900">
-                    【重要】ご来場時のお車のご利用について
-                  </h3>
-                  <p className="text-xs text-amber-800 font-medium leading-relaxed">
-                    <strong>※臨時駐車場はございません。</strong>
-                    校内の指定駐車場は駐車台数に大変限りがございます。ご来校の際は可能な限り公共交通機関（路線バス等）のご利用にご協力をお願いいたします。
+            {/* ③ 鶴岡高専へのアクセス */}
+            <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <span className="text-3xl p-2.5 bg-sky-50 rounded-2xl text-sky-600">🏫</span>
+                <div>
+                  <h2 className="font-black text-lg text-slate-900">鶴岡高専へのアクセス</h2>
+                  <p className="text-xs text-slate-500 font-bold">〒997-8511 山形県鶴岡市井岡字沢田104</p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="relative w-full h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
+                  <iframe
+                    title="鶴岡工業高等専門学校 Google Map"
+                    src="https://maps.google.com/maps?q=38.70950241993693,139.79776942224186&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                    className="w-full h-full border-0"
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+                <p className="text-[11px] text-center font-bold text-slate-400">
+                  ※ 指やマウス操作で自由な移動・拡大・縮小が可能です
+                </p>
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
+                    <Navigation className="w-4 h-4 text-sky-600" />
+                    <span>JR鶴岡駅から路線バス</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    JR鶴岡駅より庄内交通バス「湯野浜温泉行き（加茂経由）」乗車（約20分）、「高専前」バス停下車すぐ。
+                  </p>
+                </div>
+
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
+                    <Car className="w-4 h-4 text-emerald-600" />
+                    <span>お車でお越しの場合</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    山形自動車道「鶴岡IC」より約10分。構内駐車場の誘導に従って駐車してください。
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-                <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                  <span className="text-3xl p-2.5 bg-sky-50 rounded-2xl text-sky-600">🏫</span>
-                  <div>
-                    <h2 className="font-black text-lg text-slate-900">鶴岡高専へのアクセス</h2>
-                    <p className="text-xs text-slate-500 font-bold">〒997-8511 山形県鶴岡市井岡字沢田104</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="relative w-full h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
-                    <iframe
-                      title="鶴岡工業高等専門学校 Google Map"
-                      src="https://maps.google.com/maps?q=38.70950241993693,139.79776942224186&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                      className="w-full h-full border-0"
-                      allowFullScreen={true}
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
-                  </div>
-                  <p className="text-[11px] text-center font-bold text-slate-400">
-                    ※ 指やマウス操作で自由な移動・拡大・縮小が可能です
-                  </p>
-                </div>
-
-                <div className="space-y-3 pt-2">
-                  <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                      <Navigation className="w-4 h-4 text-sky-600" />
-                      <span>JR鶴岡駅から路線バス</span>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                      JR鶴岡駅より庄内交通バス「湯野浜温泉行き（加茂経由）」乗車（約20分）、「高専前」バス停下車すぐ。
-                    </p>
-                  </div>
-
-                  <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                      <Car className="w-4 h-4 text-emerald-600" />
-                      <span>お車でお越しの場合</span>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                      山形自動車道「鶴岡IC」より約10分。構内駐車場の誘導に従って駐車してください。
-                    </p>
-                  </div>
-
-                  <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                      <Info className="w-4 h-4 text-slate-600" />
-                      <span>ご来場にあたってのお願い</span>
-                    </div>
-                    <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
-                      <li>校内は全面禁煙です。</li>
-                      <li>酒類の持ち込み・飲酒は厳禁となっております。</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <a
-                  href="https://maps.google.com/?q=38.70950241993693,139.79776942224186"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-2xl font-black text-xs shadow transition flex items-center justify-center gap-2"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>Google マップアプリで開く</span>
-                </a>
-              </div>
+              <a
+                href="https://maps.google.com/?q=38.70950241993693,139.79776942224186"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-2xl font-black text-xs shadow transition flex items-center justify-center gap-2"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>Google マップアプリで開く</span>
+              </a>
             </div>
           </div>
         )}
