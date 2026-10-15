@@ -648,7 +648,7 @@ const STALLS_DATA: StallItem[] = [
   },
 ];
 
-// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土))
+// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土)) - 添付画像準拠
 const EVENTS_DATA = [
   {
     day: 1,
@@ -676,17 +676,6 @@ const EVENTS_DATA = [
           },
           {
             id: "d1_g1_2",
-            time: "10:30 - 11:00",
-            startTime: "10:30",
-            endTime: "11:00",
-            title: "カラオケ企画準備",
-            org: "実行委員会",
-            desc: "カラオケ大会の事前セッティング・音響チェック",
-            tag: "準備",
-            icon: "🛠️",
-          },
-          {
-            id: "d1_g1_3",
             time: "11:00 - 12:30",
             startTime: "11:00",
             endTime: "12:30",
@@ -697,29 +686,7 @@ const EVENTS_DATA = [
             icon: "🎤",
           },
           {
-            id: "d1_g1_4",
-            time: "12:30 - 13:00",
-            startTime: "12:30",
-            endTime: "13:00",
-            title: "休憩",
-            org: "全校",
-            desc: "お昼休憩・ステージメンテナンス",
-            tag: "休憩",
-            icon: "🍱",
-          },
-          {
-            id: "d1_g1_5",
-            time: "13:00 - 13:30",
-            startTime: "13:00",
-            endTime: "13:30",
-            title: "音部準備",
-            org: "音楽部",
-            desc: "音楽部ライブの機材搬入・セッティング",
-            tag: "準備",
-            icon: "🎸",
-          },
-          {
-            id: "d1_g1_6",
+            id: "d1_g1_3",
             time: "13:30 - 15:00",
             startTime: "13:30",
             endTime: "15:00",
@@ -732,13 +699,13 @@ const EVENTS_DATA = [
         ],
       },
       {
-        stageId: "gym_around",
-        stageName: "体育館の周り",
-        location: "体育館周辺",
+        stageId: "gym_out",
+        stageName: "第一体育館（外）",
+        location: "第一体育館 周辺",
         locationZoneId: "gym1",
         schedule: [
           {
-            id: "d1_ga_1",
+            id: "d1_go_1",
             time: "13:00 - 15:00",
             startTime: "13:00",
             endTime: "15:00",
@@ -751,13 +718,13 @@ const EVENTS_DATA = [
         ],
       },
       {
-        stageId: "entrance_balcony",
-        stageName: "昇降口前バルコニー",
+        stageId: "entrance",
+        stageName: "学生昇降口前",
         location: "学生昇降口",
         locationZoneId: "entrance",
         schedule: [
           {
-            id: "d1_eb_1",
+            id: "d1_en_1",
             time: "11:00 - 12:00",
             startTime: "11:00",
             endTime: "12:00",
@@ -777,31 +744,9 @@ const EVENTS_DATA = [
         schedule: [
           {
             id: "d1_j_1",
-            time: "08:30 - 10:00",
-            startTime: "08:30",
-            endTime: "10:00",
-            title: "出欠確認・各自準備",
-            org: "実行委員会",
-            desc: "1日目の出欠確認および企画準備",
-            tag: "準備",
-            icon: "📋",
-          },
-          {
-            id: "d1_j_2",
-            time: "10:00 - 10:30",
-            startTime: "10:00",
-            endTime: "10:30",
-            title: "参加者募集",
-            org: "ゲーム企画運営",
-            desc: "ゲーム大会参加者の受付およびルール説明を行います。",
-            tag: "受付",
-            icon: "📝",
-          },
-          {
-            id: "d1_j_3",
-            time: "10:30 - 15:30",
+            time: "10:30 - 15:00",
             startTime: "10:30",
-            endTime: "15:30",
+            endTime: "15:00",
             title: "ゲーム企画 今日、ゲームになりました。",
             org: "実行委員会",
             desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
@@ -838,28 +783,6 @@ const EVENTS_DATA = [
           },
           {
             id: "d2_g1_2",
-            time: "11:00 - 11:30",
-            startTime: "11:00",
-            endTime: "11:30",
-            title: "休憩",
-            org: "全校",
-            desc: "ステージメンテナンス・休憩",
-            tag: "休憩",
-            icon: "☕",
-          },
-          {
-            id: "d2_g1_3",
-            time: "11:30 - 12:00",
-            startTime: "11:30",
-            endTime: "12:00",
-            title: "漫才企画準備",
-            org: "有志・実行委員会",
-            desc: "鶴専-1グランプリの準備・マイクチェック",
-            tag: "準備",
-            icon: "🎤",
-          },
-          {
-            id: "d2_g1_4",
             time: "12:00 - 13:00",
             startTime: "12:00",
             endTime: "13:00",
@@ -870,18 +793,7 @@ const EVENTS_DATA = [
             icon: "🎙",
           },
           {
-            id: "d2_g1_5",
-            time: "13:00 - 13:30",
-            startTime: "13:00",
-            endTime: "13:30",
-            title: "ダンス企画準備",
-            org: "ダンス部・有志",
-            desc: "ダンスステージの準備・リハーサル",
-            tag: "準備",
-            icon: "💃",
-          },
-          {
-            id: "d2_g1_6",
+            id: "d2_g1_3",
             time: "13:30 - 14:30",
             startTime: "13:30",
             endTime: "14:30",
@@ -892,13 +804,13 @@ const EVENTS_DATA = [
             icon: "💃",
           },
           {
-            id: "d2_g1_7",
+            id: "d2_g1_4",
             time: "14:30 - 15:30",
             startTime: "14:30",
             endTime: "15:30",
             title: "エンディング",
             org: "全校・実行委員会",
-            desc: "高専祭の感動のフィナーレ！（ダンス企画からの移行時間含む）",
+            desc: "高専祭の感動のフィナーレ！",
             tag: "セレモニー",
             icon: "🎆",
           },
@@ -912,17 +824,6 @@ const EVENTS_DATA = [
         schedule: [
           {
             id: "d2_j_1",
-            time: "08:30 - 10:00",
-            startTime: "08:30",
-            endTime: "10:00",
-            title: "出欠確認・各自準備",
-            org: "実行委員会",
-            desc: "2日目の出欠確認および企画準備",
-            tag: "準備",
-            icon: "📋",
-          },
-          {
-            id: "d2_j_2",
             time: "10:00 - 10:30",
             startTime: "10:00",
             endTime: "10:30",
@@ -933,7 +834,7 @@ const EVENTS_DATA = [
             icon: "📝",
           },
           {
-            id: "d2_j_3",
+            id: "d2_j_2",
             time: "10:30 - 15:00",
             startTime: "10:30",
             endTime: "15:00",
@@ -980,17 +881,6 @@ const EVENTS_DATA = [
             desc: "吹奏楽部によるミニコンサートを開催します！素敵な演奏をお楽しみください！",
             tag: "演奏",
             icon: "🎷",
-          },
-          {
-            id: "d2_b8_2",
-            time: "13:00 - 14:00",
-            startTime: "13:00",
-            endTime: "14:00",
-            title: "学校説明会",
-            org: "広報・入試担当",
-            desc: "中学生・保護者の皆様に向けた鶴岡高専の学校説明会です。",
-            tag: "説明会",
-            icon: "🏫",
           },
         ],
       },
@@ -1161,11 +1051,22 @@ export default function Page() {
   const [detailMapBuilding, setDetailMapBuilding] = useState<"bldg1" | "bldg8" | "media_center" | null>(null);
   const [detailMapFloor, setDetailMapFloor] = useState<"1F" | "2F" | "3F">("1F");
 
-  // 現在時刻ステート
+  // 現在時刻ステート＆初期化時の自動日付切り替え
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   useEffect(() => {
-    setCurrentTime(new Date());
+    const now = new Date();
+    setCurrentTime(now);
+
+    // 当日の日付（10/24であれば2日目、それ以外/10/23は1日目）に自動切り替え
+    const month = now.getMonth() + 1;
+    const date = now.getDate();
+    if (month === 10 && date === 24) {
+      setSelectedDay(2);
+    } else {
+      setSelectedDay(1);
+    }
+
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 5000);
@@ -1338,7 +1239,7 @@ export default function Page() {
     setTimeout(() => scrollToRightSide(true), 50);
   };
 
-  // リアルタイムイベント特定ロジック（日付・時刻考慮）
+  // リアルタイムLIVEイベント特定ロジック（実際の日付（10/23か10/24）にしか判定されないよう厳密化）
   const liveEvents = useMemo(() => {
     if (!currentTime) return [];
 
@@ -1348,15 +1249,17 @@ export default function Page() {
     const currentMinutes = currentTime.getMinutes();
     const currentTotalMinutes = currentHours * 60 + currentMinutes;
 
-    // 現在の日付が10/23か10/24か判定。それ以外の日の場合は選択中のタブ（selectedDay）を参照
-    let targetDayNumber = selectedDay;
+    // 10月23日のときは1日目、10月24日のときは2日目のみLIVE判定。それ以外の日はLIVE判定なし。
+    let activeDayNumber: number | null = null;
     if (currentMonth === 10 && currentDate === 23) {
-      targetDayNumber = 1;
+      activeDayNumber = 1;
     } else if (currentMonth === 10 && currentDate === 24) {
-      targetDayNumber = 2;
+      activeDayNumber = 2;
     }
 
-    const dayData = EVENTS_DATA.find((d) => d.day === targetDayNumber);
+    if (!activeDayNumber) return [];
+
+    const dayData = EVENTS_DATA.find((d) => d.day === activeDayNumber);
     if (!dayData) return [];
 
     const list: Array<any> = [];
@@ -1381,7 +1284,7 @@ export default function Page() {
       }
     }
     return list;
-  }, [currentTime, selectedDay]);
+  }, [currentTime]);
 
   const primaryLiveEvent = liveEvents[0] || null;
 
@@ -1523,7 +1426,6 @@ export default function Page() {
             <span className="text-rose-600">高専祭</span>
             <span className="text-slate-300">|</span>
             <span>10/23(金)・10/24(土)</span>
-            <span className="text-slate-400 font-normal">@鶴岡高専</span>
           </div>
 
           <div className="flex items-center justify-center gap-6 pt-2 z-10 w-full">
@@ -1541,7 +1443,7 @@ export default function Page() {
               />
               <div className="text-[11px] font-bold text-slate-600 group-hover:text-teal-600 flex items-center gap-1">
                 <Globe className="w-3.5 h-3.5 text-teal-600" />
-                <span>高専 HP</span>
+                <span>鶴岡高専HP</span>
                 <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-teal-600" />
               </div>
             </a>
@@ -1576,7 +1478,7 @@ export default function Page() {
             </button>
 
             <p className="text-xs text-slate-500 font-semibold tracking-wide">
-              鶴岡高専祭をお楽しみください！
+              高専祭をお楽しみください！
             </p>
           </div>
         </div>
@@ -2087,7 +1989,7 @@ export default function Page() {
             <div className="bg-orange-50 border border-orange-200 p-3.5 rounded-2xl text-xs font-bold text-orange-900 flex items-center justify-between">
               <span>📅 高専祭 {selectedDay === 1 ? "1日目 (10/23 金)" : "2日目 (10/24 土)"} タイムスケジュール</span>
               <span className="bg-orange-200 text-orange-900 px-2 py-0.5 rounded font-black text-[10px]">
-                {selectedDay === 1 ? "10:00〜15:30" : "09:00〜15:30"}
+                {selectedDay === 1 ? "10:00〜15:00" : "09:00〜15:30"}
               </span>
             </div>
 
