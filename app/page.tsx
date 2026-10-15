@@ -897,8 +897,8 @@ const CAMPUS_ZONES = [
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "🎸",
     top: "76.0%",
-    left: "9.4%", // 2%左へ移動 (11.4% -> 9.4%)
-    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに移動経路と通行禁止エリアが表示されます。",
+    left: "9.4%",
+    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに移動経路が表示されます。",
   },
   {
     id: "yamazaki",
@@ -1411,14 +1411,15 @@ export default function Page() {
         <div />
 
         {/* メインタイトル ＆ 入場ボタン */}
-        <div className="w-full max-w-sm flex flex-col items-center text-center z-10 my-auto space-y-6">
-          <div className="text-teal-600 font-extrabold text-xs tracking-[0.25em] font-sans">
+        <div className="w-full max-w-md flex flex-col items-center text-center z-10 my-auto space-y-6">
+          <div className="text-teal-600 font-extrabold text-xs sm:text-sm tracking-[0.25em] font-sans">
             TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
-          <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans">
-            <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-sm">
-              <div className="text-4xl sm:text-5xl flex">
+          {/* 大きく表示変更した「熱狂のカニバル 高専祭」アニメーション */}
+          <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans scale-110 sm:scale-125 my-2">
+            <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-md">
+              <div className="text-5xl sm:text-7xl flex">
                 {titlePart1.map((char, index) => (
                   <span
                     key={index}
@@ -1430,8 +1431,8 @@ export default function Page() {
                 ))}
               </div>
 
-              <div className="relative inline-block ml-1">
-                <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] sm:text-xs font-black text-rose-500 tracking-widest whitespace-nowrap flex">
+              <div className="relative inline-block ml-2">
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs sm:text-sm font-black text-rose-500 tracking-widest whitespace-nowrap flex">
                   {titlePart2.map((char, index) => (
                     <span
                       key={index}
@@ -1443,7 +1444,7 @@ export default function Page() {
                   ))}
                 </span>
 
-                <div className="text-5xl sm:text-6xl flex">
+                <div className="text-6xl sm:text-8xl flex">
                   {titlePart3.map((char, index) => (
                     <span
                       key={index}
@@ -1749,7 +1750,16 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 音楽部プレハブ選択時の複数矢印（隙間あり）移動経路 ＆ 通行禁止オーバーレイ */}
+                {/* 常時表示される「通行禁止」バッジ */}
+                <div className="absolute inset-0 pointer-events-none z-30">
+                  <div className="absolute top-[70%] left-[21%] -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-red-700 text-xs sm:text-sm font-black px-3 py-1.5 rounded-xl shadow-xl border-2 border-red-600 flex items-center gap-1.5 select-none scale-125 origin-center">
+                    <span>🚧</span>
+                    <span className="text-xs sm:text-sm font-black tracking-wider">通行禁止</span>
+                    <span>🚧</span>
+                  </div>
+                </div>
+
+                {/* 音楽部プレハブ選択時に表示される直線＆斜め線の移動経路（隙間あり矢印セグメント） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-35">
                     <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
@@ -1762,25 +1772,25 @@ export default function Page() {
                         </filter>
                       </defs>
 
-                      {/* 隙間を空けた複数の進行矢印セグメント群（白フチ＋青線＋矢印） */}
+                      {/* 画像（校内図-通行止め_5.jpeg）と同じ正確な経路（垂直・水平・斜め直線） */}
                       {[
-                        // 1. 右側道路の北上セグメント
-                        { x1: 575, y1: 215, x2: 575, y2: 170 },
-                        { x1: 575, y1: 160, x2: 575, y2: 118 },
-                        // 2. 北側道路の西進セグメント（東側）
+                        // 1. 右側道路の北上セグメント (垂直)
+                        { x1: 575, y1: 215, x2: 575, y2: 165 },
+                        { x1: 575, y1: 155, x2: 575, y2: 112 },
+                        // 2. 北側道路の東側西進セグメント (水平)
                         { x1: 568, y1: 112, x2: 505, y2: 112 },
                         { x1: 495, y1: 112, x2: 435, y2: 112 },
-                        // 3. クランク状の斜めセグメント
-                        { x1: 425, y1: 114, x2: 385, y2: 126 },
-                        // 4. 北側道路の西進セグメント（西側）
-                        { x1: 375, y1: 128, x2: 310, y2: 128 },
-                        { x1: 300, y1: 128, x2: 235, y2: 128 },
-                        { x1: 225, y1: 128, x2: 160, y2: 128 },
-                        { x1: 150, y1: 128, x2: 100, y2: 128 },
-                        // 5. 体育館西側の南下セグメント（プレハブピンの上へ到達）
+                        // 3. クランク部の斜め直線セグメント
+                        { x1: 425, y1: 112, x2: 380, y2: 128 },
+                        // 4. 北側道路の西側西進セグメント (水平)
+                        { x1: 370, y1: 128, x2: 305, y2: 128 },
+                        { x1: 295, y1: 128, x2: 230, y2: 128 },
+                        { x1: 220, y1: 128, x2: 155, y2: 128 },
+                        { x1: 145, y1: 128, x2: 100, y2: 128 },
+                        // 5. 体育館西側の南下セグメント (垂直・先端矢印)
                         { x1: 94, y1: 138, x2: 94, y2: 190 },
                         { x1: 94, y1: 200, x2: 94, y2: 255 },
-                        { x1: 94, y1: 265, x2: 94, y2: 318 }, // ピンの真上に重なる最終矢印
+                        { x1: 94, y1: 265, x2: 94, y2: 318 },
                       ].map((seg, i) => (
                         <g key={i} filter="url(#glowShadow)">
                           {/* 下地白枠線 */}
@@ -1808,17 +1818,10 @@ export default function Page() {
                       ))}
                     </svg>
 
-                    {/* 移動経路バッジ（10%下に移動: top-[18%]） */}
+                    {/* 移動経路バッジ */}
                     <div className="absolute top-[18%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
                       <span>🚶‍♂️</span>
                       <span>移動経路</span>
-                    </div>
-
-                    {/* 通行禁止バッジ（黄色背景・赤文字・赤枠、両側に🚧絵文字） */}
-                    <div className="absolute top-[70%] left-[21%] -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-red-700 text-xs sm:text-sm font-black px-3 py-1.5 rounded-xl shadow-xl border-2 border-red-600 flex items-center gap-1.5 select-none scale-125 origin-right">
-                      <span>🚧</span>
-                      <span className="text-xs sm:text-sm font-black tracking-wider">通行禁止</span>
-                      <span>🚧</span>
                     </div>
                   </div>
                 )}
