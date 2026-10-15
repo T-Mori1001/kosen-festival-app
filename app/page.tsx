@@ -30,7 +30,56 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-// Instagramアイコン用SVG
+// --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS） ---
+
+const ToiletIcon = () => (
+  <div className="bg-black text-white px-1.5 py-1 rounded-md flex items-center justify-center gap-0.5 shadow-sm min-w-[32px] h-[30px] border border-black select-none shrink-0">
+    <svg className="w-3.5 h-4 fill-current" viewBox="0 0 24 24">
+      <circle cx="12" cy="4" r="3" />
+      <path d="M12 8c-2 0-3.5 1-4 3l-1.5 5h3v5h5v-5h3l-1.5-5c-.5-2-2-3-4-3z" />
+    </svg>
+    <div className="w-[1px] h-4 bg-white/60" />
+    <svg className="w-3.5 h-4 fill-current" viewBox="0 0 24 24">
+      <circle cx="12" cy="4" r="3" />
+      <path d="M9 8h6v7h-1.5v6h-3v-6H9V8z" />
+    </svg>
+  </div>
+);
+
+const StairsIcon = () => (
+  <div className="flex flex-col items-center select-none shrink-0">
+    <svg
+      className="w-7 h-7 text-slate-900"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M6 19h4v-4h4v-4h4V7" />
+    </svg>
+  </div>
+);
+
+const RedTriangle = () => (
+  <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[18px] border-b-red-600 drop-shadow-sm select-none" />
+);
+
+const BreakLineSS = () => (
+  <svg
+    className="w-5 h-8 text-black select-none shrink-0"
+    viewBox="0 0 20 32"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3.5"
+    strokeLinecap="round"
+  >
+    <path d="M4 2 C12 8, 12 12, 4 18 C12 24, 12 28, 4 30" />
+    <path d="M12 2 C20 8, 20 12, 12 18 C20 24, 20 28, 12 30" />
+  </svg>
+);
+
 const InstagramIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg
     className={className}
@@ -64,7 +113,7 @@ interface StallItem {
   menu?: string[];
 }
 
-// 全出店・企画・施設・その他データ
+// 全出店・企画・施設データ
 const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 1F ---
   {
@@ -76,7 +125,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 1F 111教室",
     zoneId: "bldg1",
     floor: "1F",
-    roomNo: "111教室",
+    roomNo: "111",
     description: "1-1による熱々で外はサクッ、中はジュワッ！香ばしい絶品ほっとサンド！",
     icon: "🥪",
     menu: ["ほっとサンド"],
@@ -90,7 +139,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 1F 112教室",
     zoneId: "bldg1",
     floor: "1F",
-    roomNo: "112教室",
+    roomNo: "112",
     description: "1-2がお届けする冷たくてシュワっと美味しい各種ソフトドリンク！",
     icon: "🍹",
     menu: ["ソフトドリンク各種"],
@@ -104,9 +153,21 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 1F 113教室",
     zoneId: "bldg1",
     floor: "1F",
-    roomNo: "113教室",
+    roomNo: "113",
     description: "4Mのメンバーが華麗にお出迎え！？非日常の最高のおもてなし空間！",
     icon: "🌹",
+  },
+  {
+    id: 307,
+    title: "かるた体験（見学・体験）",
+    category: "部活動企画",
+    grade: "有志",
+    dept: "かるた体験",
+    location: "4号館 412教室",
+    zoneId: "bldg4",
+    roomNo: "412",
+    description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
+    icon: "🎴",
   },
 
   // --- 1号館 (bldg1) 2F ---
@@ -119,7 +180,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 2F 121教室",
     zoneId: "bldg1",
     floor: "2F",
-    roomNo: "121教室",
+    roomNo: "121",
     description: "1-3作！フワフワ甘くて可愛いビッグわたあめ！",
     icon: "🍥",
     menu: ["わたあめ"],
@@ -133,7 +194,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 2F 122教室",
     zoneId: "bldg1",
     floor: "2F",
-    roomNo: "122教室",
+    roomNo: "122",
     description: "1-4手作り生地のボリューム満点トッピングクレープ！",
     icon: "🥞",
     menu: ["手作りクレープ"],
@@ -147,7 +208,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 2F 123教室",
     zoneId: "bldg1",
     floor: "2F",
-    roomNo: "123教室",
+    roomNo: "123",
     description: "3Eみんなでワイワイ楽しめる対戦ゲーム＆レトロゲームが揃ったゲームカフェ！",
     icon: "🎮",
   },
@@ -164,6 +225,19 @@ const STALLS_DATA: StallItem[] = [
     description: "絵画・写真作品や高専祭を彩る各種看板作品の展示。",
     icon: "🖼️",
   },
+  {
+    id: 401,
+    title: "今日、ゲームになりました。",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "1号館 2F 合同講義室",
+    zoneId: "bldg1",
+    floor: "2F",
+    roomNo: "合同講義室",
+    description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
+    icon: "🎮",
+  },
 
   // --- 1号館 (bldg1) 3F ---
   {
@@ -175,7 +249,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 3F 131教室",
     zoneId: "bldg1",
     floor: "3F",
-    roomNo: "131教室",
+    roomNo: "131",
     description: "4I特製カジノ！本格的なテーブルゲームでスリリングな心理戦を楽しもう！",
     icon: "🎲",
   },
@@ -188,7 +262,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 3F 132教室",
     zoneId: "bldg1",
     floor: "3F",
-    roomNo: "132教室",
+    roomNo: "132",
     description: "3Iがお届けするおしゃれで落ち着いた雰囲気のノンアルコールバー！",
     icon: "🍸",
   },
@@ -201,7 +275,7 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 3F 133教室",
     zoneId: "bldg1",
     floor: "3F",
-    roomNo: "133教室",
+    roomNo: "133",
     description: "3Bによるゆったり寛げる特製喫茶店！こだわりのドリンクでおもてなし。",
     icon: "☕",
   },
@@ -218,18 +292,31 @@ const STALLS_DATA: StallItem[] = [
     description: "天体写真展示および手作りドームによる幻想的なプラネタリウム上映！",
     icon: "🌌",
   },
-
-  // --- 合同講義室（1号館内） ---
   {
-    id: 401,
-    title: "今日、ゲームになりました。",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "1号館 合同講義室",
+    id: 310,
+    title: "大会議室（展示・企画）",
+    category: "校内施設・その他",
+    grade: "施設",
+    dept: "各系展示",
+    location: "1号館 3F 大会議室",
     zoneId: "bldg1",
-    description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
-    icon: "🎮",
+    floor: "3F",
+    roomNo: "大会議室",
+    description: "1号館3Fに位置する大会議室。各種展示・研究紹介ブースが設置されています。",
+    icon: "🏛️",
+  },
+  {
+    id: 311,
+    title: "小会議室（展示・研究）",
+    category: "校内施設・その他",
+    grade: "施設",
+    dept: "各種展示",
+    location: "1号館 3F 小会議室",
+    zoneId: "bldg1",
+    floor: "3F",
+    roomNo: "小会議室",
+    description: "1号館3Fに位置する小会議室。作品・資料展示スペースです。",
+    icon: "🏢",
   },
 
   // --- 第一体育館 (gym1) ---
@@ -281,61 +368,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🍢",
     menu: ["やみつき焼き鳥"],
   },
-  {
-    id: 402,
-    title: "2026KOSEN歌謡祭 秋",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "第一体育館",
-    zoneId: "gym1",
-    description: "高専生の自慢の歌声を競う熱いカラオケステージ！",
-    icon: "🎤",
-  },
-  {
-    id: 403,
-    title: "あつまれ きんにくの森",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "第一体育館",
-    zoneId: "gym1",
-    description: "筋肉自慢の高専生が集結！極限の腕立て伏せバトル！",
-    icon: "💪",
-  },
-  {
-    id: 404,
-    title: "カリモノ競争",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "第一体育館",
-    zoneId: "gym1",
-    description: "何を引き当てるか分からない！？大興奮のクラス対抗リレー！",
-    icon: "🏃",
-  },
-  {
-    id: 405,
-    title: "鶴専-1グランプリ",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "第一体育館",
-    zoneId: "gym1",
-    description: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
-    icon: "🎙️",
-  },
-  {
-    id: 406,
-    title: "DoKa Project",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "第一体育館",
-    zoneId: "gym1",
-    description: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
-    icon: "💃",
-  },
 
   // --- 第二体育館 (gym2) ---
   {
@@ -348,6 +380,74 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym2",
     description: "バンド演奏による熱いロック＆ポップスサウンドをお届け！（10:00〜15:00）",
     icon: "🎸",
+  },
+
+  // --- 8号館 (bldg8) ---
+  {
+    id: 308,
+    title: "吹奏楽部 ミニコンサート",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "吹奏楽部",
+    location: "8号館 2F 大講義室",
+    zoneId: "bldg8",
+    floor: "2F",
+    roomNo: "吹奏楽部演奏会",
+    description: "吹奏楽部によるミニコンサート（9:00〜11:45）！素敵な演奏をお楽しみください！",
+    icon: "🎷",
+  },
+  {
+    id: 503,
+    title: "学校説明会",
+    category: "校内施設・その他",
+    grade: "案内",
+    dept: "広報・入試",
+    location: "8号館 2F / 3F 大講義室",
+    zoneId: "bldg8",
+    floor: "2F",
+    roomNo: "学校説明会",
+    description: "中学生・保護者の皆様に向けた学校説明会（13:00〜14:00）。",
+    icon: "🏫",
+  },
+
+  // --- 総合メディアセンター (media_center) ---
+  {
+    id: 16,
+    title: "格付けチェック",
+    category: "クラス企画",
+    grade: "4B",
+    dept: "4年 生物・化学コース (4B)",
+    location: "総合メディアセンター 2F マルチメディア教室",
+    zoneId: "media_center",
+    roomNo: "マルチメディア室",
+    description: "4Bあなたの一流度が試される！高級品と激安品を見破れるか！？",
+    icon: "🍷",
+  },
+  {
+    id: 309,
+    title: "ロボット研究部（ロボット展示）",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "ロボット研究部",
+    location: "総合メディアセンター 1F 多目的交流室",
+    zoneId: "media_center",
+    floor: "1F",
+    roomNo: "多目的交流室",
+    description: "自作ロボットのデモ実演および操縦体験コーナー！",
+    icon: "🤖",
+  },
+  {
+    id: 312,
+    title: "デジタルサロン（作品展示）",
+    category: "校内施設・その他",
+    grade: "施設",
+    dept: "情報基盤",
+    location: "総合メディアセンター 1F デジタルサロン",
+    zoneId: "media_center",
+    floor: "1F",
+    roomNo: "デジタルサロン",
+    description: "デジタルコンテンツ作品展示および体験コーナーです。",
+    icon: "💻",
   },
 
   // --- 7号館 (bldg7) ---
@@ -372,117 +472,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg7",
     description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！",
     icon: "⚽",
-  },
-  {
-    id: 304,
-    title: "AMデザイン部（作品展示・3Dプリンタ体験）",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "AMデザイン部",
-    location: "7号館 731教室",
-    zoneId: "bldg7",
-    description: "3Dプリンタの実演・造形体験およびデザイン作品の展示。",
-    icon: "𖤤",
-  },
-  {
-    id: 305,
-    title: "5B 研究発表（ポスター）",
-    category: "部活動企画",
-    grade: "5B",
-    dept: "5年 生物・化学コース",
-    location: "7号館 721教室",
-    zoneId: "bldg7",
-    description: "5Bによる先進的な研究成果のポスター発表展示。",
-    icon: "🔬",
-  },
-
-  // --- 8号館 (bldg8) ---
-  {
-    id: 308,
-    title: "吹奏楽部 ミニコンサート",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "吹奏楽部",
-    location: "8号館 2F 大講義室",
-    zoneId: "bldg8",
-    floor: "2F",
-    roomNo: "大講義室",
-    description: "吹奏楽部によるミニコンサート（9:00〜11:45）！素敵な演奏をお楽しみください！",
-    icon: "🎷",
-  },
-  {
-    id: 503,
-    title: "学校説明会",
-    category: "校内施設・その他",
-    grade: "案内",
-    dept: "広報・入試",
-    location: "8号館 2F 大講義室",
-    zoneId: "bldg8",
-    floor: "2F",
-    roomNo: "大講義室",
-    description: "中学生・保護者の皆様に向けた学校説明会（13:00〜14:00）。",
-    icon: "🏫",
-  },
-
-  // --- 4号館 (bldg4) ---
-  {
-    id: 306,
-    title: "E.S.S.（展示）",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "E.S.S.",
-    location: "4号館 LL教室",
-    zoneId: "bldg4",
-    description: "E.S.S.部員による活動紹介・英語文化に関する展示。",
-    icon: "𔢤",
-  },
-  {
-    id: 307,
-    title: "かるた体験（見学・体験）",
-    category: "部活動企画",
-    grade: "有志",
-    dept: "かるた体験",
-    location: "4号館 411教室",
-    zoneId: "bldg4",
-    description: "競技かるたの見学および実際の体験コーナー！初心者歓迎！",
-    icon: "🎴",
-  },
-
-  // --- 総合メディアセンター (media_center) ---
-  {
-    id: 16,
-    title: "格付けチェック",
-    category: "クラス企画",
-    grade: "4B",
-    dept: "4年 生物・化学コース (4B)",
-    location: "総合メディアセンター マルチメディア教室",
-    zoneId: "media_center",
-    description: "4Bあなたの一流度が試される！高級品と激安品を見破れるか！？",
-    icon: "🍷",
-  },
-  {
-    id: 309,
-    title: "ロボット研究部（ロボット展示）",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "ロボット研究部",
-    location: "総合メディアセンター 多目的交流室",
-    zoneId: "media_center",
-    description: "自作ロボットのデモ実演および操縦体験コーナー！",
-    icon: "🤖",
-  },
-
-  // --- 学生昇降口・広場 (entrance) ---
-  {
-    id: 407,
-    title: "高専生の主張",
-    category: "実行委員会企画",
-    grade: "企画",
-    dept: "実行委員会",
-    location: "学生昇降口",
-    zoneId: "entrance",
-    description: "高専生が日頃の思いや愛を大声で叫ぶ伝統の大人気企画！",
-    icon: "📢",
   },
 
   // --- キッチンカー (entrance) ---
@@ -526,7 +515,7 @@ const STALLS_DATA: StallItem[] = [
     menu: ["スムージー", "ガパオライス等"],
   },
 
-  // --- 金券販売 (ticket) ---
+  // --- 金券・本部・その他 ---
   {
     id: 501,
     title: "金券販売",
@@ -541,17 +530,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🎟️",
   },
   {
-    id: 502,
-    title: "学校紹介ブース",
-    category: "校内施設・その他",
-    grade: "案内",
-    dept: "広報・入試",
-    location: "学生昇降口 高専祭本部（金券販売）",
-    zoneId: "ticket",
-    description: "鶴岡高専の学校案内、学科紹介、入試相談などを行っている特設ブースです。",
-    icon: "🏫",
-  },
-  {
     id: 504,
     title: "本部",
     category: "校内施設・その他",
@@ -563,39 +541,6 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "本部",
     description: "高専祭実行委員会本部です。落とし物やご案内はこちらまでお越しください。",
     icon: "🏫",
-  },
-  {
-    id: 201,
-    title: "総合メディアセンター",
-    category: "校内施設・その他",
-    grade: "施設",
-    dept: "図書・情報基盤",
-    location: "第一体育館 西側",
-    zoneId: "media_center",
-    description: "図書室や情報処理施設が設置された総合メディアセンターです。休憩場所としてもご利用いただけます。",
-    icon: "📚",
-  },
-  {
-    id: 202,
-    title: "ヤマザキショップ 鶴岡高専店",
-    category: "校内施設・その他",
-    grade: "店舗",
-    dept: "学内購買",
-    location: "総合メディアセンター 西側隣接",
-    zoneId: "yamazaki",
-    description: "パン、お菓子、飲料、文房具などを販売している校内売店です。",
-    icon: "🏪",
-  },
-  {
-    id: 203,
-    title: "駐車場",
-    category: "校内施設・その他",
-    grade: "施設",
-    dept: "構内施設",
-    location: "東側 構内駐車場",
-    zoneId: "parking",
-    description: "ご来場者様用の構内駐車場です。台数に限りがございますので公共交通機関の利用にご協力ください。",
-    icon: "🅿️️",
   },
 ];
 
@@ -646,7 +591,7 @@ const EVENTS_DATA = [
         org: "有志企画",
         desc: "高専生のお笑いNo.1を決める爆笑必至の漫才グランプリ！",
         tag: "お笑い",
-        icon: "🎙️️",
+        icon: "🎙",
       },
       {
         id: "g1_3",
@@ -658,77 +603,6 @@ const EVENTS_DATA = [
         desc: "圧倒的なパフォーマンスと熱量でお届けするダンスステージ！",
         tag: "ダンス",
         icon: "💃",
-      },
-      {
-        id: "g1_4",
-        time: "14:30 - 15:30",
-        startTime: "14:30",
-        endTime: "15:30",
-        title: "エンディング",
-        org: "全校・実行委員会",
-        desc: "高専祭の感動のフィナーレ！",
-        tag: "セレモニー",
-        icon: "🎆",
-      },
-    ],
-  },
-  {
-    stageId: "joint",
-    stageName: "1号館 合同講義室",
-    location: "合同講義室",
-    locationZoneId: "bldg1",
-    schedule: [
-      {
-        id: "j_1",
-        time: "10:00 - 10:30",
-        startTime: "10:00",
-        endTime: "10:30",
-        title: "参加者募集",
-        org: "ゲーム企画運営",
-        desc: "ゲーム大会参加者の受付およびルール説明を行います。",
-        tag: "受付",
-        icon: "📝",
-      },
-      {
-        id: "j_2",
-        time: "10:30 - 15:00",
-        startTime: "10:30",
-        endTime: "15:00",
-        title: "今日、ゲームになりました。",
-        org: "実行委員会",
-        desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
-        tag: "eスポーツ",
-        icon: "🎮",
-      },
-    ],
-  },
-  {
-    stageId: "bldg8",
-    stageName: "8号館 大講義室",
-    location: "8号館 2階 大講義室",
-    locationZoneId: "bldg8",
-    schedule: [
-      {
-        id: "b8_1",
-        time: "09:00 - 11:45",
-        startTime: "09:00",
-        endTime: "11:45",
-        title: "吹奏楽部 ミニコンサート",
-        org: "吹奏楽部",
-        desc: "吹奏楽部によるミニコンサートを開催します！素敵な演奏をお楽しみください！",
-        tag: "演奏",
-        icon: "🎷",
-      },
-      {
-        id: "b8_2",
-        time: "13:00 - 14:00",
-        startTime: "13:00",
-        endTime: "14:00",
-        title: "学校説明会",
-        org: "広報・入試担当",
-        desc: "中学生・保護者の皆様に向けた鶴岡高専の学校説明会です。",
-        tag: "説明会",
-        icon: "🏫",
       },
     ],
   },
@@ -789,40 +663,7 @@ const CAMPUS_ZONES = [
     icon: "🏫",
     top: "30.4%",
     left: "69.8%",
-    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
-  },
-  {
-    id: "bldg4",
-    name: "4号館",
-    subName: "展示・体験棟",
-    pinLabel: "4号館",
-    lightBg: "bg-teal-50 border-teal-300 text-teal-900",
-    icon: "",
-    top: "9.0%",
-    left: "82.9%",
-    desc: "LL教室（E.S.S.展示）、411教室（かるた体験）を開催！",
-  },
-  {
-    id: "ticket",
-    name: "高専祭本部（金券販売）",
-    subName: "金券本部・案内",
-    pinLabel: "高専祭本部\n（金券販売）",
-    lightBg: "bg-amber-50 border-amber-300 text-amber-900",
-    icon: "🎟️",
-    top: "40.6%",
-    left: "76.5%",
-    desc: "1号館1Fに位置し、模擬店等で使用できる金券の販売を行っています。",
-  },
-  {
-    id: "bldg7",
-    name: "7号館",
-    subName: "アトラクション・展示棟",
-    pinLabel: "7号館",
-    lightBg: "bg-purple-50 border-purple-300 text-purple-900",
-    icon: "👻",
-    top: "40.6%",
-    left: "83.6%",
-    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
+    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画が実施されています。",
   },
   {
     id: "bldg8",
@@ -833,7 +674,18 @@ const CAMPUS_ZONES = [
     icon: "🎷",
     top: "26.5%",
     left: "91.5%",
-    desc: "2階の大講義室にて吹奏楽部ミニコンサート（9:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
+    desc: "2階・3階にて吹奏楽部ミニコンサートおよび学校説明会を開催！",
+  },
+  {
+    id: "bldg7",
+    name: "7号館",
+    subName: "アトラクション・展示棟",
+    pinLabel: "7号館",
+    lightBg: "bg-purple-50 border-purple-300 text-purple-900",
+    icon: "👻",
+    top: "40.6%",
+    left: "83.6%",
+    desc: "3Mお化け屋敷、4Eキッキングスナイパーを開催！",
   },
   {
     id: "entrance",
@@ -844,7 +696,7 @@ const CAMPUS_ZONES = [
     icon: "🚚",
     top: "55.1%",
     left: "77.4%",
-    desc: "学校紹介ブース（高専祭本部）、高専生の主張、および昇降口前ロータリーのキッチンカー3店が集結！",
+    desc: "キッチンカー3店が集結！",
   },
   {
     id: "parking",
@@ -859,19 +711,6 @@ const CAMPUS_ZONES = [
   },
 ];
 
-// 工学モチーフ浮遊アニメーションデータ
-const TECH_FLOATING_ITEMS = [
-  { icon: "⚙️", top: "8%", left: "10%", size: "text-3xl", delay: "0s", duration: "10s" },
-  { icon: "🤖", top: "16%", right: "8%", size: "text-4xl", delay: "0.8s", duration: "9.5s" },
-  { icon: "🔩", top: "25%", left: "6%", size: "text-2xl", delay: "1.5s", duration: "11s" },
-  { icon: "⚡", top: "35%", right: "12%", size: "text-3xl", delay: "0.5s", duration: "8.5s" },
-  { icon: "🔧", top: "45%", left: "12%", size: "text-3xl", delay: "1.8s", duration: "10s" },
-  { icon: "💻", top: "52%", right: "6%", size: "text-3xl", delay: "1.2s", duration: "11s" },
-  { icon: "🔌", top: "66%", left: "8%", size: "text-2xl", delay: "2s", duration: "9s" },
-  { icon: "⚙️", top: "75%", right: "10%", size: "text-5xl", delay: "0.4s", duration: "12s" },
-  { icon: "🤖", top: "84%", left: "18%", size: "text-3xl", delay: "1.6s", duration: "10.5s" },
-];
-
 export default function Page() {
   const [isEntered, setIsEntered] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "stalls" | "events" | "access">("map");
@@ -880,22 +719,16 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
-  // ハイライト用ピン留め教室・ブース管理ステート
-  const [highlightedRoomNo, setHighlightedRoomNo] = useState<string | null>(null);
-
   // マップの初期ズーム倍率 3.0倍 (300%)
   const [zoomLevel, setZoomLevel] = useState<number>(3.0);
-
-  // マップ表示完了フラグ
   const [isMapReady, setIsMapReady] = useState<boolean>(false);
 
-  // マップコンテナ＆拡大内側要素の参照
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapContentRef = useRef<HTMLDivElement>(null);
 
-  // 1号館フロア詳細モーダル用ステート
-  const [isBldg1ModalOpen, setIsBldg1ModalOpen] = useState(false);
-  const [currentFloor, setCurrentFloor] = useState<"1F" | "2F" | "3F">("1F");
+  // 詳細マップモーダル用ステート (1号館 / 8号館 / 総合メディアセンター)
+  const [detailMapBuilding, setDetailMapBuilding] = useState<"bldg1" | "bldg8" | "media_center" | null>(null);
+  const [detailMapFloor, setDetailMapFloor] = useState<"1F" | "2F" | "3F">("1F");
 
   // 現在時刻ステート
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
@@ -908,11 +741,9 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
-  // マップの初期表示位置を画像右側（学生昇降口〜駐車場エリア付近）に設定する処理
   const scrollToRightSide = (smooth = false) => {
     if (!mapContainerRef.current) return;
     const container = mapContainerRef.current;
-
     const targetX = container.scrollWidth * 0.80 - container.clientWidth / 2;
     const targetY = container.scrollHeight * 0.40 - container.clientHeight / 2;
 
@@ -923,7 +754,6 @@ export default function Page() {
     });
   };
 
-  // タブ切り替え・入場時に右側へ一瞬で移動させたあとフェードイン表示
   useEffect(() => {
     if (isEntered && activeTab === "map") {
       setIsMapReady(false);
@@ -933,101 +763,15 @@ export default function Page() {
           setIsMapReady(true);
         });
       }, 50);
-      return () => clearInterval(timer);
+      return () => (clearImmediate ? clearImmediate(timer) : clearTimeout(timer));
     }
   }, [isEntered, activeTab]);
 
-  // 最新のズームレベルを ref で保持
   const zoomLevelRef = useRef(zoomLevel);
   useEffect(() => {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
-  // スマホ用ピンチイン・ピンチアウト機能
-  useEffect(() => {
-    if (!isEntered || activeTab !== "map") return;
-
-    const container = mapContainerRef.current;
-    if (!container) return;
-
-    let startDist = 0;
-    let startZoom = 3.0;
-    let startScrollLeft = 0;
-    let startScrollTop = 0;
-    let startMidX = 0;
-    let startMidY = 0;
-    let rafId: number | null = null;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        if (e.cancelable) e.preventDefault();
-
-        startDist = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        );
-        startZoom = zoomLevelRef.current;
-
-        const rect = container.getBoundingClientRect();
-        startMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-        startMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-        startScrollLeft = container.scrollLeft;
-        startScrollTop = container.scrollTop;
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 2 && startDist > 0) {
-        if (e.cancelable) e.preventDefault();
-
-        const currentDist = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        );
-
-        const rect = container.getBoundingClientRect();
-        const currentMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-        const currentMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-
-        const scale = currentDist / startDist;
-        const newZoom = Math.min(Math.max(startZoom * scale, 1.0), 4.0);
-
-        if (rafId) cancelAnimationFrame(rafId);
-
-        rafId = requestAnimationFrame(() => {
-          if (mapContentRef.current) {
-            mapContentRef.current.style.width = `${newZoom * 100}%`;
-          }
-          const ratio = newZoom / startZoom;
-          container.scrollLeft = (startScrollLeft + startMidX) * ratio - currentMidX;
-          container.scrollTop = (startScrollTop + startMidY) * ratio - currentMidY;
-          setZoomLevel(newZoom);
-        });
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (e.touches.length < 2) {
-        startDist = 0;
-        if (rafId) cancelAnimationFrame(rafId);
-      }
-    };
-
-    container.addEventListener("touchstart", handleTouchStart, { passive: false });
-    container.addEventListener("touchmove", handleTouchMove, { passive: false });
-    container.addEventListener("touchend", handleTouchEnd, { passive: true });
-    container.addEventListener("touchcancel", handleTouchEnd, { passive: true });
-
-    return () => {
-      container.removeEventListener("touchstart", handleTouchStart);
-      container.removeEventListener("touchmove", handleTouchMove);
-      container.removeEventListener("touchend", handleTouchEnd);
-      container.removeEventListener("touchcancel", handleTouchEnd);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [isEntered, activeTab]);
-
-  // ズーム操作ハンドラー
   const handleZoomIn = () => {
     const container = mapContainerRef.current;
     const content = mapContentRef.current;
@@ -1066,47 +810,6 @@ export default function Page() {
     setZoomLevel(next);
   };
 
-  const handleResetZoom = () => {
-    if (mapContentRef.current) {
-      mapContentRef.current.style.width = "300%";
-    }
-    setZoomLevel(3.0);
-    setTimeout(() => scrollToRightSide(true), 50);
-  };
-
-  // リアルタイムイベント特定ロジック
-  const liveEvents = useMemo(() => {
-    if (!currentTime) return [];
-
-    const currentHours = currentTime.getHours();
-    const currentMinutes = currentTime.getMinutes();
-    const currentTotalMinutes = currentHours * 60 + currentMinutes;
-
-    const list: Array<any> = [];
-
-    for (const stage of EVENTS_DATA) {
-      for (const event of stage.schedule) {
-        const [startHour, startMin] = event.startTime.split(":").map(Number);
-        const [endHour, endMin] = event.endTime.split(":").map(Number);
-
-        const startTotalMinutes = startHour * 60 + startMin;
-        const endTotalMinutes = endHour * 60 + endMin;
-
-        if (currentTotalMinutes >= startTotalMinutes && currentTotalMinutes <= endTotalMinutes) {
-          list.push({
-            ...event,
-            stageName: stage.stageName,
-            locationZoneId: stage.locationZoneId,
-          });
-        }
-      }
-    }
-    return list;
-  }, [currentTime]);
-
-  const primaryLiveEvent = liveEvents[0] || null;
-
-  // 検索・カテゴリフィルタリング
   const filteredStalls = useMemo(() => {
     return STALLS_DATA.filter((stall) => {
       const matchesSearch =
@@ -1122,117 +825,33 @@ export default function Page() {
     });
   }, [searchQuery, selectedCategory]);
 
-  // 地図上で選択されたゾーンのデータ
   const zoneStalls = useMemo(() => {
     if (!selectedZoneId) return [];
     return STALLS_DATA.filter((s) => s.zoneId === selectedZoneId);
   }, [selectedZoneId]);
 
-  // 現在選択中のゾーン情報
   const currentZone = CAMPUS_ZONES.find((z) => z.id === selectedZoneId);
 
-  // 教室・ブースの個別出展取得ヘルパー
-  const getRoomStall = (roomNo: string) => {
-    return STALLS_DATA.find((s) => s.zoneId === "bldg1" && (s.roomNo === roomNo || s.title === roomNo));
+  const getRoomStall = (roomKey: string) => {
+    return STALLS_DATA.find(
+      (s) =>
+        s.roomNo === roomKey ||
+        s.title.includes(roomKey) ||
+        s.location.includes(roomKey)
+    );
   };
-
-  // タイトルアニメーション文字
-  const titlePart1 = ["熱", "狂", "の"];
-  const titlePart2 = ["カ", "ー", "ニ", "バ", "ル"];
-  const titlePart3 = ["高", "専", "祭"];
 
   // 1. 入場前トップ画面
   if (!isEntered) {
     return (
       <div className="min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-col items-center justify-between py-12 px-6 relative overflow-hidden select-none font-sans">
-        <style>{`
-          @keyframes floatTech {
-            0% { transform: translateY(0px) rotate(0deg) scale(1); }
-            50% { transform: translateY(-18px) rotate(180deg) scale(1.1); }
-            100% { transform: translateY(0px) rotate(360deg) scale(1); }
-          }
-          @keyframes dropChar {
-            0% { transform: translateY(-80px) scale(0.2); opacity: 0; }
-            65% { transform: translateY(12px) scale(1.1); opacity: 1; }
-            85% { transform: translateY(-3px) scale(0.98); }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-          }
-          .animate-float-tech {
-            animation: floatTech linear infinite;
-          }
-          .animate-drop-char {
-            display: inline-block;
-            animation: dropChar 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-          }
-        `}</style>
-
-        {/* 背景アニメーション */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {TECH_FLOATING_ITEMS.map((item, idx) => (
-            <div
-              key={idx}
-              style={{
-                top: item.top,
-                left: item.left,
-                right: item.right,
-                animationDuration: item.duration,
-                animationDelay: item.delay,
-              }}
-              className={`absolute ${item.size} opacity-70 animate-float-tech filter drop-shadow-sm`}
-            >
-              {item.icon}
-            </div>
-          ))}
-        </div>
-
-        <div />
-
-        {/* メインタイトル ＆ 入場ボタン */}
         <div className="w-full max-w-sm flex flex-col items-center text-center z-10 my-auto space-y-6">
-          <div className="text-teal-600 font-extrabold text-xs tracking-[0.25em] font-sans">
+          <div className="text-teal-600 font-extrabold text-xs tracking-[0.25em]">
             TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
-          <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans">
-            <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-sm">
-              <div className="text-4xl sm:text-5xl flex">
-                {titlePart1.map((char, index) => (
-                  <span
-                    key={index}
-                    className="animate-drop-char"
-                    style={{ animationDelay: `${index * 0.18}s` }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </div>
-
-              <div className="relative inline-block ml-1">
-                <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] sm:text-xs font-black text-rose-500 tracking-widest whitespace-nowrap flex">
-                  {titlePart2.map((char, index) => (
-                    <span
-                      key={index}
-                      className="animate-drop-char"
-                      style={{ animationDelay: `${0.6 + index * 0.15}s` }}
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </span>
-
-                <div className="text-5xl sm:text-6xl flex">
-                  {titlePart3.map((char, index) => (
-                    <span
-                      key={index}
-                      className="animate-drop-char"
-                      style={{ animationDelay: `${1.3 + index * 0.18}s` }}
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="text-5xl sm:text-6xl font-black text-[#E53935] tracking-tight">
+            高専祭
           </div>
 
           <div className="bg-white/95 border border-slate-200/80 shadow-md rounded-full px-5 py-2.5 flex items-center justify-center gap-2 text-xs font-extrabold text-slate-700">
@@ -1242,385 +861,125 @@ export default function Page() {
             <span className="text-slate-400 font-normal">@鶴岡高専</span>
           </div>
 
-          <div className="flex items-center justify-center gap-6 pt-2 z-10 w-full">
-            <a
-              href="https://www.tsuruoka-nct.ac.jp/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1.5 group hover:scale-105 active:scale-95 transition-all cursor-pointer"
-              title="鶴岡高専 公式HPを開く"
-            >
-              <img
-                src="/高専QR.png"
-                alt="鶴岡高専 公式HP QRコード"
-                className="w-22 h-22 object-contain shadow-md rounded-xl border border-slate-200 bg-white p-1 group-hover:border-teal-500 group-hover:shadow-lg transition-all"
-              />
-              <div className="text-[11px] font-bold text-slate-600 group-hover:text-teal-600 flex items-center gap-1">
-                <Globe className="w-3.5 h-3.5 text-teal-600" />
-                <span>高専 HP</span>
-                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-teal-600" />
-              </div>
-            </a>
-
-            <a
-              href="https://www.instagram.com/nittc_kosensai2026?stkn=cjgxeW1rbW5hbjBn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1.5 group hover:scale-105 active:scale-95 transition-all cursor-pointer"
-              title="高専祭公式 Instagramを開く"
-            >
-              <img
-                src="/インスタQR.png"
-                alt="高専祭公式 Instagram QRコード"
-                className="w-22 h-22 object-contain shadow-md rounded-xl border border-slate-200 bg-white p-1 group-hover:border-pink-500 group-hover:shadow-lg transition-all"
-              />
-              <div className="text-[11px] font-bold text-slate-600 group-hover:text-pink-600 flex items-center gap-1">
-                <InstagramIcon className="w-3.5 h-3.5 text-pink-600" />
-                <span>公式インスタ</span>
-                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-pink-600" />
-              </div>
-            </a>
-          </div>
-
-          <div className="pt-2 w-full flex flex-col items-center space-y-3">
-            <button
-              onClick={() => setIsEntered(true)}
-              className="w-full max-w-[260px] py-4 rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-500 text-white text-base font-black tracking-wider shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 border border-white/30"
-            >
-              <span>プログラムを見る</span>
-              <span className="text-lg">⚙️</span>
-            </button>
-
-            <p className="text-xs text-slate-500 font-semibold tracking-wide">
-              鶴岡高専祭をお楽しみください！
-            </p>
-          </div>
+          <button
+            onClick={() => setIsEntered(true)}
+            className="w-full max-w-[260px] py-4 rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-500 text-white text-base font-black tracking-wider shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2"
+          >
+            <span>プログラムを見る</span>
+            <span>⚙️</span>
+          </button>
         </div>
-
-        <div />
       </div>
     );
   }
 
-  // 2. 入場後アプリメイン画面
+  // 2. 入場後メインアプリ
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 pb-20 font-sans relative">
-      <style>{`
-        .custom-map-scrollbar::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-        }
-        .custom-map-scrollbar::-webkit-scrollbar-track {
-          background: rgba(241, 245, 249, 0.8);
-          border-radius: 9999px;
-        }
-        .custom-map-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(203, 213, 225, 0.9);
-          border-radius: 9999px;
-        }
-        .custom-map-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(148, 163, 184, 1);
-        }
-      `}</style>
-
-      {/* リアルタイムLIVEバナー */}
-      {primaryLiveEvent && (
-        <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-red-600 text-white border-b border-white/20 shadow-xl overflow-hidden">
-          <style>{`
-            @keyframes liveFade {
-              0%, 100% { opacity: 0.3; }
-              50% { opacity: 1; }
-            }
-            @keyframes liveWave {
-              0% { transform: scaleY(0.4); }
-              50% { transform: scaleY(1); }
-              100% { transform: scaleY(1); }
-            }
-            .animate-live-fade { animation: liveFade 1.5s ease-in-out infinite; }
-            .animate-live-wave { animation: liveWave 0.8s ease-in-out infinite; transform-origin: bottom; }
-          `}</style>
-
-          <div className="max-w-2xl mx-auto p-4 flex items-center justify-between gap-4 relative">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 text-xs sm:text-sm font-black tracking-widest uppercase mb-1 opacity-90">
-                <Radio className="w-4 h-4 animate-live-fade" />
-                <span>ただいま実施中の企画 ({liveEvents.length}件)</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 text-[13px] sm:text-base font-bold">
-                <span className="flex items-center gap-1 truncate">
-                  <span className="text-xl">{primaryLiveEvent.icon}</span>
-                  <span className="truncate">
-                    {primaryLiveEvent.stageName}: {primaryLiveEvent.title}
-                  </span>
-                </span>
-                <span className="text-xs sm:text-sm font-black bg-white/20 px-2 py-0.5 rounded flex items-center gap-1.5 shrink-0 w-fit">
-                  <span>{primaryLiveEvent.time}</span>
-                  <div className="flex items-end gap-0.5 h-3">
-                    <div className="w-0.5 h-full bg-white animate-live-wave" style={{ animationDelay: "0s" }} />
-                    <div className="w-0.5 h-full bg-white animate-live-wave" style={{ animationDelay: "0.2s" }} />
-                    <div className="w-0.5 h-full bg-white animate-live-wave" style={{ animationDelay: "0.1s" }} />
-                  </div>
-                  <span className="text-[10px] font-black tracking-wider text-amber-100">LIVE</span>
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                setActiveTab("events");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className="bg-white/95 text-red-700 px-3 py-1.5 rounded-full text-xs font-black shadow hover:bg-white hover:scale-105 transition flex items-center gap-1.5 shrink-0"
-            >
-              <MapPin className="w-3.5 h-3.5" />
-              <span>全プログラム</span>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ヘッダー・ナビゲーション */}
-      <header
-        className={`sticky ${
-          primaryLiveEvent ? "top-[76px] sm:top-[72px]" : "top-0"
-        } z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all`}
-      >
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
-          <button onClick={() => setIsEntered(false)} className="flex items-center gap-2.5 text-left shrink-0">
-            <img src="/高専ロゴ.jpg" alt="高専ロゴ" className="w-9 h-9 object-contain" />
-            <div className="flex flex-col">
-              <span className="font-black text-base text-slate-800 leading-tight">高専祭</span>
-              <span className="text-[10px] font-extrabold text-orange-600">10:00〜15:00</span>
-            </div>
+          <button onClick={() => setIsEntered(false)} className="flex items-center gap-2 text-left">
+            <span className="font-black text-base text-slate-800">高専祭</span>
+            <span className="text-[10px] font-extrabold text-orange-600">10:00〜15:00</span>
           </button>
 
           <nav className="flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200">
             <button
               onClick={() => setActiveTab("map")}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
-                activeTab === "map"
-                  ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white"
-                  : "text-slate-600 hover:text-slate-900"
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${
+                activeTab === "map" ? "bg-orange-500 text-white" : "text-slate-600"
               }`}
-              title="マップ"
             >
-              <Map className="w-4 h-4" />
-              {activeTab === "map" && <span>マップ</span>}
+              マップ
             </button>
             <button
               onClick={() => setActiveTab("stalls")}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
-                activeTab === "stalls"
-                  ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white"
-                  : "text-slate-600 hover:text-slate-900"
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${
+                activeTab === "stalls" ? "bg-orange-500 text-white" : "text-slate-600"
               }`}
-              title="企画一覧"
             >
-              <Store className="w-4 h-4" />
-              {activeTab === "stalls" && <span>企画一覧</span>}
+              企画一覧
             </button>
             <button
               onClick={() => setActiveTab("events")}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
-                activeTab === "events"
-                  ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white"
-                  : "text-slate-600 hover:text-slate-900"
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${
+                activeTab === "events" ? "bg-orange-500 text-white" : "text-slate-600"
               }`}
-              title="タイムスケジュール"
             >
-              <Calendar className="w-4 h-4" />
-              {activeTab === "events" && <span>スケジュール</span>}
+              スケジュール
             </button>
             <button
               onClick={() => setActiveTab("access")}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
-                activeTab === "access"
-                  ? "bg-gradient-to-r from-orange-500 to-rose-500 text-white"
-                  : "text-slate-600 hover:text-slate-900"
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${
+                activeTab === "access" ? "bg-orange-500 text-white" : "text-slate-600"
               }`}
-              title="交通・アクセス"
             >
-              <Car className="w-4 h-4" />
-              {activeTab === "access" && <span>アクセス</span>}
+              アクセス
             </button>
           </nav>
         </div>
       </header>
 
-      {/* メインエリア */}
       <main className="max-w-2xl mx-auto px-4 pt-4 pb-12 space-y-4">
-        {/* タブ 1: 校内マップ */}
         {activeTab === "map" && (
           <div className="space-y-4">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1 gap-2">
-              <span className="flex items-center gap-1.5 text-slate-700 truncate">
-                <Move className="w-3.5 h-3.5 text-orange-500 animate-pulse shrink-0" />
-                <span className="truncate">指2本で拡大縮小、ドラッグで移動</span>
-              </span>
-
-              {/* ズームコントローラー */}
-              <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-full p-1 shadow-sm shrink-0">
-                <button
-                  onClick={handleZoomOut}
-                  disabled={zoomLevel <= 1.0}
-                  className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
-                  title="縮小"
-                >
-                  <ZoomOut className="w-3.5 h-3.5" />
-                </button>
-                <span className="text-[10px] font-black min-w-[36px] text-center text-slate-700 select-none">
-                  {Math.round(zoomLevel * 100)}%
-                </span>
-                <button
-                  onClick={handleZoomIn}
-                  disabled={zoomLevel >= 4.0}
-                  className="p-1 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-700 transition"
-                  title="拡大"
-                >
-                  <ZoomIn className="w-3.5 h-3.5" />
-                </button>
-                {zoomLevel !== 3.0 && (
-                  <button
-                    onClick={handleResetZoom}
-                    className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition ml-0.5 border-l border-slate-200"
-                    title="標準位置に戻す"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                  </button>
-                )}
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
+              <span>校内マップ</span>
+              <div className="flex items-center gap-1 bg-white border rounded-full p-1 shadow-sm">
+                <button onClick={handleZoomOut} className="p-1"><ZoomOut className="w-3.5 h-3.5" /></button>
+                <span className="text-[10px] font-black">{Math.round(zoomLevel * 100)}%</span>
+                <button onClick={handleZoomIn} className="p-1"><ZoomIn className="w-3.5 h-3.5" /></button>
               </div>
             </div>
 
-            {/* キャンパスマップコンテナ */}
             <div
               ref={mapContainerRef}
-              style={{
-                aspectRatio: `${2.37 / Math.min(zoomLevel, 2.0)}`,
-              }}
-              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
-                isMapReady ? "opacity-100" : "opacity-0"
-              }`}
+              className="w-full overflow-auto rounded-3xl border-2 border-slate-200 bg-slate-200 relative aspect-[2.37/1]"
             >
-              <div
-                ref={mapContentRef}
-                style={{
-                  width: `${zoomLevel * 100}%`,
-                  minWidth: "100%",
-                }}
-                className="relative aspect-[2.37/1] select-none"
-              >
-                {/* 校内図画像 */}
-                <img
-                  src="/校内図.jpeg"
-                  alt="校内図"
-                  onLoad={() => {
-                    scrollToRightSide(false);
-                    setIsMapReady(true);
-                  }}
-                  className="w-full h-full object-contain pointer-events-none rounded-2xl"
-                />
+              <div ref={mapContentRef} style={{ width: `${zoomLevel * 100}%` }} className="relative aspect-[2.37/1]">
+                <img src="/校内図.jpeg" alt="校内図" className="w-full h-full object-contain pointer-events-none" />
 
-                {/* 校内マップのピン */}
-                {CAMPUS_ZONES.map((zone) => {
-                  const isSelected = selectedZoneId === zone.id;
-                  const isLiveStageZone = liveEvents.some((e) => e.locationZoneId === zone.id);
-                  const showLabel = isSelected || (selectedZoneId === null && zone.id === "ticket");
-
-                  return (
-                    <div
-                      key={zone.id}
-                      style={{ top: zone.top, left: zone.left }}
-                      className={`absolute transition-all duration-200 ${
-                        isSelected ? "z-30" : "z-10"
-                      }`}
+                {CAMPUS_ZONES.map((zone) => (
+                  <div key={zone.id} style={{ top: zone.top, left: zone.left }} className="absolute -translate-x-1/2 -translate-y-full">
+                    <button
+                      onClick={() => setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))}
+                      className="w-7 h-7 bg-rose-500 text-white rounded-full flex items-center justify-center font-bold text-xs shadow-md border-2 border-white hover:scale-110 transition"
                     >
-                      <button
-                        onClick={() =>
-                          setSelectedZoneId((prev) => (prev === zone.id ? null : zone.id))
-                        }
-                        className={`relative -translate-x-1/2 -translate-y-full flex items-center justify-center cursor-pointer group transition-transform duration-200 ${
-                          isSelected ? "scale-110" : "hover:scale-105"
-                        }`}
-                      >
-                        <div className="relative flex items-center justify-center shrink-0">
-                          {isLiveStageZone && (
-                            <span className="absolute w-7 h-7 rounded-full bg-rose-500/50 animate-ping" />
-                          )}
-                          {zone.id === "parking" ? (
-                            <div
-                              className={`w-6 h-6 bg-blue-600 rounded border-2 border-white shadow-md flex items-center justify-center text-white font-black text-xs leading-none shrink-0 ${
-                                isSelected ? "ring-2 ring-rose-500" : ""
-                              }`}
-                            >
-                              P
-                            </div>
-                          ) : (
-                            <div
-                              className={`w-5 h-5 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-t-full rounded-bl-full rotate-45 border-2 border-white shadow-md flex items-center justify-center shrink-0 ${
-                                isSelected ? "ring-2 ring-rose-500" : ""
-                              }`}
-                            >
-                              <div className="w-2 h-2 bg-white rounded-full -rotate-45 shadow-inner" />
-                            </div>
-                          )}
-                        </div>
-
-                        {showLabel && (
-                          <div
-                            className={`absolute bg-slate-900/85 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg text-[10px] font-black tracking-wider text-center leading-tight flex flex-col items-center whitespace-nowrap px-2.5 py-1 ${
-                              zone.id === "bldg4"
-                                ? "left-full top-1/2 -translate-y-1/2 ml-2"
-                                : "bottom-full left-1/2 -translate-x-1/2 mb-1.5"
-                            }`}
-                          >
-                            {zone.pinLabel.split("\n").map((line, idx) => (
-                              <span key={idx}>{line}</span>
-                            ))}
-                          </div>
-                        )}
-                      </button>
-                    </div>
-                  );
-                })}
+                      📍
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* 選択されたスポットの詳細パネル */}
             {currentZone ? (
-              <div className={`rounded-3xl p-5 border shadow-sm space-y-4 transition-all ${currentZone.lightBg}`}>
-                <div className="flex items-start justify-between gap-2 border-b border-current/10 pb-3">
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl p-2 bg-white/80 rounded-2xl shadow-sm">{currentZone.icon}</span>
-                    <div>
-                      <h3 className="text-xl font-black text-slate-900">{currentZone.name}</h3>
-                      <p className="text-xs font-bold opacity-80">{currentZone.subName}</p>
-                    </div>
+              <div className={`rounded-3xl p-5 border shadow-sm space-y-4 ${currentZone.lightBg}`}>
+                <div className="flex items-center justify-between border-b pb-3">
+                  <div>
+                    <h3 className="text-xl font-black">{currentZone.name}</h3>
+                    <p className="text-xs font-bold opacity-80">{currentZone.subName}</p>
                   </div>
                   <span className="text-xs font-black px-3 py-1 bg-white/90 rounded-full shadow-sm">
-                    対象リスト ({zoneStalls.length}件)
+                    ({zoneStalls.length}件)
                   </span>
                 </div>
+                <p className="text-xs font-medium leading-relaxed">{currentZone.desc}</p>
 
-                <p className="text-xs leading-relaxed font-medium opacity-90">{currentZone.desc}</p>
-
-                {selectedZoneId === "bldg1" && (
+                {(selectedZoneId === "bldg1" || selectedZoneId === "bldg8" || selectedZoneId === "media_center") && (
                   <button
                     onClick={() => {
-                      setIsBldg1ModalOpen(true);
-                      setHighlightedRoomNo(null);
+                      setDetailMapBuilding(selectedZoneId as any);
+                      setDetailMapFloor(selectedZoneId === "bldg8" ? "2F" : "1F");
                     }}
-                    className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-black text-xs shadow-md hover:shadow-lg transition flex items-center justify-center gap-2"
+                    className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-black text-xs shadow-md flex items-center justify-center gap-2 hover:opacity-90 transition"
                   >
                     <Layers className="w-4 h-4" />
-                    <span>1号館のフロア詳細マップ（1F / 2F / 3F）を開く</span>
+                    <span>{currentZone.name} の詳細フロアマップを開く</span>
                   </button>
                 )}
 
                 <div className="space-y-2">
-                  <h4 className="text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                    <span>📍 {currentZone.name} の出展・施設一覧</span>
-                  </h4>
-
+                  <h4 className="text-xs font-extrabold text-slate-800">出展・施設一覧</h4>
                   {zoneStalls.length > 0 ? (
                     <div className="grid grid-cols-1 gap-2">
                       {zoneStalls.map((stall) => (
@@ -1632,14 +991,11 @@ export default function Page() {
                           <div className="flex items-center gap-3">
                             <span className="text-2xl p-2 bg-slate-50 rounded-xl">{stall.icon}</span>
                             <div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="text-[10px] font-black px-2 py-0.2 bg-orange-100 text-orange-700 rounded">
-                                  {stall.grade}
-                                </span>
-                                <span className="text-[10px] font-bold text-slate-500">{stall.category}</span>
-                              </div>
+                              <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded">
+                                {stall.grade}
+                              </span>
                               <h5 className="font-black text-sm text-slate-900 mt-0.5">{stall.title}</h5>
-                              <p className="text-[11px] text-slate-500 font-medium">{stall.location}</p>
+                              <p className="text-[11px] text-slate-500">{stall.location}</p>
                             </div>
                           </div>
                           <ChevronRight className="w-5 h-5 text-slate-400" />
@@ -1647,60 +1003,40 @@ export default function Page() {
                       ))}
                     </div>
                   ) : (
-                    <div className="bg-white/60 p-4 rounded-2xl text-center text-xs text-slate-500 font-bold border border-slate-200">
-                      このエリアに関する個別のアトラクションリストは以上です。
-                    </div>
+                    <p className="text-xs text-slate-500 font-bold">該当するリストはありません。</p>
                   )}
                 </div>
               </div>
             ) : (
-              <div className="bg-white p-5 rounded-3xl border border-slate-200 text-center text-slate-500 font-bold text-xs space-y-1 shadow-sm">
-                <p className="text-xl">📍</p>
-                <p>マップ上のピンをタップすると場所の詳細が表示されます</p>
+              <div className="bg-white p-4 rounded-2xl text-center text-xs text-slate-500 font-bold border shadow-sm">
+                マップ上のピンをタップすると場所の詳細が表示されます
               </div>
             )}
           </div>
         )}
 
-        {/* タブ 2: 企画一覧 */}
         {activeTab === "stalls" && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-3">
               <div className="relative">
                 <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="企画名・出し物・クラス・場所で検索..."
+                  placeholder="企画名・場所・クラスで検索..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 bg-slate-50 rounded-2xl border border-slate-200 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 rounded-2xl border border-slate-200 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                 />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
               </div>
 
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-                {[
-                  "すべて",
-                  "模擬店",
-                  "クラス企画",
-                  "部活動企画",
-                  "実行委員会企画",
-                  "キッチンカー",
-                  "校内施設・その他",
-                ].map((cat) => (
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                {["すべて", "模擬店", "クラス企画", "部活動企画", "キッチンカー", "校内施設・その他"].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-black shrink-0 transition ${
+                    className={`px-3 py-1 rounded-full text-xs font-black shrink-0 transition ${
                       selectedCategory === cat
-                        ? "bg-orange-500 text-white shadow-sm"
+                        ? "bg-orange-500 text-white"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                   >
@@ -1710,229 +1046,64 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <p className="text-xs font-extrabold text-slate-500 px-1">
-                該当件数: {filteredStalls.length}件 （開催時間: 10:00〜15:00）
-              </p>
-
-              {filteredStalls.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {filteredStalls.map((stall) => (
-                    <div
-                      key={stall.id}
-                      onClick={() => setModalItem(stall)}
-                      className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition flex flex-col justify-between space-y-3 group"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl p-2.5 bg-orange-50 rounded-2xl group-hover:scale-110 transition shrink-0">
-                            {stall.icon}
-                          </span>
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
-                                {stall.grade}
-                              </span>
-                              <span className="text-[10px] font-extrabold text-slate-400">
-                                {stall.category}
-                              </span>
-                            </div>
-                            <h3 className="font-black text-base text-slate-900 mt-1 line-clamp-1">
-                              {stall.title}
-                            </h3>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                        {stall.description}
-                      </p>
-
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-500">
-                        <span className="flex items-center gap-1 truncate max-w-[80%]">
-                          <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
-                          <span className="truncate">{stall.location}</span>
-                        </span>
-                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-orange-500 group-hover:translate-x-0.5 transition" />
-                      </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {filteredStalls.map((s) => (
+                <div
+                  key={s.id}
+                  onClick={() => setModalItem(s)}
+                  className="p-4 bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl p-2.5 bg-orange-50 rounded-2xl">{s.icon}</span>
+                    <div>
+                      <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
+                        {s.grade}
+                      </span>
+                      <h4 className="font-black text-sm text-slate-900 mt-0.5">{s.title}</h4>
+                      <p className="text-xs text-slate-500">{s.location}</p>
                     </div>
-                  ))}
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400" />
                 </div>
-              ) : (
-                <div className="bg-white p-8 rounded-3xl text-center border border-slate-200 text-slate-400 font-bold space-y-2">
-                  <p className="text-2xl">🔍</p>
-                  <p className="text-xs">条件に該当する出店・企画が見つかりませんでした</p>
-                </div>
-              )}
+              ))}
             </div>
           </div>
         )}
 
-        {/* タブ 3: ステージ・タイムスケジュール */}
         {activeTab === "events" && (
-          <div className="space-y-6">
-            <div className="bg-orange-50 border border-orange-200 p-3.5 rounded-2xl text-xs font-bold text-orange-900 flex items-center justify-between">
-              <span>📅 高専祭 タイムスケジュール</span>
-              <span className="bg-orange-200 text-orange-900 px-2 py-0.5 rounded font-black text-[10px]">
-                10:00〜15:00
-              </span>
-            </div>
-
+          <div className="space-y-4">
             {EVENTS_DATA.map((stage) => (
-              <div key={stage.stageId} className="space-y-3">
-                <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 rounded-3xl shadow-md flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">🎭</span>
-                    <div>
-                      <h2 className="font-black text-base">{stage.stageName}</h2>
-                      <p className="text-xs opacity-80 font-medium">場所: {stage.location}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => {
-                      setSelectedZoneId(stage.locationZoneId);
-                      setActiveTab("map");
-                    }}
-                    className="text-xs bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1 shrink-0"
-                  >
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span>マップ</span>
-                  </button>
+              <div key={stage.stageId} className="bg-white p-5 rounded-3xl border shadow-sm space-y-3">
+                <div className="flex items-center justify-between border-b pb-2">
+                  <h3 className="font-black text-base">{stage.stageName}</h3>
+                  <span className="text-xs text-slate-500 font-bold">{stage.location}</span>
                 </div>
-
-                <div className="space-y-3">
-                  {stage.schedule.map((event) => {
-                    const isLive = liveEvents.some((e) => e.id === event.id);
-
-                    return (
-                      <div
-                        key={event.id}
-                        className={`p-4 rounded-3xl border transition relative overflow-hidden ${
-                          isLive
-                            ? "bg-gradient-to-r from-orange-500/10 to-rose-500/10 border-orange-500 ring-2 ring-orange-400/50 shadow-md"
-                            : "bg-white border-slate-200 shadow-sm"
-                        }`}
-                      >
-                        {isLive && (
-                          <div className="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-2xl uppercase tracking-wider flex items-center gap-1">
-                            <Radio className="w-3 h-3 animate-pulse" />
-                            <span>LIVE 実施中</span>
-                          </div>
-                        )}
-
-                        <div className="flex items-start gap-3">
-                          <span className="text-3xl p-2.5 bg-slate-100 rounded-2xl shrink-0 mt-1">
-                            {event.icon}
-                          </span>
-                          <div className="space-y-1 flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-xs font-black text-orange-600 flex items-center gap-1">
-                                <Clock className="w-3.5 h-3.5" />
-                                {event.time}
-                              </span>
-                              <span className="text-[10px] font-extrabold px-2 py-0.5 bg-slate-100 text-slate-600 rounded">
-                                {event.tag}
-                              </span>
-                            </div>
-
-                            <h3 className="font-black text-base text-slate-900">{event.title}</h3>
-                            <p className="text-xs text-slate-500 font-bold">主催・担当: {event.org}</p>
-                            <p className="text-xs text-slate-600 leading-relaxed pt-1">{event.desc}</p>
-                          </div>
-                        </div>
+                <div className="space-y-2">
+                  {stage.schedule.map((ev) => (
+                    <div key={ev.id} className="p-3 bg-slate-50 rounded-2xl border text-xs space-y-1">
+                      <div className="flex items-center justify-between font-black text-orange-600">
+                        <span>{ev.time}</span>
+                        <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded text-[10px]">
+                          {ev.tag}
+                        </span>
                       </div>
-                    );
-                  })}
+                      <h4 className="font-black text-sm text-slate-800">{ev.title}</h4>
+                      <p className="text-slate-600">{ev.desc}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* タブ 4: 交通・アクセス */}
         {activeTab === "access" && (
-          <div className="space-y-4">
-            <div className="bg-amber-50 border border-amber-200 p-4 rounded-3xl shadow-sm flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <h3 className="text-xs font-black text-amber-900">
-                  【重要】ご来場時のお車のご利用について
-                </h3>
-                <p className="text-xs text-amber-800 font-medium leading-relaxed">
-                  <strong>※臨時駐車場はございません。</strong>
-                  校内の指定駐車場は駐車台数に大変限りがございます。ご来校の際は可能な限り公共交通機関（路線バス等）のご利用にご協力をお願いいたします。
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                <span className="text-3xl p-2.5 bg-sky-50 rounded-2xl text-sky-600">🏫</span>
-                <div>
-                  <h2 className="font-black text-lg text-slate-900">鶴岡高専へのアクセス</h2>
-                  <p className="text-xs text-slate-500 font-bold">〒997-8511 山形県鶴岡市井岡字沢田104</p>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="relative w-full h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
-                  <iframe
-                    title="鶴岡工業高等専門学校 Google Map"
-                    src="https://maps.google.com/maps?q=38.70950241993693,139.79776942224186&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                    className="w-full h-full border-0"
-                    allowFullScreen={true}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </div>
-                <p className="text-[11px] text-center font-bold text-slate-400">
-                  ※ 指やマウス操作で自由な移動・拡大・縮小が可能です
-                </p>
-              </div>
-
-              <div className="space-y-3 pt-2">
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                    <Navigation className="w-4 h-4 text-sky-600" />
-                    <span>JR鶴岡駅から路線バス</span>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    JR鶴岡駅より庄内交通バス「湯野浜温泉行き（加茂経由）」乗車（約20分）、「高専前」バス停下車すぐ。
-                  </p>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                    <Car className="w-4 h-4 text-emerald-600" />
-                    <span>お車でお越しの場合</span>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    山形自動車道「鶴岡IC」より約10分。構内駐車場の誘導に従って駐車してください。
-                  </p>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-slate-800">
-                    <Info className="w-4 h-4 text-slate-600" />
-                    <span>ご来場にあたってのお願い</span>
-                  </div>
-                  <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
-                    <li>校内は全面禁煙です。</li>
-                    <li>酒類の持ち込み・飲酒は厳禁となっております。</li>
-                  </ul>
-                </div>
-              </div>
-
-              <a
-                href="https://maps.google.com/?q=38.70950241993693,139.79776942224186"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-2xl font-black text-xs shadow transition flex items-center justify-center gap-2"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>Google マップアプリで開く</span>
-              </a>
-            </div>
+          <div className="bg-white p-5 rounded-3xl border shadow-sm space-y-4">
+            <h3 className="font-black text-base">鶴岡高専へのアクセス</h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-medium">
+              〒997-8511 山形県鶴岡市井岡字沢田104<br />
+              JR鶴岡駅より庄内交通バス「湯野浜温泉行き（加茂経由）」乗車（約20分）、「高専前」バス停下車すぐ。
+            </p>
           </div>
         )}
       </main>
@@ -1940,470 +1111,354 @@ export default function Page() {
       {/* モーダル1: 出店・施設詳細 */}
       {modalItem && (
         <div className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-5 space-y-4">
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-4xl p-3 bg-orange-50 rounded-2xl">{modalItem.icon}</span>
-                  <div>
-                    <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
-                      {modalItem.grade}
-                    </span>
-                    <h3 className="text-lg font-black text-slate-900 mt-0.5">{modalItem.title}</h3>
-                    <p className="text-xs text-slate-500 font-bold">{modalItem.dept}</p>
-                  </div>
+          <div className="bg-white w-full max-w-sm rounded-3xl p-5 space-y-4 shadow-2xl">
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl p-2 bg-orange-50 rounded-2xl">{modalItem.icon}</span>
+                <div>
+                  <span className="text-xs font-black bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
+                    {modalItem.grade}
+                  </span>
+                  <h3 className="text-lg font-black mt-1">{modalItem.title}</h3>
+                  <p className="text-xs text-slate-500">{modalItem.location}</p>
                 </div>
-                <button
-                  onClick={() => setModalItem(null)}
-                  className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition"
-                >
-                  <X className="w-5 h-5" />
-                </button>
               </div>
-
-              <div className="space-y-2 text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
-                <p>{modalItem.description}</p>
-              </div>
-
-              {modalItem.menu && (
-                <div className="space-y-1.5">
-                  <span className="text-xs font-extrabold text-slate-800">🍽️ 取扱・提供メニュー</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {modalItem.menu.map((m, i) => (
-                      <span
-                        key={i}
-                        className="text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200/80 px-2.5 py-1 rounded-xl"
-                      >
-                        {m}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="space-y-2 pt-2 border-t border-slate-100">
-                <div className="flex items-center gap-2 text-xs font-extrabold text-slate-600">
-                  <MapPin className="w-4 h-4 text-orange-500" />
-                  <span>{modalItem.location}</span>
-                </div>
-
-                {modalItem.instagram && (
-                  <a
-                    href={modalItem.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs font-bold text-pink-600 hover:underline pt-1"
-                  >
-                    <InstagramIcon className="w-4 h-4 text-pink-600" />
-                    <span>公式 Instagram を見る</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                )}
-              </div>
-
-              <div className="pt-2 flex gap-2">
-                <button
-                  onClick={() => {
-                    if (modalItem.zoneId === "bldg1") {
-                      setIsBldg1ModalOpen(true);
-                      if (modalItem.floor) {
-                        setCurrentFloor(modalItem.floor);
-                      }
-                      setHighlightedRoomNo(modalItem.roomNo || modalItem.title);
-                      setModalItem(null);
-                    } else {
-                      setSelectedZoneId(modalItem.zoneId);
-                      setActiveTab("map");
-                      setModalItem(null);
-                    }
-                  }}
-                  className="w-full py-3 bg-slate-900 text-white rounded-2xl text-xs font-black shadow hover:bg-slate-800 transition flex items-center justify-center gap-1.5"
-                >
-                  <MapPin className="w-4 h-4" />
-                  <span>マップで場所を確認</span>
-                </button>
-              </div>
+              <button onClick={() => setModalItem(null)} className="p-1"><X className="w-5 h-5" /></button>
             </div>
+            <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-2xl border">
+              {modalItem.description}
+            </p>
+            <button
+              onClick={() => {
+                if (modalItem.zoneId === "bldg1" || modalItem.zoneId === "bldg8" || modalItem.zoneId === "media_center") {
+                  setDetailMapBuilding(modalItem.zoneId as any);
+                  setDetailMapFloor(modalItem.floor || "1F");
+                  setModalItem(null);
+                } else {
+                  setSelectedZoneId(modalItem.zoneId);
+                  setActiveTab("map");
+                  setModalItem(null);
+                }
+              }}
+              className="w-full py-3 bg-slate-900 text-white rounded-2xl text-xs font-black hover:bg-slate-800 transition"
+            >
+              詳細マップで場所を確認 📍
+            </button>
           </div>
         </div>
       )}
 
-      {/* モーダル2: 1号館フロア詳細マップ (z-50) */}
-      {isBldg1ModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
-            <div className="p-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between shadow-md">
+      {/* モーダル2: 統合詳細フロアマップモーダル (1号館 / 8号館 / 総合メディアセンター) */}
+      {detailMapBuilding && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+            {/* モーダルヘッダー */}
+            <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Layers className="w-5 h-5 text-blue-400" />
-                <h3 className="font-black text-base">1号館 フロア詳細マップ</h3>
+                <h3 className="font-black text-base">フロア詳細マップ</h3>
               </div>
               <button
-                onClick={() => {
-                  setIsBldg1ModalOpen(false);
-                  setHighlightedRoomNo(null);
-                }}
+                onClick={() => setDetailMapBuilding(null)}
                 className="p-1 text-slate-400 hover:text-white rounded-full transition"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* フロア切替タブ */}
-            <div className="flex border-b border-slate-200 bg-slate-100 p-1.5 gap-1.5">
-              {(["1F", "2F", "3F"] as const).map((floor) => (
+            {/* 建物切替メインタブ */}
+            <div className="flex border-b border-slate-200 bg-slate-200 p-1.5 gap-1">
+              {[
+                { id: "bldg1", label: "1号館" },
+                { id: "bldg8", label: "8号館" },
+                { id: "media_center", label: "総合メディアセンター" },
+              ].map((b) => (
                 <button
-                  key={floor}
-                  onClick={() => setCurrentFloor(floor)}
+                  key={b.id}
+                  onClick={() => {
+                    setDetailMapBuilding(b.id as any);
+                    setDetailMapFloor(b.id === "bldg8" ? "2F" : "1F");
+                  }}
                   className={`flex-1 py-2 rounded-xl text-xs font-black transition ${
-                    currentFloor === floor
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "text-slate-600 hover:bg-slate-200"
+                    detailMapBuilding === b.id
+                      ? "bg-slate-900 text-white shadow-sm"
+                      : "text-slate-700 hover:bg-slate-300"
                   }`}
                 >
-                  {floor}
+                  {b.label}
                 </button>
               ))}
             </div>
 
+            {/* フロア切替サブタブ (1号館) */}
+            {detailMapBuilding === "bldg1" && (
+              <div className="flex border-b border-slate-200 bg-slate-100 p-1 gap-1">
+                {(["1F", "2F", "3F"] as const).map((floor) => (
+                  <button
+                    key={floor}
+                    onClick={() => setDetailMapFloor(floor)}
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition ${
+                      detailMapFloor === floor ? "bg-blue-600 text-white shadow-sm" : "text-slate-600"
+                    }`}
+                  >
+                    {floor}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {/* フロアレイアウトコンテンツ */}
-            <div className="p-4 space-y-3 overflow-y-auto custom-map-scrollbar">
-              {currentFloor === "1F" && (
-                /* 1F フロアマップ */
+            <div className="p-4 space-y-3 overflow-y-auto bg-slate-100/60">
+              {/* ==================== ① 1号館 (1-1F, 1-2F, 1-3F 忠実再現) ==================== */}
+              {detailMapBuilding === "bldg1" && (
                 <div className="space-y-3">
-                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
-                      <span>1号館 1Fフロアマップ</span>
-                    </span>
-                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
-                  </div>
+                  {/* --- 1号館 1F (画像「1-1F」準拠) --- */}
+                  {detailMapFloor === "1F" && (
+                    <div className="w-full overflow-x-auto pb-2">
+                      <div className="min-w-[560px] max-w-[660px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
+                        <div className="text-center font-black text-3xl text-slate-900 mb-6 tracking-wide">1F</div>
 
-                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
-                    <div className="min-w-[560px] max-w-[660px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-                      {/* --- 十字路背景構造 --- */}
-                      <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
-                      <div className="absolute top-[76px] left-4 w-[calc(45.833%-16px)] h-[40px] bg-slate-200 border-y-2 border-l-2 border-slate-300 rounded-l-lg z-0" />
-                      <div className="absolute top-[76px] left-[54.166%] right-4 h-[40px] bg-slate-200 border-y-2 border-r-2 border-slate-300 rounded-r-lg z-0" />
-                      <div className="absolute top-[116px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
-                      <div className="absolute top-[76px] left-[45.833%] w-[8.333%] h-[40px] bg-slate-200 z-0" />
-
-                      {/* --- コンテンツ配置 --- */}
-                      <div className="relative z-10 space-y-0">
-                        <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
-                          <div className="col-span-5"></div>
-                          <div className="col-span-2 flex flex-col items-center justify-center h-full">
-                            <span className="text-xs font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
-                              4号館へ
-                            </span>
-                            <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
+                        {/* 上部横廊下 (右上に「4号館」テキスト、右側に「SS」波線、右下に部屋「412」) */}
+                        <div className="relative mb-12">
+                          <div className="absolute -top-7 right-20 text-sm font-black text-slate-900 tracking-wider">
+                            4号館
                           </div>
-                          <div className="col-span-5 pl-2 flex justify-start">
+
+                          <div className="h-10 bg-slate-500 w-full relative flex items-center justify-end pr-20">
+                            <BreakLineSS />
+                          </div>
+
+                          <div className="absolute right-2 top-0 translate-y-3">
                             <button
                               onClick={() => {
-                                const stall = getRoomStall("本部");
+                                const stall = getRoomStall("412");
                                 if (stall) setModalItem(stall);
                               }}
-                              className={`relative w-28 h-12 border-2 rounded-xl shadow-sm text-center font-black transition flex flex-col items-center justify-center ${
-                                highlightedRoomNo === "本部" || highlightedRoomNo === "1F 本部"
-                                  ? "bg-rose-600 text-white border-rose-700 ring-2 ring-rose-400"
-                                  : "bg-rose-500 hover:bg-rose-600 text-white border-rose-600"
-                              }`}
+                              className="w-16 h-22 border-[2.5px] border-slate-900 bg-white font-black text-slate-900 text-lg rounded-lg hover:bg-amber-100 transition shadow-sm flex items-center justify-center cursor-pointer"
                             >
-                              {(highlightedRoomNo === "本部" || highlightedRoomNo === "1F 本部") && (
-                                <div className="absolute -top-3 -right-2 z-20 bg-amber-400 text-rose-900 rounded-full p-1 shadow-md animate-bounce">
-                                  <MapPin className="w-4 h-4 fill-amber-400 text-rose-900" />
-                                </div>
-                              )}
-                              <span className="text-[8px] opacity-80 uppercase tracking-wider">Headquarters</span>
-                              <span className="text-xs">🏫 本部</span>
+                              412
                             </button>
                           </div>
                         </div>
 
-                        {/* 中央横廊下スペース (高さ40px) */}
-                        <div className="h-[40px]" />
+                        {/* 中央縦廊下 + 入口赤三角▲ */}
+                        <div className="relative min-h-[160px] flex flex-col items-center">
+                          <div className="w-12 bg-slate-500 h-28 relative">
+                            <div className="absolute -bottom-7 left-1/2 -translate-x-1/2">
+                              <RedTriangle />
+                            </div>
+                          </div>
 
-                        {/* 下部エリア */}
-                        <div className="grid grid-cols-12 gap-0 pt-2">
-                          <div className="col-span-5 grid grid-cols-3 gap-1.5 pr-2">
+                          {/* 廊下左側: 113, 112, 111 教室 */}
+                          <div className="absolute left-6 top-0 flex gap-3">
                             {[
-                              { roomNo: "113教室", roomLabel: "113", defaultTitle: "ホスト", emoji: "🌹" },
-                              { roomNo: "112教室", roomLabel: "112", defaultTitle: "ドリンク", emoji: "🍹" },
-                              { roomNo: "111教室", roomLabel: "111", defaultTitle: "ほっとサンド", emoji: "🥪" },
+                              { id: "113", label: "113" },
+                              { id: "112", label: "112" },
+                              { id: "111", label: "111" },
                             ].map((r) => {
-                              const stall = getRoomStall(r.roomNo);
-                              const isHighlighted = highlightedRoomNo === r.roomNo;
+                              const stall = getRoomStall(r.id);
                               return (
                                 <button
-                                  key={r.roomNo}
+                                  key={r.id}
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className={`relative border-2 p-1.5 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
-                                    isHighlighted
-                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                      : "bg-white border-orange-200 hover:border-orange-500"
-                                  }`}
+                                  className="w-16 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-lg text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer"
                                 >
-                                  {isHighlighted && (
-                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                                    </div>
-                                  )}
-                                  <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
-                                    {r.roomLabel}
-                                  </div>
-                                  <div className="my-auto text-center">
-                                    <div className="text-lg group-hover:scale-110 transition">{r.emoji}</div>
-                                    <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-1 group-hover:text-orange-600">
-                                      {stall ? stall.title : r.defaultTitle}
-                                    </div>
-                                  </div>
-                                  {stall && (
-                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
-                                      {stall.grade}
-                                    </div>
-                                  )}
+                                  <span>{r.label}</span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          <div className="col-span-2 flex flex-col items-center justify-end min-h-[160px] pb-2">
-                            <div className="text-center">
-                              <div className="inline-flex items-center gap-1 bg-slate-800 text-white px-2.5 py-1 rounded-full text-[10px] font-black shadow-md whitespace-nowrap">
-                                <Users className="w-3 h-3 text-amber-400" />
-                                <span>学生昇降口</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* 金券販売と交流ラウンジ (col-span-5) */}
-                          <div className="col-span-5 grid grid-cols-12 gap-1 pl-1">
-                            <div className="col-span-3 flex flex-col gap-1.5">
-                              <button
-                                onClick={() => {
-                                  const stall = STALLS_DATA.find((s) => s.id === 501);
-                                  if (stall) setModalItem(stall);
-                                }}
-                                className={`relative h-20 border-2 rounded-xl shadow-sm p-1 flex flex-col items-center justify-center text-center font-black transition w-full ${
-                                  highlightedRoomNo === "金券販売" || highlightedRoomNo === "1号館 1F 金券販売"
-                                    ? "bg-amber-300 border-rose-500 ring-2 ring-rose-400 text-amber-950"
-                                    : "bg-amber-400 hover:bg-amber-300 border-amber-500 text-amber-950"
-                                }`}
-                              >
-                                {(highlightedRoomNo === "金券販売" || highlightedRoomNo === "1号館 1F 金券販売") && (
-                                  <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                                    <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                                  </div>
-                                )}
-                                <Ticket className="w-3.5 h-3.5 mb-0.5 shrink-0" />
-                                <span className="text-[10px] font-black tracking-widest [writing-mode:vertical-rl]">金券販売</span>
-                              </button>
-
-                              <div className="h-20 bg-emerald-50 border-2 border-emerald-300 rounded-xl p-1 text-center flex flex-col items-center justify-center w-full">
-                                <span className="text-base leading-none mb-0.5">🛋️</span>
-                                <span className="text-[9px] font-black text-emerald-900 tracking-wider [writing-mode:vertical-rl]">
-                                  交流ラウンジ
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="col-span-9 grid grid-cols-3 gap-1 h-20">
-                              <div className="bg-slate-200 border border-slate-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                                <svg
-                                  className="w-4 h-4 text-slate-700 mb-0.5"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <path d="M6 19h4v-4h4v-4h4V7" />
-                                </svg>
-                                <span className="text-[8px] font-extrabold text-slate-700">階段</span>
-                              </div>
-
-                              <div className="bg-sky-100 border border-sky-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                                <span className="text-xs leading-none mb-0.5">🚹</span>
-                                <span className="text-[9px] font-black text-sky-800 [writing-mode:vertical-rl]">男子トイレ</span>
-                              </div>
-
-                              <div className="bg-pink-100 border border-pink-300 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                                <span className="text-xs leading-none mb-0.5">🚺</span>
-                                <span className="text-[9px] font-black text-pink-800 [writing-mode:vertical-rl]">女子トイレ</span>
-                              </div>
-                            </div>
+                          {/* 廊下右側: 階段 & トイレ */}
+                          <div className="absolute right-12 top-2 flex items-center gap-4">
+                            <StairsIcon />
+                            <ToiletIcon />
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              )}
+                  )}
 
-              {currentFloor === "2F" && (
-                /* 2F フロアマップ */
-                <div className="space-y-3">
-                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
-                      <span>1号館 2Fフロアマップ</span>
-                    </span>
-                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
-                  </div>
+                  {/* --- 1号館 2F (画像「1-2F」準拠) --- */}
+                  {detailMapFloor === "2F" && (
+                    <div className="w-full overflow-x-auto pb-2">
+                      <div className="min-w-[560px] max-w-[660px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
+                        <div className="text-center font-black text-3xl text-slate-900 mb-6 tracking-wide">2F</div>
 
-                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
-                    <div className="min-w-[600px] max-w-[700px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-                      {/* --- 背景廊下構造 --- */}
-                      {/* 上部縦廊下 */}
-                      <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
-                      {/* 横廊下 (左から右まで) */}
-                      <div className="absolute top-[76px] left-4 right-4 h-[36px] bg-slate-200 border-y-2 border-l-2 border-r-2 border-slate-300 rounded-l-lg rounded-r-lg z-0" />
-                      {/* 下部縦廊下（中央） */}
-                      <div className="absolute top-[112px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
-                      {/* 右端7号館接続廊下背景（区切りなしで横廊下に接続） */}
-                      <div className="absolute top-[76px] right-4 w-[10%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
-                      {/* 横廊下と右端接続廊下の境目を消すマスク */}
-                      <div className="absolute top-[78px] right-[18px] w-[calc(10%-4px)] h-[32px] bg-slate-200 z-[1]" />
+                        <div className="h-10 bg-slate-500 w-full mb-10" />
 
-                      {/* --- コンテンツ配置 --- */}
-                      <div className="relative z-10 space-y-0">
-                        {/* 上部: 4号館へ */}
-                        <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
-                          <div className="col-span-5"></div>
-                          <div className="col-span-2 flex flex-col items-center justify-center h-full">
-                            <span className="text-xs font-black text-slate-800 tracking-wider mb-1 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
-                              4号館へ
-                            </span>
-                            <ArrowUp className="w-4 h-4 text-slate-600 animate-bounce" />
-                          </div>
-                          <div className="col-span-5"></div>
-                        </div>
+                        <div className="relative min-h-[160px] flex flex-col items-center">
+                          <div className="w-12 bg-slate-500 h-24 relative" />
 
-                        {/* 中央横廊下スペース (高さ36px) */}
-                        <div className="h-[36px]" />
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("合同講義室");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-24 h-20 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 text-sm leading-tight hover:bg-amber-100 transition shadow-sm -mt-1 z-10 cursor-pointer"
+                          >
+                            <span>合同</span>
+                            <span>講義室</span>
+                          </button>
 
-                        {/* 下部エリア（廊下の下） */}
-                        <div className="grid grid-cols-12 gap-0 pt-2">
-                          {/* 左側: 教室群（幅を大きく col-span-6） */}
-                          <div className="col-span-6 grid grid-cols-4 gap-1 pr-1.5">
+                          <div className="absolute left-2 top-0 flex gap-2">
                             {[
-                              { roomNo: "123教室", roomLabel: "123", defaultTitle: "ゲームカフェ", emoji: "🎮" },
-                              { roomNo: "12Fゼミ室", roomLabel: "12Fゼミ", defaultTitle: "美術写真部", emoji: "🖼️" },
-                              { roomNo: "122教室", roomLabel: "122", defaultTitle: "クレープ", emoji: "🥞" },
-                              { roomNo: "121教室", roomLabel: "121", defaultTitle: "わたあめ", emoji: "🍥" },
+                              { id: "123", label: "123" },
+                              { id: "12Fゼミ室", label: "12F\nゼミ室" },
+                              { id: "122", label: "122" },
+                              { id: "121", label: "121" },
                             ].map((r) => {
-                              const stall = getRoomStall(r.roomNo);
-                              const isHighlighted = highlightedRoomNo === r.roomNo;
+                              const stall = getRoomStall(r.id);
                               return (
                                 <button
-                                  key={r.roomNo}
+                                  key={r.id}
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
-                                    isHighlighted
-                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                      : "bg-white border-orange-200 hover:border-orange-500"
-                                  }`}
+                                  className="w-15 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-base text-slate-900 whitespace-pre-line leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer"
                                 >
-                                  {isHighlighted && (
-                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                                    </div>
-                                  )}
-                                  <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
-                                    {r.roomLabel}
-                                  </div>
-                                  <div className="my-auto text-center">
-                                    <div className="text-xl group-hover:scale-110 transition">{r.emoji}</div>
-                                    <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-2 leading-tight group-hover:text-orange-600">
-                                      {stall ? stall.title : r.defaultTitle}
-                                    </div>
-                                  </div>
-                                  {stall && (
-                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
-                                      {stall.grade}
-                                    </div>
-                                  )}
+                                  {r.label}
                                 </button>
                               );
                             })}
                           </div>
 
-                          {/* 中央: 合同講義室（廊下の下に配置、col-span-3でサイズ拡大） */}
-                          <div className="col-span-3 px-1 flex flex-col items-center justify-start">
+                          <div className="absolute right-12 top-2 flex items-center gap-4">
+                            <StairsIcon />
+                            <ToiletIcon />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* --- 1号館 3F (画像「1-3F」準拠) --- */}
+                  {detailMapFloor === "3F" && (
+                    <div className="w-full overflow-x-auto pb-2">
+                      <div className="min-w-[560px] max-w-[660px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
+                        <div className="text-center font-black text-3xl text-slate-900 mb-6 tracking-wide">3F</div>
+
+                        <div className="h-10 bg-slate-500 w-full mb-10" />
+
+                        <div className="relative min-h-[160px] flex flex-col items-center">
+                          <div className="w-12 bg-slate-500 h-24 relative" />
+
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("大会議室");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-24 h-20 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 text-sm leading-tight hover:bg-amber-100 transition shadow-sm -mt-1 z-10 cursor-pointer"
+                          >
+                            <span>大</span>
+                            <span>会議室</span>
+                          </button>
+
+                          <div className="absolute left-2 top-0 flex gap-2">
+                            {[
+                              { id: "13Fゼミ室", label: "13F\nゼミ室" },
+                              { id: "133", label: "133" },
+                              { id: "132", label: "132" },
+                              { id: "131", label: "131" },
+                            ].map((r) => {
+                              const stall = getRoomStall(r.id);
+                              return (
+                                <button
+                                  key={r.id}
+                                  onClick={() => {
+                                    if (stall) setModalItem(stall);
+                                  }}
+                                  className="w-15 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-base text-slate-900 whitespace-pre-line leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                                >
+                                  {r.label}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          <div className="absolute right-2 top-2 flex items-center gap-3">
+                            <StairsIcon />
+                            <ToiletIcon />
                             <button
                               onClick={() => {
-                                const jointStall = STALLS_DATA.find((s) => s.id === 401);
-                                if (jointStall) setModalItem(jointStall);
+                                const stall = getRoomStall("小会議室");
+                                if (stall) setModalItem(stall);
                               }}
-                              className={`relative w-full h-32 border-2 p-2 rounded-xl shadow-sm hover:shadow transition flex flex-col items-center justify-between group ${
-                                highlightedRoomNo === "合同講義室" || highlightedRoomNo === "今日、ゲームになりました。"
-                                  ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                  : "bg-orange-50 hover:bg-orange-100/80 border-orange-200 hover:border-orange-400"
-                              }`}
+                              className="w-16 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-sm text-slate-900 leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer"
                             >
-                              {(highlightedRoomNo === "合同講義室" || highlightedRoomNo === "今日、ゲームになりました。") && (
-                                <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                                  <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                                </div>
-                              )}
-                              <div className="text-[9px] font-black text-orange-600 bg-white/90 px-2 py-0.5 rounded border border-orange-200">
-                                合同講義室
-                              </div>
-                              <div className="my-auto text-center">
-                                <div className="text-2xl group-hover:scale-110 transition">🎮</div>
-                                <div className="text-xs font-black text-slate-800 mt-1 line-clamp-2 leading-tight group-hover:text-orange-600">
-                                  今日、ゲームになりました。
-                                </div>
-                              </div>
-                              <div className="text-[8px] font-extrabold text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full">
-                                実行委員会企画
-                              </div>
+                              <span>小</span>
+                              <span>会議室</span>
                             </button>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
-                          {/* 右側: 階段、トイレ（サイズ1/2）、および右端接続（表示なし） */}
-                          <div className="col-span-3 grid grid-cols-3 gap-1 pl-1">
-                            <div className="col-span-2 space-y-1">
-                              {/* 階段 & トイレ (縦横ともにサイズ1/2にしコンパクト化) */}
-                              <div className="grid grid-cols-3 gap-1 h-14">
-                                <div className="bg-slate-200 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                                  <svg className="w-3 h-3 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                    <path d="M6 19h4v-4h4v-4h4V7" />
-                                  </svg>
-                                  <span className="text-[7px] font-extrabold text-slate-700">階段</span>
-                                </div>
-                                <div className="bg-sky-100 border border-sky-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                                  <span className="text-[10px] leading-none">🚹</span>
-                                  <span className="text-[7px] font-black text-sky-800">男子</span>
-                                </div>
-                                <div className="bg-pink-100 border border-pink-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                                  <span className="text-[10px] leading-none">🚺</span>
-                                  <span className="text-[7px] font-black text-pink-800">女子</span>
-                                </div>
-                              </div>
-                            </div>
+              {/* ==================== ② 8号館 (画像「8-2-3F」忠実再現) ==================== */}
+              {detailMapBuilding === "bldg8" && (
+                <div className="w-full overflow-x-auto pb-2">
+                  <div className="min-w-[560px] max-w-[660px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
+                    <div className="text-center font-black text-2xl sm:text-3xl text-slate-900 mb-6">
+                      8号館詳細
+                    </div>
 
-                            {/* 右端 7号館接続（テキスト表示なし、枠線の区切りなしで直感的に接続） */}
-                            <div className="col-span-1 pl-0.5">
-                              <button
-                                onClick={() => {
-                                  setSelectedZoneId("bldg7");
-                                  setIsBldg1ModalOpen(false);
-                                }}
-                                className="w-full h-32 bg-purple-100/80 hover:bg-purple-200 border-2 border-purple-300 rounded-xl p-1 flex flex-col items-center justify-between text-center transition group shadow-sm"
-                              >
-                                <div className="text-[8px] font-black text-purple-700 bg-white/80 px-1 py-0.5 rounded">7号館へ</div>
-                                <div className="my-auto text-center">
-                                  <ArrowRight className="w-5 h-5 text-purple-600 mx-auto group-hover:translate-x-0.5 transition" />
-                                </div>
-                                <span className="text-[9px] font-bold text-purple-700">👻 お化け屋敷</span>
-                              </button>
-                            </div>
+                    <div className="grid grid-cols-2 gap-6 divide-x-2 divide-slate-200">
+                      {/* --- 2F --- */}
+                      <div className="pr-4 flex flex-col items-center">
+                        <div className="font-black text-2xl text-slate-900 mb-3">2F</div>
+
+                        <button
+                          onClick={() => {
+                            const stall = getRoomStall("吹奏楽部");
+                            if (stall) setModalItem(stall);
+                          }}
+                          className="w-full h-28 sm:h-32 border-[2.5px] border-slate-900 bg-white rounded-lg p-2 flex flex-col items-center justify-center font-black text-slate-900 text-xs sm:text-sm text-center leading-snug hover:bg-amber-100 transition shadow-sm mb-0 z-10 cursor-pointer"
+                        >
+                          <span>吹奏楽部演奏会</span>
+                          <span className="text-slate-600 my-0.5">&</span>
+                          <span>中学生向け</span>
+                          <span>学校説明会</span>
+                        </button>
+
+                        <div className="relative w-10 bg-slate-500 h-40 flex flex-col items-center justify-end pb-2">
+                          <div className="absolute -left-10 top-4">
+                            <StairsIcon />
+                          </div>
+                          <div className="absolute -right-12 top-4">
+                            <ToiletIcon />
+                          </div>
+                          <div className="text-xs font-black text-white text-center leading-tight whitespace-nowrap [writing-mode:vertical-rl] tracking-wider">
+                            1号館2階へ ↓
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* --- 3F --- */}
+                      <div className="pl-6 flex flex-col items-center">
+                        <div className="font-black text-2xl text-slate-900 mb-3">3F</div>
+
+                        <button
+                          onClick={() => {
+                            const stall = getRoomStall("学校説明会");
+                            if (stall) setModalItem(stall);
+                          }}
+                          className="w-full h-28 sm:h-32 border-[2.5px] border-slate-900 bg-white rounded-lg p-2 flex flex-col items-center justify-center font-black text-slate-900 text-xs sm:text-sm text-center leading-snug hover:bg-amber-100 transition shadow-sm mb-0 z-10 cursor-pointer"
+                        >
+                          <span>中学生向け</span>
+                          <span>学校説明会</span>
+                        </button>
+
+                        <div className="relative w-10 bg-slate-500 h-40">
+                          <div className="absolute -left-10 top-4">
+                            <StairsIcon />
+                          </div>
+                          <div className="absolute -right-12 top-4">
+                            <ToiletIcon />
                           </div>
                         </div>
                       </div>
@@ -2412,165 +1467,58 @@ export default function Page() {
                 </div>
               )}
 
-              {currentFloor === "3F" && (
-                /* 3F フロアマップ */
-                <div className="space-y-3">
-                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-[11px] font-extrabold text-blue-900 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
-                      <span>1号館 3Fフロアマップ</span>
-                    </span>
-                    <span className="text-blue-600 font-bold hidden sm:inline">※部屋をタップして詳細表示</span>
-                  </div>
+              {/* ==================== ③ 総合メディアセンター (画像「総合メディアセンター1F」忠実再現) ==================== */}
+              {detailMapBuilding === "media_center" && (
+                <div className="w-full overflow-x-auto pb-2">
+                  <div className="min-w-[560px] max-w-[660px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
+                    <div className="text-center font-black text-xl sm:text-2xl text-slate-900 mb-6">
+                      総合メディアセンター 1F
+                    </div>
 
-                  <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
-                    <div className="min-w-[600px] max-w-[700px] mx-auto bg-slate-50 border-2 border-slate-300 rounded-2xl p-4 relative select-none">
-                      {/* --- 背景廊下構造 --- */}
-                      {/* 上部縦廊下 */}
-                      <div className="absolute top-4 left-[45.833%] w-[8.333%] h-[60px] bg-slate-200 border-x-2 border-t-2 border-slate-300 rounded-t-lg z-0" />
-                      {/* 横廊下 (左から右まで) */}
-                      <div className="absolute top-[76px] left-4 right-4 h-[36px] bg-slate-200 border-y-2 border-l-2 border-r-2 border-slate-300 rounded-l-lg rounded-r-lg z-0" />
-                      {/* 下部縦廊下（中央） */}
-                      <div className="absolute top-[112px] left-[45.833%] w-[8.333%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
-                      {/* 右端7号館接続廊下背景 (2F同様に接続) */}
-                      <div className="absolute top-[76px] right-4 w-[10%] bottom-4 bg-slate-200 border-x-2 border-b-2 border-slate-300 rounded-b-lg z-0" />
-                      {/* 横廊下と右端接続廊下の境目を消すマスク */}
-                      <div className="absolute top-[78px] right-[18px] w-[calc(10%-4px)] h-[32px] bg-slate-200 z-[1]" />
-
-                      {/* --- コンテンツ配置 --- */}
-                      <div className="relative z-10 space-y-0">
-                        {/* 上部エリア */}
-                        <div className="grid grid-cols-12 gap-1 items-center h-[60px] mb-2">
-                          <div className="col-span-5"></div>
-                          {/* 中央縦廊下上部 */}
-                          <div className="col-span-2 flex flex-col items-center justify-center h-full">
-                            <span className="text-[10px] font-black text-slate-600 bg-white/90 px-2 py-0.5 rounded-full border border-slate-300 shadow-sm">
-                              屋上・階段
-                            </span>
-                          </div>
-                          {/* 横廊下の右端上部に「中会議室」を配置 */}
-                          <div className="col-span-5 flex justify-end pr-10">
-                            <div className="w-28 h-12 bg-indigo-100 border-2 border-indigo-300 rounded-xl p-1 flex flex-col items-center justify-center text-center shadow-sm">
-                              <span className="text-[9px] font-black text-indigo-600 bg-white/80 px-1.5 py-0.2 rounded">3F</span>
-                              <span className="text-xs font-black text-indigo-900 mt-0.5">中会議室</span>
-                            </div>
-                          </div>
+                    <div className="relative min-h-[220px] flex items-center justify-center my-4">
+                      {/* 中央横廊下 */}
+                      <div className="w-full h-10 bg-slate-500 relative flex items-center justify-center">
+                        <div className="absolute -top-10">
+                          <ToiletIcon />
                         </div>
 
-                        {/* 中央横廊下スペース (高さ36px) */}
-                        <div className="h-[36px]" />
+                        <div className="absolute -bottom-6">
+                          <RedTriangle />
+                        </div>
 
-                        {/* 下部エリア（廊下の下） */}
-                        <div className="grid grid-cols-12 gap-0 pt-2">
-                          {/* 左側: 教室群（幅を大きく col-span-6） */}
-                          <div className="col-span-6 grid grid-cols-4 gap-1 pr-1.5">
-                            {[
-                              { roomNo: "131教室", roomLabel: "131", defaultTitle: "カジノ", emoji: "🎲" },
-                              { roomNo: "132教室", roomLabel: "132", defaultTitle: "バー", emoji: "🍸" },
-                              { roomNo: "133教室", roomLabel: "133", defaultTitle: "喫茶店", emoji: "☕" },
-                              { roomNo: "13Fゼミ室", roomLabel: "13Fゼミ", defaultTitle: "天文部", emoji: "🌌" },
-                            ].map((r) => {
-                              const stall = getRoomStall(r.roomNo);
-                              const isHighlighted = highlightedRoomNo === r.roomNo;
-                              return (
-                                <button
-                                  key={r.roomNo}
-                                  onClick={() => {
-                                    if (stall) setModalItem(stall);
-                                  }}
-                                  className={`relative border-2 p-1 rounded-xl shadow-sm hover:shadow transition flex flex-col justify-between h-32 text-left group ${
-                                    isHighlighted
-                                      ? "bg-amber-50 border-rose-500 ring-2 ring-rose-400"
-                                      : "bg-white border-orange-200 hover:border-orange-500"
-                                  }`}
-                                >
-                                  {isHighlighted && (
-                                    <div className="absolute -top-3 -right-2 z-20 bg-rose-500 text-white rounded-full p-1 shadow-md animate-bounce">
-                                      <MapPin className="w-4 h-4 fill-white text-rose-500" />
-                                    </div>
-                                  )}
-                                  <div className="text-[9px] font-black text-orange-600 bg-orange-50 px-1 py-0.5 rounded w-fit">
-                                    {r.roomLabel}
-                                  </div>
-                                  <div className="my-auto text-center">
-                                    <div className="text-xl group-hover:scale-110 transition">{r.emoji}</div>
-                                    <div className="text-[11px] font-black text-slate-800 mt-0.5 line-clamp-2 leading-tight group-hover:text-orange-600">
-                                      {stall ? stall.title : r.defaultTitle}
-                                    </div>
-                                  </div>
-                                  {stall && (
-                                    <div className="text-[8px] font-extrabold text-slate-400 text-center">
-                                      {stall.grade}
-                                    </div>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-
-                          {/* 中央: 大会議室（廊下の下に配置、col-span-3でサイズ拡大） */}
-                          <div className="col-span-3 px-1 flex flex-col items-center justify-start">
-                            <div className="w-full h-32 bg-sky-50 border-2 border-sky-300 rounded-xl p-2 flex flex-col items-center justify-between text-center shadow-sm">
-                              <div className="text-[9px] font-black text-sky-700 bg-white/90 px-2 py-0.5 rounded border border-sky-200">
-                                3F
-                              </div>
-                              <div className="my-auto text-center">
-                                <div className="text-2xl mb-1">🏢</div>
-                                <div className="text-xs font-black text-slate-800">大会議室</div>
-                              </div>
-                              <div className="text-[8px] font-extrabold text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full">
-                                多目的会議スペース
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* 右側: 階段・トイレ（1/2サイズ）、小会議室（女子トイレ横）、右端接続廊下 */}
-                          <div className="col-span-3 grid grid-cols-3 gap-1 pl-1">
-                            <div className="col-span-2 space-y-1">
-                              {/* 階段 & トイレ (縦横ともにサイズ1/2) */}
-                              <div className="grid grid-cols-3 gap-1 h-14">
-                                <div className="bg-slate-200 border border-slate-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                                  <svg className="w-3 h-3 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                    <path d="M6 19h4v-4h4v-4h4V7" />
-                                  </svg>
-                                  <span className="text-[7px] font-extrabold text-slate-700">階段</span>
-                                </div>
-                                <div className="bg-sky-100 border border-sky-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                                  <span className="text-[10px] leading-none">🚹</span>
-                                  <span className="text-[7px] font-black text-sky-800">男子</span>
-                                </div>
-                                <div className="bg-pink-100 border border-pink-300 rounded-lg p-0.5 flex flex-col items-center justify-center text-center">
-                                  <span className="text-[10px] leading-none">🚺</span>
-                                  <span className="text-[7px] font-black text-pink-800">女子</span>
-                                </div>
-                              </div>
-
-                              {/* 女子トイレの横（下側）に「小会議室」を設置 */}
-                              <div className="h-[68px] bg-teal-50 border-2 border-teal-300 rounded-xl p-1.5 flex flex-col items-center justify-center text-center shadow-sm">
-                                <span className="text-[8px] font-black text-teal-700 bg-white/90 px-1.5 py-0.2 rounded border border-teal-200">3F</span>
-                                <span className="text-[10px] font-black text-teal-900 mt-0.5">小会議室</span>
-                              </div>
-                            </div>
-
-                            {/* 右端 7号館接続廊下 (3Fにも2Fと同様に配置、表示テキスト無し、区切り無し) */}
-                            <div className="col-span-1 pl-0.5">
-                              <button
-                                onClick={() => {
-                                  setSelectedZoneId("bldg7");
-                                  setIsBldg1ModalOpen(false);
-                                }}
-                                className="w-full h-32 bg-purple-100/80 hover:bg-purple-200 border-2 border-purple-300 rounded-xl p-1 flex flex-col items-center justify-between text-center transition group shadow-sm"
-                              >
-                                <div className="text-[8px] font-black text-purple-700 bg-white/80 px-1 py-0.5 rounded">7号館へ</div>
-                                <div className="my-auto text-center">
-                                  <ArrowRight className="w-5 h-5 text-purple-600 mx-auto group-hover:translate-x-0.5 transition" />
-                                </div>
-                                <span className="text-[9px] font-bold text-purple-700">👻 お化け屋敷</span>
-                              </button>
-                            </div>
+                        <div className="absolute right-12 top-12 flex flex-col items-center">
+                          <StairsIcon />
+                          <div className="text-center font-black text-xs text-slate-900 leading-tight mt-1">
+                            <span>↓</span>
+                            <br />
+                            <span>2 階</span>
+                            <br />
+                            <span>マルチメディア室へ</span>
                           </div>
                         </div>
                       </div>
+
+                      {/* 左端縦エリア: 多目的交流室 */}
+                      <button
+                        onClick={() => {
+                          const stall = getRoomStall("多目的交流室");
+                          if (stall) setModalItem(stall);
+                        }}
+                        className="absolute left-0 h-48 sm:h-52 w-16 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex items-center justify-center font-black text-slate-900 text-sm sm:text-base [writing-mode:vertical-rl] hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                      >
+                        多目的交流室
+                      </button>
+
+                      {/* 右端縦エリア: デジタルサロン */}
+                      <button
+                        onClick={() => {
+                          const stall = getRoomStall("デジタルサロン");
+                          if (stall) setModalItem(stall);
+                        }}
+                        className="absolute right-0 h-48 sm:h-52 w-16 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex items-center justify-center font-black text-slate-900 text-sm sm:text-base [writing-mode:vertical-rl] hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                      >
+                        デジタルサロン
+                      </button>
                     </div>
                   </div>
                 </div>
