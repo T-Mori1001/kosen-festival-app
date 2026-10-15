@@ -381,15 +381,15 @@ const STALLS_DATA: StallItem[] = [
     icon: "💃",
   },
 
-  // --- 第二体育館 (gym2) ---
+  // --- 音楽部プレハブ (prefab) ---
   {
     id: 303,
     title: "音楽部（音楽ライブ）",
     category: "部活動企画",
     grade: "部活",
     dept: "音楽部",
-    location: "第二体育館",
-    zoneId: "gym2",
+    location: "音楽部プレハブ",
+    zoneId: "prefab",
     description: "バンド演奏による熱いロック＆ポップスサウンドをお届け！（10:00〜15:00）",
     icon: "🎸",
   },
@@ -846,25 +846,6 @@ const EVENTS_DATA = [
         ],
       },
       {
-        stageId: "gym2",
-        stageName: "第二体育館",
-        location: "第二体育館",
-        locationZoneId: "gym2",
-        schedule: [
-          {
-            id: "d2_g2_1",
-            time: "10:00 - 15:00",
-            startTime: "10:00",
-            endTime: "15:00",
-            title: "音楽部 体育館ライブ",
-            org: "音楽部",
-            desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
-            tag: "ライブ",
-            icon: "🎸",
-          },
-        ],
-      },
-      {
         stageId: "bldg8",
         stageName: "8号館 2階 大講義室",
         location: "8号館 2階 大講義室",
@@ -883,6 +864,25 @@ const EVENTS_DATA = [
           },
         ],
       },
+      {
+        stageId: "prefab",
+        stageName: "音楽部プレハブ",
+        location: "音楽部プレハブ",
+        locationZoneId: "prefab",
+        schedule: [
+          {
+            id: "d2_g2_1",
+            time: "10:00 - 15:00",
+            startTime: "10:00",
+            endTime: "15:00",
+            title: "音楽部 ライブ",
+            org: "音楽部",
+            desc: "バンド演奏による熱いロック＆ポップスサウンドをお届け！",
+            tag: "ライブ",
+            icon: "🎸",
+          },
+        ],
+      },
     ],
   },
 ];
@@ -890,15 +890,15 @@ const EVENTS_DATA = [
 // 校内マップのピン座標
 const CAMPUS_ZONES = [
   {
-    id: "gym2",
-    name: "第二体育館",
+    id: "prefab",
+    name: "音楽部プレハブ",
     subName: "音楽部ライブ会場 (10:00〜15:00)",
-    pinLabel: "第二体育館",
+    pinLabel: "音楽部プレハブ",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "🎸",
-    top: "56.0%",
+    top: "61.0%",
     left: "6.4%",
-    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！",
+    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに指定通行順路と通行禁止エリアが表示されます。",
   },
   {
     id: "yamazaki",
@@ -1734,7 +1734,7 @@ export default function Page() {
                 }}
                 className="relative aspect-[2.37/1] select-none"
               >
-                {/* 校内図画像 */}
+                {/* 基本校内図画像 */}
                 <img
                   src="/校内図.jpeg"
                   alt="校内図"
@@ -1747,6 +1747,15 @@ export default function Page() {
                     setIsMapReady(true);
                   }}
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
+                />
+
+                {/* 通行止め・順路案内画像 (音楽部プレハブ選択時のみ重ねて表示) */}
+                <img
+                  src="/校内図-通行止め.jpeg"
+                  alt="校内図 通行止め・順路案内"
+                  className={`absolute inset-0 w-full h-full object-contain pointer-events-none rounded-2xl transition-opacity duration-300 ${
+                    selectedZoneId === "prefab" ? "opacity-100 z-1" : "opacity-0"
+                  }`}
                 />
 
                 {/* 校内マップのピン */}
