@@ -143,7 +143,7 @@ interface EventDayData {
   stages: StageItem[];
 }
 
-// 全出店・企画・施設・その他データ（パンフレットPDFを基に構成）
+// 全出店・企画・施設・その他データ
 const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 1F ---
   {
@@ -615,16 +615,16 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 307,
-    title: "競技かるた愛好会（畳の上の格闘技）",
+    title: "競技かるた体験会（畳の上の格闘技）",
     category: "部活動企画",
     grade: "有志",
-    dept: "競技かるた愛好会",
+    dept: "競技かるた体験会",
     location: "4号館 411教室",
     zoneId: "bldg4",
     description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
     icon: "🎴",
     imageUrl: "/カルタ.png",
-    bannerTitle: "競技かるた愛好会",
+    bannerTitle: "競技かるた体験会",
     bannerSub: "畳の上の格闘技！ガチ試合見学 & 初心者体験会",
     bannerColor: "from-emerald-700 to-green-900",
   },
@@ -647,10 +647,10 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 309,
-    title: "ロボット研究部（高専ロボコン展示＆体験）",
+    title: "ロボット技術研究部（高専ロボコン展示＆体験）",
     category: "部活動企画",
     grade: "部活",
-    dept: "ロボット研究部",
+    dept: "ロボット技術研究部",
     location: "総合メディアセンター 多目的交流室",
     zoneId: "media_center",
     description: "高専ロボコン「ぞうきんとうてきせんしゅけん」優勝ロボット展示！さらにスイカ割りミニゲームロボットの操作体験もあります！",
@@ -1063,7 +1063,7 @@ const CAMPUS_ZONES = [
     icon: "📚",
     top: "48.0%",
     left: "52.2%",
-    desc: "4B格付けチェック（マルチメディア教室）およびロボ研（多目的交流室）を開催！",
+    desc: "4B格付けチェック（マルチメディア教室）およびロボット技術研究部（多目的交流室）を開催！",
   },
   {
     id: "gym1",
@@ -1894,52 +1894,61 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 常時表示される「通行禁止」バッジ */}
+                {/* 常時表示される「通行禁止」表示（画像と同じ配置・両端赤丸付き、マップ画像に連動して同倍率で拡縮） */}
                 <div className="absolute inset-0 pointer-events-none z-30">
-                  <div className="absolute top-[70%] left-[21%] -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-red-700 text-xs sm:text-sm font-black px-3 py-1.5 rounded-xl shadow-xl border-2 border-red-600 flex items-center gap-1.5 select-none scale-125 origin-center">
-                    <span>🚧</span>
-                    <span className="text-xs sm:text-sm font-black tracking-wider">通行禁止</span>
-                    <span>🚧</span>
+                  {/* 通行禁止エリア左側の赤丸 */}
+                  <div className="absolute top-[70%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-red-600 bg-red-100/80 flex items-center justify-center shadow-md">
+                    <div className="w-3 h-0.5 bg-red-600 rotate-45" />
+                  </div>
+
+                  {/* 通行禁止テキストバッジ */}
+                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-md shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                    <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
+                  </div>
+
+                  {/* 通行禁止エリア右側の赤丸 */}
+                  <div className="absolute top-[70%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-red-600 bg-red-100/80 flex items-center justify-center shadow-md">
+                    <div className="w-3 h-0.5 bg-red-600 rotate-45" />
                   </div>
                 </div>
 
-                {/* 音楽部プレハブ選択時に表示される移動経路（校内図-通行止め_6.jpeg完全忠実再現） */}
+                {/* 音楽部プレハブ選択時に表示される移動経路（プレハブ順路.jpgの黒い矢印ルートを忠実再現） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-35">
                     <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
                       <defs>
-                        <marker id="blueArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+                        <marker id="blackArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#000000" />
                         </marker>
-                        <filter id="glowShadow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.3"/>
+                        <filter id="glowShadowBlack" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#000000" floodOpacity="0.25"/>
                         </filter>
                       </defs>
 
-                      {/* 添付画像（校内図-通行止め_6.jpeg）の黒線通りに完全再現した連続経路（セグメント） */}
+                      {/* 添付画像（プレハブ順路.jpg）の黒線＆矢印ルートを完全再現したSVGセグメント */}
                       {[
-                        // 1. 東側道路を北上 (y:215 -> y:72)
+                        // 1. 東側道路を北上 (↑)
                         { x1: 575, y1: 215, x2: 575, y2: 140 },
                         { x1: 575, y1: 130, x2: 575, y2: 72 },
 
-                        // 2. 北側道路を西進 (x:575 -> x:385, y:72)
+                        // 2. 北側道路を西進 (←)
                         { x1: 568, y1: 72, x2: 480, y2: 72 },
                         { x1: 470, y1: 72, x2: 385, y2: 72 },
 
-                        // 3. クランク部分（斜め南西へ下る） (x:385, y:72 -> x:360, y:92)
+                        // 3. クランク部分（斜め南西へ下る）
                         { x1: 385, y1: 72, x2: 360, y2: 92 },
 
-                        // 4. 北側道路西エリアを西進 (x:360 -> x:112, y:92)
+                        // 4. 北側道路西エリアを西進 (←)
                         { x1: 352, y1: 92, x2: 270, y2: 92 },
                         { x1: 260, y1: 92, x2: 180, y2: 92 },
                         { x1: 170, y1: 92, x2: 112, y2: 92 },
 
-                        // 5. 体育館西側を南下してプレハブへ (y:92 -> y:300, 矢印)
+                        // 5. 第一体育館西側を南下してプレハブへ (↓)
                         { x1: 112, y1: 100, x2: 112, y2: 165 },
                         { x1: 112, y1: 175, x2: 112, y2: 240 },
                         { x1: 112, y1: 250, x2: 112, y2: 300 },
                       ].map((seg, i) => (
-                        <g key={i} filter="url(#glowShadow)">
+                        <g key={i} filter="url(#glowShadowBlack)">
                           {/* 下地白枠線 */}
                           <line
                             x1={seg.x1}
@@ -1947,28 +1956,28 @@ export default function Page() {
                             x2={seg.x2}
                             y2={seg.y2}
                             stroke="#FFFFFF"
-                            strokeWidth="8"
+                            strokeWidth="7"
                             strokeLinecap="round"
                           />
-                          {/* メイン青矢印線 */}
+                          {/* メイン黒色矢印線 */}
                           <line
                             x1={seg.x1}
                             y1={seg.y1}
                             x2={seg.x2}
                             y2={seg.y2}
-                            stroke="#2563EB"
-                            strokeWidth="4"
+                            stroke="#000000"
+                            strokeWidth="3.5"
                             strokeLinecap="round"
-                            markerEnd="url(#blueArrow)"
+                            markerEnd="url(#blackArrow)"
                           />
                         </g>
                       ))}
                     </svg>
 
                     {/* 移動経路バッジ */}
-                    <div className="absolute top-[13%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
+                    <div className="absolute top-[13%] left-[34%] -translate-x-1/2 bg-slate-900 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
                       <span>🚶‍♂️</span>
-                      <span>移動経路</span>
+                      <span>プレハブへの順路</span>
                     </div>
                   </div>
                 )}
