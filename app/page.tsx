@@ -128,6 +128,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "111教室",
     description: "1-1による熱々で外はサクッ、中はジュワッ！香ばしい絶品ほっとサンド！",
     icon: "🥪",
+    imageUrl: "/1-1.png",
     menu: ["チョコ", "ハムサンド", "ピザ"],
     bannerTitle: "1-1 ホットサンド",
     bannerSub: "MENU: チョコ・ハムサンド・ピザ",
@@ -145,6 +146,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "112教室",
     description: "平成カフェ♡ タピオカ＆1-2がお届けする冷たくてシュワっと美味しい各種ソフトドリンク！",
     icon: "🍹",
+    imageUrl: "/1-2.png",
     menu: ["タピオカ", "ソフトドリンク各種"],
     bannerTitle: "1年2組 平成カフェ",
     bannerSub: "タピオカ＆ドリンク カワイイょ♡",
@@ -162,6 +164,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "113教室",
     description: "CLUB CROWNへようこそ！ハマりすぎ注意！？沼る覚悟でお越しください･･･",
     icon: "🌹",
+    imageUrl: "/4M.png",
     menu: ["ブルーハワイソーダ", "メロンソーダ", "いちごソーダ", "カルピス"],
     bannerTitle: "CLUB CROWN (4M)",
     bannerSub: "ハマりすぎ注意!? 沼る覚悟でお越しください･･･",
@@ -181,6 +184,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "121教室",
     description: "1-3作！フワフワ甘くて可愛いビッグわたあめ♡",
     icon: "🍥",
+    imageUrl: "/1-3.png",
     menu: ["わたあめ"],
     bannerTitle: "1-3 わたあめ♡",
     bannerSub: "フワフワ甘くて可愛いビッグわたあめ！",
@@ -198,6 +202,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "122教室",
     description: "1の4が新しい風吹かすッ！極上のクレープを味わいたい方は1号館122教室へ･･･",
     icon: "🥞",
+    imageUrl: "/1-4.png",
     menu: ["手作りクレープ"],
     bannerTitle: "1-4 クレープ",
     bannerSub: "1の4が新しい風吹かすッ！極上のクレープ！",
@@ -215,6 +220,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "123教室",
     description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンク（ジュース1杯100円）でリフレッシュ！",
     icon: "🎮",
+    imageUrl: "/3E.png",
     menu: ["ジュース各種 (100円)"],
     bannerTitle: "3E ゲームカフェ",
     bannerSub: "ゲームカフェへようこそ！ドリンク100円",
@@ -232,6 +238,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "12Fゼミ室",
     description: "絵画・写真作品や高専祭を彩る各種看板作品の展示。",
     icon: "🖼️",
+    imageUrl: "/美術写真.png",
     bannerTitle: "美術写真部 展示",
     bannerSub: "絵画・写真作品＆高専祭看板展示",
     bannerColor: "from-indigo-500 to-purple-600",
@@ -250,6 +257,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "131教室",
     description: "4I特製カジノ！トランプ、UNO、ダーツ、人狼（WERE WOLF）など本格的なゲームでスリリングな心理戦を楽しもう！※ワンドリンク制・景品あり",
     icon: "🎲",
+    imageUrl: "/4I.png",
     menu: ["トランプ", "UNO", "ダーツ", "人狼ゲーム"],
     bannerTitle: "4I CASINO",
     bannerSub: "TRUMP / UNO / DARTS / WERE WOLF",
@@ -267,6 +275,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "132教室",
     description: "3B喫茶店✿ たくさんのご来店お待ちしております！ゆったり寛げる空間でこだわりのドリンクをお届け。",
     icon: "☕",
+    imageUrl: "/3B.png",
     bannerTitle: "3B 喫茶店 ✿",
     bannerSub: "たくさんのご来店お待ちしております✿",
     bannerColor: "from-emerald-500 to-teal-700",
@@ -283,6 +292,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "133教室",
     description: "喉が渇いたときや休憩したいときにはぜひ来てください！おしゃれな雰囲気が魅力のノンアルコールバー！",
     icon: "🍸",
+    imageUrl: "/3I.png",
     bannerTitle: "3I Bar",
     bannerSub: "喉が渇いたときや休憩したいときにぜひ！",
     bannerColor: "from-amber-700 to-yellow-900",
@@ -299,6 +309,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "13Fゼミ室",
     description: "プラネタリウム（13Fゼミ室）で星空を体験！小会議室では天体写真の展示＆パンフレット配布を実施中！",
     icon: "🌌",
+    imageUrl: "/天文部.png",
     bannerTitle: "天文部 Astronomy Club",
     bannerSub: "プラネタリウム & 天体写真展示",
     bannerColor: "from-slate-900 via-indigo-950 to-blue-900",
@@ -331,6 +342,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "2M特製！餃子 木村屋 100円！鉄板で一気に焼き上げるパリッとジューシーな絶品焼き餃子！",
     icon: "🥟",
+    imageUrl: "/2M.png",
     menu: ["特製焼き餃子 (100円)"],
     bannerTitle: "餃子 木村屋 (2M)",
     bannerSub: "100円！鉄板で一気に焼き上げる絶品餃子！",
@@ -346,6 +358,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "2-E はじめました ポップコーン！これ食べて高専祭、はじけてみない？おいしい間食にどうぞ！",
     icon: "🍿",
+    imageUrl: "/2E.png",
     menu: ["フレーバーポップコーン"],
     bannerTitle: "2-E ポップコーン",
     bannerSub: "これ食べて高専祭、はじけてみない？",
@@ -361,6 +374,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "小腹が空いたら2I玉こん！秘伝の出汁がしっかり染み込んだ熱々の山形名物・玉こんにゃく！",
     icon: "🍡",
+    imageUrl: "/2I.png",
     menu: ["山形名物 玉こんにゃく"],
     bannerTitle: "2I 玉こん",
     bannerSub: "小腹が空いたら出汁の染みたあつあつ玉こん！",
@@ -376,6 +390,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "2B香ばしく焼き上げる秘伝タレ＆塩のやみつき焼き鳥！串もも・つくね・とりかわ！",
     icon: "🍢",
+    imageUrl: "/2B.png",
     menu: ["串もも", "つくね", "とりかわ"],
     bannerTitle: "2B やきとり",
     bannerSub: "串もも・つくね・とりかわ 香ばしいやみつき味！",
@@ -463,8 +478,9 @@ const STALLS_DATA: StallItem[] = [
     dept: "音楽部",
     location: "音楽部プレハブ / 第一体育館",
     zoneId: "prefab",
-    description: "音が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください!（YOUTH RIOT FES VOL.4）",
+    description: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください!（YOUTH RIOT FES VOL.4）",
     icon: "🎸",
+    imageUrl: "/音楽部.png",
     bannerTitle: "YOUTH RIOT FES VOL.4",
     bannerSub: "音が重なれば、楽しさも広がる。音楽部ライブ!",
     bannerColor: "from-red-600 via-purple-700 to-slate-900",
@@ -482,6 +498,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "711",
     description: "その教室に入ってはいけなかった。呪われた教室。教室から、逃げられるか。3M教室で恐怖の扉を、開け。",
     icon: "👻",
+    imageUrl: "/3M.png",
     bannerTitle: "呪われた教室 お化け屋敷 (3M)",
     bannerSub: "その教室に入ってはいけなかった。恐怖の扉を開け。",
     bannerColor: "from-purple-900 via-slate-900 to-red-950",
@@ -497,6 +514,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "722",
     description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！",
     icon: "⚽",
+    imageUrl: "/4E.png",
     bannerTitle: "キッキングスナイパー (4E)",
     bannerSub: "動くターゲットを狙ってシュート！豪華景品をゲット！",
     bannerColor: "from-emerald-600 to-green-700",
@@ -512,6 +530,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "731",
     description: "AM DESIGN CLUB TRIAL SESSION！デザコン出場歴代作品展示、3DCAD＆3Dプリンタ体験！ミニオブジェのプレゼントも！",
     icon: "𖤤",
+    imageUrl: "/AMデザイン.png",
     bannerTitle: "AM DESIGN CLUB",
     bannerSub: "3DCAD & 3Dプリンタ体験！ミニオブジェプレゼント！",
     bannerColor: "from-sky-600 to-blue-700",
@@ -545,6 +564,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "大講義室",
     description: "吹奏楽部によるオープニング演奏（感電等）＆ミニコンサート（嵐メドレー等）！素敵な演奏をお楽しみください！",
     icon: "🎷",
+    imageUrl: "/吹奏楽部.png",
     bannerTitle: "吹奏楽部 ミニコンサート",
     bannerSub: "感電 / 嵐メドレー等 素敵な演奏をお届け！",
     bannerColor: "from-amber-500 to-yellow-600",
@@ -577,6 +597,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg4",
     description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
     icon: "𔢤",
+    imageUrl: "/ESS.png",
     bannerTitle: "E.S.S. Little World",
     bannerSub: "留学生紹介ポスター & 海外生活Vlog展示",
     bannerColor: "from-sky-500 to-teal-600",
@@ -591,6 +612,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg4",
     description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
     icon: "🎴",
+    imageUrl: "/カルタ.png",
     bannerTitle: "競技かるた愛好会",
     bannerSub: "畳の上の格闘技！ガチ試合見学 & 初心者体験会",
     bannerColor: "from-emerald-700 to-green-900",
@@ -607,6 +629,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "media_center",
     description: "4B格付けチェック！あなたは本物をみぬけるか？一流！味覚・視覚・知識に挑戦！",
     icon: "🍷",
+    imageUrl: "/4B.png",
     bannerTitle: "4B 格付けチェック",
     bannerSub: "あなたは本物を見抜けるか？一流を目指せ！",
     bannerColor: "from-purple-800 to-amber-600",
@@ -621,6 +644,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "media_center",
     description: "高専ロボコン「ぞうきんとうてきせんしゅけん」優勝ロボット展示！さらにスイカ割りミニゲームロボットの操作体験もあります！",
     icon: "🤖",
+    imageUrl: "/ロボコン.png",
     bannerTitle: "高専ロボコン ロボ展示 & 操作体験",
     bannerSub: "NHK高専ロボコン出場機展示 & スイカ割り体験",
     bannerColor: "from-green-600 to-emerald-800",
@@ -1942,7 +1966,7 @@ export default function Page() {
                       ))}
                     </svg>
 
-                    {/* 移動経路バッジ (要望により5%上へ移動: top-[18%] -> top-[13%]) */}
+                    {/* 移動経路バッジ */}
                     <div className="absolute top-[13%] left-[34%] -translate-x-1/2 bg-blue-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
                       <span>🚶‍♂️</span>
                       <span>移動経路</span>
@@ -2069,7 +2093,15 @@ export default function Page() {
                           className="bg-white text-slate-800 p-3.5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition flex items-center justify-between"
                         >
                           <div className="flex items-center gap-3">
-                            <span className="text-2xl p-2 bg-slate-50 rounded-xl">{stall.icon}</span>
+                            {stall.imageUrl ? (
+                              <img
+                                src={stall.imageUrl}
+                                alt={stall.title}
+                                className="w-12 h-12 object-cover rounded-xl border border-slate-200 shrink-0"
+                              />
+                            ) : (
+                              <span className="text-2xl p-2 bg-slate-50 rounded-xl shrink-0">{stall.icon}</span>
+                            )}
                             <div>
                               <div className="flex items-center gap-1.5">
                                 <span className="text-[10px] font-black px-2 py-0.2 bg-orange-100 text-orange-700 rounded">
@@ -2162,21 +2194,38 @@ export default function Page() {
                       onClick={() => setModalItem(stall)}
                       className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition flex flex-col justify-between space-y-3 group"
                     >
+                      {stall.imageUrl ? (
+                        <div className="w-full h-36 rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 relative">
+                          <img
+                            src={stall.imageUrl}
+                            alt={stall.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                          />
+                          <div className="absolute top-2 left-2 bg-slate-900/75 backdrop-blur-sm text-white text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <span>{stall.grade}</span>
+                          </div>
+                        </div>
+                      ) : null}
+
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <span className="text-3xl p-2.5 bg-orange-50 rounded-2xl group-hover:scale-110 transition shrink-0">
-                            {stall.icon}
-                          </span>
+                          {!stall.imageUrl && (
+                            <span className="text-3xl p-2.5 bg-orange-50 rounded-2xl group-hover:scale-110 transition shrink-0">
+                              {stall.icon}
+                            </span>
+                          )}
                           <div>
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
-                                {stall.grade}
-                              </span>
-                              <span className="text-[10px] font-extrabold text-slate-400">
-                                {stall.category}
-                              </span>
-                            </div>
-                            <h3 className="font-black text-base text-slate-900 mt-1 line-clamp-1">
+                            {!stall.imageUrl && (
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
+                                  {stall.grade}
+                                </span>
+                                <span className="text-[10px] font-extrabold text-slate-400">
+                                  {stall.category}
+                                </span>
+                              </div>
+                            )}
+                            <h3 className="font-black text-base text-slate-900 mt-0.5 line-clamp-1">
                               {stall.title}
                             </h3>
                           </div>
@@ -2478,21 +2527,31 @@ export default function Page() {
                 </button>
               </div>
 
-              {/* パンフレットPR画像 / ポスターカードグラフィック表示 */}
-              <div className={`w-full rounded-2xl p-4 bg-gradient-to-br ${modalItem.bannerColor || "from-slate-800 to-slate-900"} text-white shadow-md relative overflow-hidden flex flex-col items-center text-center justify-center min-h-[120px] border border-white/20 select-none`}>
-                <div className="absolute top-2 left-2.5 flex items-center gap-1 text-[10px] font-black tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded-full text-white/90">
-                  <ImageIcon className="w-3 h-3" />
-                  <span>パンフレット掲載 PR</span>
+              {/* パンフレットPR画像表示 (imageUrl がある場合は画像を最優先表示) */}
+              {modalItem.imageUrl ? (
+                <div className="w-full rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-100 flex items-center justify-center max-h-[360px] relative">
+                  <img
+                    src={modalItem.imageUrl}
+                    alt={modalItem.title}
+                    className="w-full h-auto max-h-[360px] object-contain rounded-2xl"
+                  />
                 </div>
-                <div className="pt-4 space-y-1">
-                  <h4 className="font-black text-lg sm:text-xl drop-shadow-sm tracking-wide">
-                    {modalItem.bannerTitle || modalItem.title}
-                  </h4>
-                  <p className="text-xs text-white/90 font-bold tracking-normal leading-tight px-2">
-                    {modalItem.bannerSub || modalItem.description}
-                  </p>
+              ) : (
+                <div className={`w-full rounded-2xl p-4 bg-gradient-to-br ${modalItem.bannerColor || "from-slate-800 to-slate-900"} text-white shadow-md relative overflow-hidden flex flex-col items-center text-center justify-center min-h-[120px] border border-white/20 select-none`}>
+                  <div className="absolute top-2 left-2.5 flex items-center gap-1 text-[10px] font-black tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded-full text-white/90">
+                    <ImageIcon className="w-3 h-3" />
+                    <span>パンフレット掲載 PR</span>
+                  </div>
+                  <div className="pt-4 space-y-1">
+                    <h4 className="font-black text-lg sm:text-xl drop-shadow-sm tracking-wide">
+                      {modalItem.bannerTitle || modalItem.title}
+                    </h4>
+                    <p className="text-xs text-white/90 font-bold tracking-normal leading-tight px-2">
+                      {modalItem.bannerSub || modalItem.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="space-y-2 text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
                 <p>{modalItem.description}</p>
