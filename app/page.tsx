@@ -16,7 +16,6 @@ import {
   Clock,
   Navigation,
   Info,
-  AlertTriangle,
   Globe,
   Move,
   ZoomIn,
@@ -111,6 +110,37 @@ interface StallItem {
   bannerTitle?: string;
   bannerSub?: string;
   bannerColor?: string;
+}
+
+// イベントスケジュールデータ型
+interface ScheduleItem {
+  id: string;
+  time: string;
+  startTime: string;
+  endTime: string;
+  title: string;
+  org: string;
+  desc: string;
+  tag: string;
+  icon: string;
+  imageUrl?: string;
+}
+
+interface StageItem {
+  stageId: string;
+  stageName: string;
+  location: string;
+  locationZoneId: string;
+  schedule: ScheduleItem[];
+}
+
+interface EventDayData {
+  day: number;
+  dateLabel: string;
+  dateStr: string;
+  month: number;
+  dayOfMonth: number;
+  stages: StageItem[];
 }
 
 // 全出店・企画・施設・その他データ（パンフレットPDFを基に構成）
@@ -761,7 +791,7 @@ const STALLS_DATA: StallItem[] = [
 ];
 
 // ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土))
-const EVENTS_DATA = [
+const EVENTS_DATA: EventDayData[] = [
   {
     day: 1,
     dateLabel: "1日目：10/23（金）",
