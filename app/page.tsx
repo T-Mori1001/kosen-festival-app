@@ -25,7 +25,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 
-// --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS） ---
+// --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS・通行禁止標識） ---
 
 const ToiletIcon = () => (
   <div className="bg-black text-white px-1.5 py-1 rounded-md flex items-center justify-center gap-0.5 shadow-sm min-w-[32px] h-[30px] border border-black select-none shrink-0">
@@ -72,6 +72,15 @@ const BreakLineSS = () => (
   >
     <path d="M4 2 C12 8, 12 12, 4 18 C12 24, 12 28, 4 30" />
     <path d="M12 2 C20 8, 20 12, 12 18 C20 24, 20 28, 12 30" />
+  </svg>
+);
+
+// 添付画像と同デザインの通行禁止（車両進入禁止）標識アイコン
+const NoEntrySign = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={`${className} select-none shrink-0`}>
+    <circle cx="50" cy="50" r="48" fill="#E53935" />
+    <circle cx="50" cy="50" r="44" fill="none" stroke="#FFFFFF" strokeWidth="3" />
+    <rect x="10" y="41" width="80" height="18" fill="#FFFFFF" rx="1" />
   </svg>
 );
 
@@ -499,7 +508,7 @@ const STALLS_DATA: StallItem[] = [
     icon: "🎸",
     imageUrl: "/音楽部.png",
     bannerTitle: "YOUTH RIOT FES VOL.4",
-    bannerSub: "音が重なれば、楽しさも広がる。音楽部ライブ!",
+    bannerSub: "色が重なれば、楽しさも広がる。音楽部ライブ!",
     bannerColor: "from-red-600 via-purple-700 to-slate-900",
   },
 
@@ -1041,7 +1050,7 @@ const CAMPUS_ZONES = [
     icon: "🎸",
     top: "76.0%",
     left: "9.4%",
-    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！※ピン選択時、マップに移動経路が表示されます。",
+    desc: "音楽部による熱いロック＆ポップスサウンドのライブステージ（10:00～15:00）を開催！",
   },
   {
     id: "yamazaki",
@@ -1894,93 +1903,24 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 常時表示される「通行禁止」表示（画像と同じ配置・両端赤丸付き、マップ画像に連動して同倍率で拡縮） */}
+                {/* 常時表示される「通行禁止」標識表示（添付画像デザインと同等の標識アイコンを配置） */}
                 <div className="absolute inset-0 pointer-events-none z-30">
-                  {/* 通行禁止エリア左側の赤丸 */}
-                  <div className="absolute top-[70%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-red-600 bg-red-100/80 flex items-center justify-center shadow-md">
-                    <div className="w-3 h-0.5 bg-red-600 rotate-45" />
+                  {/* 通行禁止エリア左側標識 */}
+                  <div className="absolute top-[70%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md">
+                    <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
                   {/* 通行禁止テキストバッジ */}
-                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-md shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center gap-1 whitespace-nowrap select-none">
+                    <NoEntrySign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
-                  {/* 通行禁止エリア右側の赤丸 */}
-                  <div className="absolute top-[70%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-red-600 bg-red-100/80 flex items-center justify-center shadow-md">
-                    <div className="w-3 h-0.5 bg-red-600 rotate-45" />
+                  {/* 通行禁止エリア右側標識 */}
+                  <div className="absolute top-[70%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md">
+                    <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
-
-                {/* 音楽部プレハブ選択時に表示される移動経路（プレハブ順路.jpgの黒い矢印ルートを忠実再現） */}
-                {selectedZoneId === "prefab" && (
-                  <div className="absolute inset-0 pointer-events-none z-35">
-                    <svg className="w-full h-full" viewBox="0 0 1000 422" preserveAspectRatio="none">
-                      <defs>
-                        <marker id="blackArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#000000" />
-                        </marker>
-                        <filter id="glowShadowBlack" x="-20%" y="-20%" width="140%" height="140%">
-                          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#000000" floodOpacity="0.25"/>
-                        </filter>
-                      </defs>
-
-                      {/* 添付画像（プレハブ順路.jpg）の黒線＆矢印ルートを完全再現したSVGセグメント */}
-                      {[
-                        // 1. 東側道路を北上 (↑)
-                        { x1: 575, y1: 215, x2: 575, y2: 140 },
-                        { x1: 575, y1: 130, x2: 575, y2: 72 },
-
-                        // 2. 北側道路を西進 (←)
-                        { x1: 568, y1: 72, x2: 480, y2: 72 },
-                        { x1: 470, y1: 72, x2: 385, y2: 72 },
-
-                        // 3. クランク部分（斜め南西へ下る）
-                        { x1: 385, y1: 72, x2: 360, y2: 92 },
-
-                        // 4. 北側道路西エリアを西進 (←)
-                        { x1: 352, y1: 92, x2: 270, y2: 92 },
-                        { x1: 260, y1: 92, x2: 180, y2: 92 },
-                        { x1: 170, y1: 92, x2: 112, y2: 92 },
-
-                        // 5. 第一体育館西側を南下してプレハブへ (↓)
-                        { x1: 112, y1: 100, x2: 112, y2: 165 },
-                        { x1: 112, y1: 175, x2: 112, y2: 240 },
-                        { x1: 112, y1: 250, x2: 112, y2: 300 },
-                      ].map((seg, i) => (
-                        <g key={i} filter="url(#glowShadowBlack)">
-                          {/* 下地白枠線 */}
-                          <line
-                            x1={seg.x1}
-                            y1={seg.y1}
-                            x2={seg.x2}
-                            y2={seg.y2}
-                            stroke="#FFFFFF"
-                            strokeWidth="7"
-                            strokeLinecap="round"
-                          />
-                          {/* メイン黒色矢印線 */}
-                          <line
-                            x1={seg.x1}
-                            y1={seg.y1}
-                            x2={seg.x2}
-                            y2={seg.y2}
-                            stroke="#000000"
-                            strokeWidth="3.5"
-                            strokeLinecap="round"
-                            markerEnd="url(#blackArrow)"
-                          />
-                        </g>
-                      ))}
-                    </svg>
-
-                    {/* 移動経路バッジ */}
-                    <div className="absolute top-[13%] left-[34%] -translate-x-1/2 bg-slate-900 text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full shadow-md border border-white flex items-center gap-1 select-none">
-                      <span>🚶‍♂️</span>
-                      <span>プレハブへの順路</span>
-                    </div>
-                  </div>
-                )}
 
                 {/* 校内マップのピン */}
                 {CAMPUS_ZONES.map((zone) => {
