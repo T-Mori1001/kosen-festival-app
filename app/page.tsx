@@ -1912,7 +1912,7 @@ export default function Page() {
                   </div>
 
                   {/* 通行禁止テキストバッジ */}
-                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10.5px] sm:text-[12.6px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
@@ -1921,22 +1921,46 @@ export default function Page() {
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  {/* --- 通行禁止エリア複製（上方向10%位置：高さ60%） --- */}
+                  {/* --- 通行禁止エリア複製（10%上方向へ移動：高さ50%） --- */}
                   {/* 通行禁止エリア左側標識（複製） */}
-                  <div className="absolute top-[60%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div className="absolute top-[50%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
                   {/* 通行禁止テキストバッジ（複製） */}
-                  <div className="absolute top-[60%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10.5px] sm:text-[12.6px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div className="absolute top-[50%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
                   {/* 通行禁止エリア右側標識（複製） */}
-                  <div className="absolute top-[60%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div className="absolute top-[50%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
+
+                {/* プレハブのピンがタップされた際に表示される順路矢印群 */}
+                {selectedZoneId === "prefab" && (
+                  <div className="absolute inset-0 pointer-events-none z-20">
+                    {/* 1号館北側・中庭通路の登り矢印 (↑) */}
+                    <div className="absolute top-[29%] left-[58.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↑</div>
+                    <div className="absolute top-[24.5%] left-[58.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↑</div>
+
+                    {/* 北側横道路を西へ進む左向き矢印 (←) */}
+                    <div className="absolute top-[21.5%] left-[55%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[51%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[41%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[35%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[23%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[18%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+
+                    {/* 西側縦通路を南へ進む下向き矢印 (↓) */}
+                    <div className="absolute top-[28%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[36%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[45%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[55%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[65%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
+                  </div>
+                )}
 
                 {/* 校内マップのピン */}
                 {CAMPUS_ZONES.map((zone) => {
