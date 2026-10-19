@@ -324,7 +324,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "実行委員会",
     location: "1号館 合同講義室",
     zoneId: "bldg1",
-    description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
+    description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！（※10/23(金)開催）",
     icon: "🎮",
   },
 
@@ -405,6 +405,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
     icon: "🎤",
+    imageUrl: "/歌謡祭.png",
   },
   {
     id: 403,
@@ -416,6 +417,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "試されるのは、筋力と精神力。己の限界に挑み、最後まで立ち向かえ!",
     icon: "💪",
+    imageUrl: "/あつまれきんにくの森.png",
   },
   {
     id: 404,
@@ -427,6 +429,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "勝負を決めるのは、走力とひらめき。仲間とつなぐバトン、最後に笑うのはどのクラスか?",
     icon: "🏃",
+    imageUrl: "/カリモノ競争.png",
   },
   {
     id: 405,
@@ -438,6 +441,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "高専祭史上初の漫才企画! 笑いの準備はできているか? 個性豊かなコンビたちが繰り広げる!",
     icon: "🎙️",
+    imageUrl: "/鶴専-1グランプリ.png",
   },
   {
     id: 406,
@@ -449,6 +453,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "高専祭の最後を締めくくるダンス企画! 音楽にのせて最高のパフォーマンスを!",
     icon: "💃",
+    imageUrl: "/DoKa Project.png",
   },
 
   // --- 音楽部プレハブ (prefab) ---
@@ -637,6 +642,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "entrance",
     description: "胸に秘めた思いを、ここで大放出! 普段は言えない熱い思いを、今こそ叫べ",
     icon: "📢",
+    imageUrl: "/高専生の主張.png",
   },
 
   // --- キッチンカー (entrance) ---
@@ -754,7 +760,7 @@ const STALLS_DATA: StallItem[] = [
   },
 ];
 
-// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土)) - パンフレットMAIN EVENTSのコメントに完全準拠
+// ステージ・タイムスケジュールデータ (1日目: 10/23(金), 2日目: 10/24(土))
 const EVENTS_DATA = [
   {
     day: 1,
@@ -779,6 +785,7 @@ const EVENTS_DATA = [
             desc: "吹奏楽部の演奏で高専祭の幕が上がる! OPムービーで何かが起きるかも!?",
             tag: "セレモニー",
             icon: "🎉",
+            imageUrl: "/OP.png",
           },
           {
             id: "d1_g1_2",
@@ -790,6 +797,7 @@ const EVENTS_DATA = [
             desc: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
             tag: "歌謡祭",
             icon: "🎤",
+            imageUrl: "/歌謡祭.png",
           },
           {
             id: "d1_g1_3",
@@ -798,9 +806,10 @@ const EVENTS_DATA = [
             endTime: "15:00",
             title: "音部ライブ",
             org: "音楽部",
-            desc: "音が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください!",
+            desc: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください!",
             tag: "ライブ",
             icon: "🎸",
+            imageUrl: "/音楽部.png",
           },
         ],
       },
@@ -820,6 +829,7 @@ const EVENTS_DATA = [
             desc: "勝負を決めるのは、走力とひらめき。仲間とつなぐバトン、最後に笑うのはどのクラスか?",
             tag: "競技・企画",
             icon: "🏃",
+            imageUrl: "/カリモノ競争.png",
           },
         ],
       },
@@ -839,6 +849,7 @@ const EVENTS_DATA = [
             desc: "胸に秘めた思いを、ここで大放出! 普段は言えない熱い思いを、今こそ叫べ",
             tag: "ステージ企画",
             icon: "📢",
+            imageUrl: "/高専生の主張.png",
           },
         ],
       },
@@ -886,6 +897,7 @@ const EVENTS_DATA = [
             desc: "試されるのは、筋力と精神力。己の限界に挑み、最後まで立ち向かえ!",
             tag: "競技・企画",
             icon: "💪",
+            imageUrl: "/あつまれきんにくの森.png",
           },
           {
             id: "d2_g1_2",
@@ -897,6 +909,7 @@ const EVENTS_DATA = [
             desc: "高専祭史上初の漫才企画! 笑いの準備はできているか? 個性豊かなコンビたちが繰り広げる!",
             tag: "お笑い",
             icon: "🎙",
+            imageUrl: "/鶴専-1グランプリ.png",
           },
           {
             id: "d2_g1_3",
@@ -908,6 +921,7 @@ const EVENTS_DATA = [
             desc: "高専祭の最後を締めくくるダンス企画! 音楽にのせて最高のパフォーマンスを!",
             tag: "ダンス",
             icon: "💃",
+            imageUrl: "/DoKa Project.png",
           },
           {
             id: "d2_g1_4",
@@ -919,6 +933,7 @@ const EVENTS_DATA = [
             desc: "EDムービーでOPの謎が明らかに! 最高の文化祭を締めくくろう!",
             tag: "セレモニー",
             icon: "🎆",
+            imageUrl: "/ED.png",
           },
         ],
       },
@@ -930,25 +945,14 @@ const EVENTS_DATA = [
         schedule: [
           {
             id: "d2_j_1",
-            time: "10:00 - 10:30",
+            time: "10:00 - 15:00",
             startTime: "10:00",
-            endTime: "10:30",
-            title: "参加者募集",
-            org: "ゲーム企画運営",
-            desc: "ゲーム大会参加者の受付およびルール説明を行います。",
-            tag: "受付",
-            icon: "📝",
-          },
-          {
-            id: "d2_j_2",
-            time: "10:30 - 15:00",
-            startTime: "10:30",
             endTime: "15:00",
-            title: "ゲーム企画 今日、ゲームになりました。",
+            title: "休憩室",
             org: "実行委員会",
-            desc: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
-            tag: "eスポーツ",
-            icon: "🎮",
+            desc: "ご自由にお休みいただける休憩スペースです。ほっと一息つきたい時にどうぞご利用ください。",
+            tag: "休憩",
+            icon: "☕",
           },
         ],
       },
@@ -968,6 +972,7 @@ const EVENTS_DATA = [
             desc: "吹奏楽部によるミニコンサート（嵐メドレー等）を開催します！素敵な演奏をお楽しみください！",
             tag: "演奏",
             icon: "🎷",
+            imageUrl: "/吹奏楽部.png",
           },
         ],
       },
@@ -987,6 +992,7 @@ const EVENTS_DATA = [
             desc: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください! (YOUTH RIOT FES VOL.4)",
             tag: "ライブ",
             icon: "🎸",
+            imageUrl: "/音楽部.png",
           },
         ],
       },
@@ -1049,7 +1055,7 @@ const CAMPUS_ZONES = [
     icon: "🏫",
     top: "30.4%",
     left: "69.8%",
-    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
+    desc: "1F〜3Fのクラス企画・模擬店をはじめ、合同講義室でのゲーム企画/休憩室、13Fゼミ室（天文部）や12Fゼミ室（美術写真部）が実施されています。",
   },
   {
     id: "bldg4",
@@ -2281,16 +2287,24 @@ export default function Page() {
                         }`}
                       >
                         {isLive && (
-                          <div className="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-2xl uppercase tracking-wider flex items-center gap-1">
+                          <div className="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-2xl uppercase tracking-wider flex items-center gap-1 z-10">
                             <Radio className="w-3 h-3 animate-pulse" />
                             <span>LIVE 実施中</span>
                           </div>
                         )}
 
-                        <div className="flex items-start gap-3">
-                          <span className="text-3xl p-2.5 bg-slate-100 rounded-2xl shrink-0 mt-1">
-                            {event.icon}
-                          </span>
+                        <div className="flex flex-col sm:flex-row items-start gap-3">
+                          {event.imageUrl ? (
+                            <img
+                              src={event.imageUrl}
+                              alt={event.title}
+                              className="w-full sm:w-28 h-28 object-cover rounded-2xl border border-slate-200 shrink-0"
+                            />
+                          ) : (
+                            <span className="text-3xl p-2.5 bg-slate-100 rounded-2xl shrink-0 mt-1">
+                              {event.icon}
+                            </span>
+                          )}
                           <div className="space-y-1 flex-1">
                             <div className="flex items-center gap-2">
                               <span className="text-xs font-black text-orange-600 flex items-center gap-1">
