@@ -326,9 +326,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！",
     icon: "🎮",
-    bannerTitle: "今日、ゲームになりました。",
-    bannerSub: "大画面ゲームトーナメント＆対戦企画",
-    bannerColor: "from-violet-600 to-indigo-800",
   },
 
   // --- 第一体育館 (gym1) ---
@@ -408,9 +405,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
     icon: "🎤",
-    bannerTitle: "2026 KOSEN 歌謡祭 秋",
-    bannerSub: "青春の1ページに、忘れられない思い出を。",
-    bannerColor: "from-pink-600 to-purple-600",
   },
   {
     id: 403,
@@ -422,9 +416,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "試されるのは、筋力と精神力。己の限界に挑み、最後まで立ち向かえ!",
     icon: "💪",
-    bannerTitle: "あつまれ きんにくの森",
-    bannerSub: "試されるのは、筋力と精神力。己の限界に挑め!",
-    bannerColor: "from-orange-600 to-red-600",
   },
   {
     id: 404,
@@ -436,9 +427,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "勝負を決めるのは、走力とひらめき。仲間とつなぐバトン、最後に笑うのはどのクラスか?",
     icon: "🏃",
-    bannerTitle: "カリモノ競争",
-    bannerSub: "勝負を決めるのは、走力とひらめき。",
-    bannerColor: "from-yellow-500 to-amber-600",
   },
   {
     id: 405,
@@ -450,9 +438,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "高専祭史上初の漫才企画! 笑いの準備はできているか? 個性豊かなコンビたちが繰り広げる!",
     icon: "🎙️",
-    bannerTitle: "鶴専-1グランプリ",
-    bannerSub: "高専祭史上初の漫才企画! 笑いの準備はできているか?",
-    bannerColor: "from-amber-500 to-red-500",
   },
   {
     id: 406,
@@ -464,9 +449,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "gym1",
     description: "高専祭の最後を締めくくるダンス企画! 音楽にのせて最高のパフォーマンスを!",
     icon: "💃",
-    bannerTitle: "DoKa Project",
-    bannerSub: "高専祭の最後を締めくくるダンス企画!",
-    bannerColor: "from-purple-600 to-pink-500",
   },
 
   // --- 音楽部プレハブ (prefab) ---
@@ -546,9 +528,6 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "721",
     description: "5Bによる先進的な研究成果のポスター発表展示。",
     icon: "🔬",
-    bannerTitle: "5B 研究発表ポスター",
-    bannerSub: "生物・化学コース先進研究展示",
-    bannerColor: "from-teal-600 to-cyan-800",
   },
 
   // --- 8号館 (bldg8) ---
@@ -581,9 +560,6 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "大講義室",
     description: "中学生・保護者の皆様に向けた学校説明会（10/24 13:00受付開始）。高専生活や入試など何でもご相談ください。",
     icon: "🏫",
-    bannerTitle: "中学生向け 学校説明会",
-    bannerSub: "高専での学び・寮生活・入試相談コーナー",
-    bannerColor: "from-blue-600 to-indigo-700",
   },
 
   // --- 4号館 (bldg4) ---
@@ -661,9 +637,6 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "entrance",
     description: "胸に秘めた思いを、ここで大放出! 普段は言えない熱い思いを、今こそ叫べ",
     icon: "📢",
-    bannerTitle: "高専生の主張",
-    bannerSub: "胸に秘めた思いを、ここで大放出! 今こそ叫べ!",
-    bannerColor: "from-rose-500 to-orange-500",
   },
 
   // --- キッチンカー (entrance) ---
@@ -679,9 +652,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🍜",
     instagram: "https://www.instagram.com/mokkedanonoodle/",
     menu: ["煮干しラーメン", "こだわりラーメン"],
-    bannerTitle: "中華そば雲ノ糸 / ラーメンもっけだの",
-    bannerSub: "山形の行列人気ラーメン店がキッチンカーで登場！",
-    bannerColor: "from-blue-600 to-slate-800",
   },
   {
     id: 102,
@@ -695,9 +665,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🧁",
     instagram: "https://www.instagram.com/gion_hannari_cafe/",
     menu: ["ユニコーンベビーカステラ", "本わらび餅"],
-    bannerTitle: "祇園はんなりCafé",
-    bannerSub: "つや姫米粉使用♡ふわっふわユニコーンベビーカステラ",
-    bannerColor: "from-pink-400 to-purple-500",
   },
   {
     id: 103,
@@ -711,9 +678,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🥤",
     instagram: "https://www.instagram.com/felicitaplus.sakata/",
     menu: ["濃厚スムージー", "ガパオライス", "スイーツ"],
-    bannerTitle: "フェリチタプラス",
-    bannerSub: "腸活テーマ♡無添加スムージー＆本格ガパオライス",
-    bannerColor: "from-emerald-500 to-teal-700",
   },
 
   // --- 金券販売 (ticket) ---
@@ -729,9 +693,7 @@ const STALLS_DATA: StallItem[] = [
     roomNo: "金券販売",
     description: "模擬店等で使用できる100円金券の販売を行っています（1回上限3000円分）。払い戻しは10/24 15:00まで！",
     icon: "🎟️",
-    bannerTitle: "金券販売（100円券）",
-    bannerSub: "1回につき上限3000円分まで購入可能です",
-    bannerColor: "from-amber-600 to-yellow-700",
+    imageUrl: "/金券.png",
   },
   {
     id: 502,
@@ -1175,7 +1137,8 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<"map" | "stalls" | "events" | "other">("map");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("すべて");
-  const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
+  // 初期画面で「高専祭本部（金券販売）」を選択状態にする
+  const [selectedZoneId, setSelectedZoneId] = useState<string | null>("ticket");
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
   // 選択中のスケジュール日 (1: 10/23金, 2: 10/24土)
@@ -1260,7 +1223,7 @@ export default function Page() {
     });
   };
 
-  // タブ切り替え・入場時に右側へ一瞬で移動させたあとフェードイン表示
+  // タブ切り替え・入場時に右側または選択済みピン（初期値:ticket）へスクロール移動させたあとフェードイン表示
   useEffect(() => {
     if (isEntered && activeTab === "map") {
       setIsMapReady(false);
@@ -2503,7 +2466,7 @@ export default function Page() {
         )}
       </main>
 
-      {/* モーダル1: 出店・施設詳細（パンフレット画像・PRカード対応） */}
+      {/* モーダル1: 出店・施設詳細（画像／PRカード対応） */}
       {modalItem && (
         <div className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
           <div className="bg-white w-full max-w-sm sm:max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
@@ -2527,7 +2490,7 @@ export default function Page() {
                 </button>
               </div>
 
-              {/* パンフレットPR画像表示 (imageUrl がある場合は画像を最優先表示) */}
+              {/* 画像がある場合はPR画像を表示、bannerTitleがある場合はグラフィックバナーを表示 */}
               {modalItem.imageUrl ? (
                 <div className="w-full rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-100 flex items-center justify-center max-h-[360px] relative">
                   <img
@@ -2536,7 +2499,7 @@ export default function Page() {
                     className="w-full h-auto max-h-[360px] object-contain rounded-2xl"
                   />
                 </div>
-              ) : (
+              ) : modalItem.bannerTitle ? (
                 <div className={`w-full rounded-2xl p-4 bg-gradient-to-br ${modalItem.bannerColor || "from-slate-800 to-slate-900"} text-white shadow-md relative overflow-hidden flex flex-col items-center text-center justify-center min-h-[120px] border border-white/20 select-none`}>
                   <div className="absolute top-2 left-2.5 flex items-center gap-1 text-[10px] font-black tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded-full text-white/90">
                     <ImageIcon className="w-3 h-3" />
@@ -2551,7 +2514,7 @@ export default function Page() {
                     </p>
                   </div>
                 </div>
-              )}
+              ) : null}
 
               <div className="space-y-2 text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
                 <p>{modalItem.description}</p>
