@@ -1903,21 +1903,37 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
-                {/* 常時表示される「通行禁止」標識表示（添付画像デザインと同等の標識アイコンを配置） */}
+                {/* 常時表示される「通行禁止」標識表示 */}
                 <div className="absolute inset-0 pointer-events-none z-30">
+                  {/* --- 通行禁止エリア（高さ70%） --- */}
                   {/* 通行禁止エリア左側標識 */}
-                  <div className="absolute top-[70%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md">
+                  <div className="absolute top-[70%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
                   {/* 通行禁止テキストバッジ */}
-                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center gap-1 whitespace-nowrap select-none">
-                    <NoEntrySign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10.5px] sm:text-[12.6px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
                   {/* 通行禁止エリア右側標識 */}
-                  <div className="absolute top-[70%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md">
+                  <div className="absolute top-[70%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                    <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </div>
+
+                  {/* --- 通行禁止エリア複製（上方向10%位置：高さ60%） --- */}
+                  {/* 通行禁止エリア左側標識（複製） */}
+                  <div className="absolute top-[60%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                    <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </div>
+
+                  {/* 通行禁止テキストバッジ（複製） */}
+                  <div className="absolute top-[60%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[10.5px] sm:text-[12.6px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                    <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
+                  </div>
+
+                  {/* 通行禁止エリア右側標識（複製） */}
+                  <div className="absolute top-[60%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
