@@ -1975,27 +1975,29 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* プレハブのピンがタップされた際に表示される順路矢印群（右へ3%移動・統一PathArrowで2倍拡大） */}
+                {/* プレハブのピンがタップされた際に表示される順路矢印群 */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
-                    {/* 1号館北側・中庭通路の登り矢印 (↑) (left: 56.5%) */}
-                    <div className="absolute top-[31%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
+                    {/* 1号館北側・中庭通路の登り矢印 (↑) (top: +2%, left: +1%) */}
+                    <div className="absolute top-[33%] left-[57.5%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[26.5%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[28.5%] left-[57.5%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
 
-                    {/* 北側横道路を西へ進む左向き矢印 (←) (left: 53%, 47%, 41%, 35%, 29%, 23%, 17%) */}
-                    <div className="absolute top-[23.5%] left-[53%] -translate-x-1/2 -translate-y-1/2">
+                    {/* 北側横道路を西へ進む左向き矢印 (←) */}
+                    {/* 右側の3つ (top: +2% 下移動) */}
+                    <div className="absolute top-[25.5%] left-[53%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[23.5%] left-[47%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[25.5%] left-[47%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[23.5%] left-[41%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[25.5%] left-[41%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
+                    {/* 左側の4つ */}
                     <div className="absolute top-[21.5%] left-[35%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
