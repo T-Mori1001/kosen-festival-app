@@ -1167,7 +1167,7 @@ const CAMPUS_ZONES = [
     pinLabel: "8号館",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎷",
-    top: "26.5%",
+    top: "21.5%",
     left: "91.5%",
     desc: "2階の大講義室にて吹奏楽部ミニコンサート（10:00〜11:45）および学校説明会（13:00〜14:00）を開催！",
   },
@@ -1958,7 +1958,7 @@ export default function Page() {
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  {/* --- 通行禁止エリア複製（修正: 1%右、2%上へ移動 → 高さ52%、横位置12.5%, 19.5%, 26.5%） --- */}
+                  {/* --- 通行禁止エリア複製（高さ52%、横位置12.5%, 19.5%, 26.5%） --- */}
                   {/* 通行禁止エリア左側標識（複製） */}
                   <div className="absolute top-[52%] left-[12.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1979,21 +1979,21 @@ export default function Page() {
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     {/* 1号館北側・中庭通路の登り矢印 (↑) (left: 56.5%) */}
-                    <div className="absolute top-[29%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[31%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[24.5%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[26.5%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
 
                     {/* 北側横道路を西へ進む左向き矢印 (←) (left: 53%, 47%, 41%, 35%, 29%, 23%, 17%) */}
-                    <div className="absolute top-[21.5%] left-[53%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[23.5%] left-[53%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[21.5%] left-[47%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[23.5%] left-[47%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[21.5%] left-[41%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[23.5%] left-[41%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
                     <div className="absolute top-[21.5%] left-[35%] -translate-x-1/2 -translate-y-1/2">
