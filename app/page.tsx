@@ -25,7 +25,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 
-// --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS・通行禁止標識） ---
+// --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS・通行禁止標識・統一順路矢印） ---
 
 const ToiletIcon = () => (
   <div className="bg-black text-white px-1.5 py-1 rounded-md flex items-center justify-center gap-0.5 shadow-sm min-w-[32px] h-[30px] border border-black select-none shrink-0">
@@ -83,6 +83,37 @@ const NoEntrySign = ({ className = "w-6 h-6" }: { className?: string }) => (
     <rect x="10" y="41" width="80" height="18" fill="#FFFFFF" rx="1" />
   </svg>
 );
+
+// 統一デザインの順路矢印アイコン（SVG・回転切り替えで形状・線幅を完全統一）
+const PathArrow = ({
+  direction = "up",
+  className = "w-8 h-8 sm:w-10 sm:h-10 text-red-600",
+}: {
+  direction?: "up" | "down" | "left" | "right";
+  className?: string;
+}) => {
+  const rotation = {
+    up: "rotate-0",
+    right: "rotate-90",
+    down: "rotate-180",
+    left: "-rotate-90",
+  }[direction];
+
+  return (
+    <svg
+      className={`${className} ${rotation} drop-shadow-md select-none shrink-0`}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="5 12 12 5 19 12" />
+    </svg>
+  );
+};
 
 const InstagramIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg
@@ -580,7 +611,7 @@ const STALLS_DATA: StallItem[] = [
     grade: "部活",
     dept: "E.S.S.",
     location: "7号館 732教室",
-    zoneId: "bldg7", // 4号館から7号館へ修正
+    zoneId: "bldg7",
     description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
     icon: "𔢤",
     imageUrl: "/ESS.png",
@@ -1186,6 +1217,11 @@ export default function Page() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>("ticket");
   const [modalItem, setModalItem] = useState<StallItem | null>(null);
 
+  // イベントスケジュール詳細ダイアログ用ステート
+  const [eventModalItem, setEventModalItem] = useState<
+    (ScheduleItem & { stageName?: string; location?: string; locationZoneId?: string }) | null
+  >(null);
+
   // 選択中のスケジュール日 (1: 10/23金, 2: 10/24土)
   const [selectedDay, setSelectedDay] = useState<1 | 2>(1);
 
@@ -1244,10 +1280,11 @@ export default function Page() {
     });
   };
 
-  // マップ画面へ遷移して該当のピンを画面中央にスクロールさせる処理
+  // マップ画面へ遷移して該当のピンを画面中央にスクロール＋最上部へページアップ移動させる処理
   const handleGoToMapPin = (zoneId: string) => {
     setSelectedZoneId(zoneId);
     setActiveTab("map");
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
       centerZonePin(zoneId, true);
     }, 120);
@@ -1921,45 +1958,73 @@ export default function Page() {
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  {/* --- 通行禁止エリア複製（2%左、4%下へ移動：高さ54%、横位置11.5%, 18.5%, 25.5%） --- */}
+                  {/* --- 通行禁止エリア複製（修正: 1%右、2%上へ移動 → 高さ52%、横位置12.5%, 19.5%, 26.5%） --- */}
                   {/* 通行禁止エリア左側標識（複製） */}
-                  <div className="absolute top-[54%] left-[11.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div className="absolute top-[52%] left-[12.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
                   {/* 通行禁止テキストバッジ（複製） */}
-                  <div className="absolute top-[54%] left-[18.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div className="absolute top-[52%] left-[19.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
                   {/* 通行禁止エリア右側標識（複製） */}
-                  <div className="absolute top-[54%] left-[25.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div className="absolute top-[52%] left-[26.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
 
-                {/* プレハブのピンがタップされた際に表示される順路矢印群（左へ5%移動、赤色・20%拡大、間隔一定） */}
+                {/* プレハブのピンがタップされた際に表示される順路矢印群（右へ3%移動・統一PathArrowで2倍拡大） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
-                    {/* 1号館北側・中庭通路の登り矢印 (↑) */}
-                    <div className="absolute top-[29%] left-[53.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↑</div>
-                    <div className="absolute top-[24.5%] left-[53.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↑</div>
+                    {/* 1号館北側・中庭通路の登り矢印 (↑) (left: 56.5%) */}
+                    <div className="absolute top-[29%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[24.5%] left-[56.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
 
-                    {/* 北側横道路を西へ進む左向き矢印 (←) 一定間隔(6%ピッチ) */}
-                    <div className="absolute top-[21.5%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[44%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[38%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[32%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[26%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[20%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[14%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    {/* 北側横道路を西へ進む左向き矢印 (←) (left: 53%, 47%, 41%, 35%, 29%, 23%, 17%) */}
+                    <div className="absolute top-[21.5%] left-[53%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[21.5%] left-[47%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[21.5%] left-[41%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[21.5%] left-[35%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[21.5%] left-[29%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[21.5%] left-[23%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[21.5%] left-[17%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
 
-                    {/* 西側縦通路を南へ進む下向き矢印 (↓) 一定間隔(9%ピッチ) */}
-                    <div className="absolute top-[28%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[37%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[46%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[55%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[64%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
+                    {/* 西側縦通路を南へ進む下向き矢印 (↓) (left: 11.5%) */}
+                    <div className="absolute top-[28%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[37%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[46%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[55%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
+                    <div className="absolute top-[64%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
+                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                    </div>
                   </div>
                 )}
 
@@ -2300,7 +2365,15 @@ export default function Page() {
                     return (
                       <div
                         key={event.id}
-                        className={`p-4 rounded-3xl border transition relative overflow-hidden ${
+                        onClick={() =>
+                          setEventModalItem({
+                            ...event,
+                            stageName: stage.stageName,
+                            location: stage.location,
+                            locationZoneId: stage.locationZoneId,
+                          })
+                        }
+                        className={`p-4 rounded-3xl border transition relative overflow-hidden cursor-pointer hover:shadow-md ${
                           isLive
                             ? "bg-gradient-to-r from-orange-500/10 to-rose-500/10 border-orange-500 ring-2 ring-orange-400/50 shadow-md"
                             : "bg-white border-slate-200 shadow-sm"
@@ -2338,8 +2411,25 @@ export default function Page() {
 
                             <h3 className="font-black text-base text-slate-900">{event.title}</h3>
                             <p className="text-xs text-slate-500 font-bold">主催・担当: {event.org}</p>
-                            <p className="text-xs text-slate-600 leading-relaxed pt-1 font-medium">{event.desc}</p>
+                            <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed pt-1 font-medium">{event.desc}</p>
                           </div>
+                        </div>
+
+                        <div className="pt-2 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-500">
+                          <span className="flex items-center gap-1 truncate max-w-[75%]">
+                            <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+                            <span className="truncate">{stage.stageName} ({stage.location})</span>
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleGoToMapPin(stage.locationZoneId);
+                            }}
+                            className="text-[10px] bg-slate-100 hover:bg-orange-500 hover:text-white text-slate-700 px-2.5 py-1 rounded-full font-extrabold transition flex items-center gap-1 shrink-0"
+                          >
+                            <MapPin className="w-3 h-3" />
+                            <span>マップ</span>
+                          </button>
                         </div>
                       </div>
                     );
@@ -2623,7 +2713,77 @@ export default function Page() {
         </div>
       )}
 
-      {/* モーダル2: 統合詳細フロアマップモーダル (1号館 / 7号館 / 8号館 / 総合メディアセンター) */}
+      {/* モーダル2: スケジュールイベント詳細モーダル */}
+      {eventModalItem && (
+        <div className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white w-full max-w-sm sm:max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+            <div className="p-5 space-y-4 overflow-y-auto custom-map-scrollbar">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-4xl p-3 bg-orange-50 rounded-2xl shrink-0">{eventModalItem.icon}</span>
+                  <div>
+                    <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
+                      {eventModalItem.tag}
+                    </span>
+                    <h3 className="text-lg font-black text-slate-900 mt-0.5">{eventModalItem.title}</h3>
+                    <p className="text-xs text-slate-500 font-bold">主催: {eventModalItem.org}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setEventModalItem(null)}
+                  className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition shrink-0"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {eventModalItem.imageUrl && (
+                <div className="w-full rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-100 flex items-center justify-center max-h-[300px] relative">
+                  <img
+                    src={eventModalItem.imageUrl}
+                    alt={eventModalItem.title}
+                    className="w-full h-auto max-h-[300px] object-contain rounded-2xl"
+                  />
+                </div>
+              )}
+
+              <div className="flex items-center gap-2 text-xs font-black text-orange-600 bg-orange-50 p-2.5 rounded-xl border border-orange-100">
+                <Clock className="w-4 h-4 text-orange-500 shrink-0" />
+                <span>開催時間: {eventModalItem.time}</span>
+              </div>
+
+              <div className="space-y-2 text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                <p>{eventModalItem.desc}</p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-slate-600">
+                  <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
+                  <span>会場: {eventModalItem.stageName} ({eventModalItem.location})</span>
+                </div>
+              </div>
+
+              <div className="pt-2 flex gap-2">
+                <button
+                  onClick={() => {
+                    const targetZoneId = eventModalItem.locationZoneId;
+                    setEventModalItem(null);
+                    if (targetZoneId) {
+                      handleGoToMapPin(targetZoneId);
+                    }
+                  }}
+                  className="w-full py-3 bg-slate-900 text-white rounded-2xl text-xs font-black shadow hover:bg-slate-800 transition flex items-center justify-center gap-1.5"
+                >
+                  <MapPin className="w-4 h-4 text-orange-400" />
+                  <span>マップで場所を確認</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* モーダル3: 統合詳細フロアマップモーダル (1号館 / 7号館 / 8号館 / 総合メディアセンター) */}
       {detailMapBuilding && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
           <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200">
