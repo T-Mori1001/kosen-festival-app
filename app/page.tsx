@@ -27,24 +27,26 @@ import {
 
 // --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・波線SS・通行禁止標識・順路矢印） ---
 
+// トイレアイコン（男性: 青 / 女性: ピンク・ローズにカラー化）
 const ToiletIcon = () => (
-  <div className="bg-black text-white px-1 py-0.5 rounded flex items-center justify-center gap-0.5 shadow-sm w-[32px] h-[32px] border border-black select-none shrink-0">
-    <svg className="w-3.5 h-4 fill-current" viewBox="0 0 24 24">
-      <circle cx="12" cy="4" r="3" />
-      <path d="M12 8c-2 0-3.5 1-4 3l-1.5 5h3v5h5v-5h3l-1.5-5c-.5-2-2-3-4-3z" />
-    </svg>
-    <div className="w-[1px] h-3.5 bg-white/60" />
-    <svg className="w-3.5 h-4 fill-current" viewBox="0 0 24 24">
+  <div className="bg-slate-50 border-2 border-slate-700 px-1 py-0.5 rounded-md flex items-center justify-center gap-1 shadow-sm w-[42px] h-[36px] select-none shrink-0">
+    <svg className="w-3.5 h-4 fill-blue-600" viewBox="0 0 24 24">
       <circle cx="12" cy="4" r="3" />
       <path d="M9 8h6v7h-1.5v6h-3v-6H9V8z" />
+    </svg>
+    <div className="w-[1px] h-4 bg-slate-300" />
+    <svg className="w-3.5 h-4 fill-rose-500" viewBox="0 0 24 24">
+      <circle cx="12" cy="4" r="3" />
+      <path d="M12 8c-2 0-3.5 1-4 3l-1.5 5h3v5h5v-5h3l-1.5-5c-.5-2-2-3-4-3z" />
     </svg>
   </div>
 );
 
+// 階段アイコン（全フロア統一サイズ）
 const StairsIcon = () => (
-  <div className="flex flex-col items-center select-none shrink-0">
+  <div className="bg-slate-50 border-2 border-slate-700 rounded-md p-1 flex items-center justify-center w-[36px] h-[36px] shadow-sm select-none shrink-0">
     <svg
-      className="w-7 h-7 text-black"
+      className="w-6 h-6 text-slate-800"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -142,6 +144,7 @@ interface StallItem {
   zoneId: string;
   floor?: "1F" | "2F" | "3F";
   roomNo?: string;
+  price?: string;
   description: string;
   icon: string;
   instagram?: string;
@@ -183,7 +186,7 @@ interface EventDayData {
   stages: StageItem[];
 }
 
-// 全出店・企画・施設・その他データ
+// 全出店・企画・施設・その他データ（添付画像の金額を各クラスへ反映）
 const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 1F ---
   {
@@ -196,12 +199,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "1F",
     roomNo: "111教室",
-    description: "1-1による熱々で外はサクッ、中はジュワッ！香ばしい絶品ほっとサンド！",
+    price: "200円",
+    description: "1-1による熱々で外はサクッ、中はジュワッ！香ばしい絶品ほっとサンド！（各200円）",
     icon: "🥪",
     imageUrl: "/1-1.png",
-    menu: ["チョコ", "ハムサンド", "ピザ"],
+    menu: ["チョコ (200円)", "ハムサンド (200円)", "ピザ (200円)"],
     bannerTitle: "1-1 ホットサンド",
-    bannerSub: "MENU: チョコ・ハムサンド・ピザ",
+    bannerSub: "単価 200円！MENU: チョコ・ハムサンド・ピザ",
     bannerColor: "from-amber-500 to-orange-600",
   },
   {
@@ -214,12 +218,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "1F",
     roomNo: "112教室",
-    description: "平成カフェ♡ タピオカ＆1-2がお届けする冷たくてシュワっと美味しい各種ソフトドリンク！",
+    price: "200円",
+    description: "平成カフェ♡ タピオカ＆1-2がお届けする冷たくてシュワっと美味しい各種ソフトドリンク！（200円）",
     icon: "🍹",
     imageUrl: "/1-2.png",
-    menu: ["タピオカ", "ソフトドリンク各種"],
+    menu: ["タピオカ (200円)", "ソフトドリンク各種 (200円)"],
     bannerTitle: "1年2組 平成カフェ",
-    bannerSub: "タピオカ＆ドリンク カワイイょ♡",
+    bannerSub: "単価 200円！タピオカ＆ドリンク カワイイょ♡",
     bannerColor: "from-pink-400 to-rose-500",
   },
   {
@@ -232,12 +237,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "1F",
     roomNo: "113教室",
-    description: "CLUB CROWNへようこそ！ハマりすぎ注意！？沼る覚悟でお越しください･･･",
+    price: "100円",
+    description: "CLUB CROWNへようこそ！ハマりすぎ注意！？沼る覚悟でお越しください･･･（100円）",
     icon: "🌹",
     imageUrl: "/4M.png",
-    menu: ["ブルーハワイソーダ", "メロンソーダ", "いちごソーダ", "カルピス"],
+    menu: ["ブルーハワイソーダ (100円)", "メロンソーダ (100円)", "いちごソーダ (100円)", "カルピス (100円)"],
     bannerTitle: "CLUB CROWN (4M)",
-    bannerSub: "ハマりすぎ注意!? 沼る覚悟でお越しください･･･",
+    bannerSub: "単価 100円！ハマりすぎ注意!? 沼る覚悟でお越しください･･･",
     bannerColor: "from-slate-900 via-purple-950 to-slate-900",
   },
 
@@ -252,12 +258,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "2F",
     roomNo: "121教室",
-    description: "1-3作！フワフワ甘くて可愛いビッグわたあめ♡",
+    price: "100円",
+    description: "1-3作！フワフワ甘くて可愛いビッグわたあめ♡（100円）",
     icon: "🍥",
     imageUrl: "/1-3.png",
-    menu: ["わたあめ"],
+    menu: ["わたあめ (100円)"],
     bannerTitle: "1-3 わたあめ♡",
-    bannerSub: "フワフワ甘くて可愛いビッグわたあめ！",
+    bannerSub: "単価 100円！フワフワ甘くて可愛いビッグわたあめ！",
     bannerColor: "from-pink-300 to-purple-400",
   },
   {
@@ -270,12 +277,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "2F",
     roomNo: "122教室",
-    description: "1の4が新しい風吹かすッ！極上のクレープを味わいたい方は1号館122教室へ･･･",
+    price: "200円",
+    description: "1の4が新しい風吹かすッ！極上のクレープを味わいたい方は1号館122教室へ･･･（200円）",
     icon: "🥞",
     imageUrl: "/1-4.png",
-    menu: ["手作りクレープ"],
+    menu: ["手作りクレープ (200円)"],
     bannerTitle: "1-4 クレープ",
-    bannerSub: "1の4が新しい風吹かすッ！極上のクレープ！",
+    bannerSub: "単価 200円！1の4が新しい風吹かすッ！極上のクレープ！",
     bannerColor: "from-amber-400 to-yellow-500",
   },
   {
@@ -288,12 +296,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "2F",
     roomNo: "123教室",
-    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンク（ジュース1杯100円）でリフレッシュ！",
+    price: "200円",
+    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンクでリフレッシュ！（200円）",
     icon: "🎮",
     imageUrl: "/3E.png",
-    menu: ["ジュース各種 (100円)"],
+    menu: ["ジュース各種 (200円)"],
     bannerTitle: "3E ゲームカフェ",
-    bannerSub: "ゲームカフェへようこそ！ドリンク100円",
+    bannerSub: "単価 200円！ゲームカフェへようこそ！",
     bannerColor: "from-cyan-500 to-blue-600",
   },
   {
@@ -325,12 +334,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "131教室",
-    description: "4I特製カジノ！トランプ、UNO、ダーツ、人狼（WERE WOLF）など本格的なゲームでスリリングな心理戦を楽しもう！※ワンドリンク制・景品あり",
+    price: "100円",
+    description: "4I特製カジノ！トランプ、UNO、ダーツ、人狼など本格的なゲームでスリリングな心理戦を楽しもう！（100円）",
     icon: "🎲",
     imageUrl: "/4I.png",
     menu: ["トランプ", "UNO", "ダーツ", "人狼ゲーム"],
     bannerTitle: "4I CASINO",
-    bannerSub: "TRUMP / UNO / DARTS / WERE WOLF",
+    bannerSub: "単価 100円！TRUMP / UNO / DARTS / WERE WOLF",
     bannerColor: "from-red-700 to-slate-900",
   },
   {
@@ -343,11 +353,12 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "132教室",
-    description: "3B喫茶店✿ たくさんのご来店お待ちしております！ゆったり寛げる空間でこだわりのドリンクをお届け。",
+    price: "200円",
+    description: "3B喫茶店✿ たくさんのご来店お待ちしております！ゆったり寛げる空間でこだわりのドリンクをお届け。（200円）",
     icon: "☕",
     imageUrl: "/3B.png",
     bannerTitle: "3B 喫茶店 ✿",
-    bannerSub: "たくさんのご来店お待ちしております✿",
+    bannerSub: "単価 200円！たくさんのご来店お待ちしております✿",
     bannerColor: "from-emerald-500 to-teal-700",
   },
   {
@@ -360,11 +371,12 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3F",
     roomNo: "133教室",
-    description: "喉が渇いたときや休憩したいときにはぜひ来てください！おしゃれな雰囲気が魅力のノンアルコールバー！",
+    price: "200円",
+    description: "喉が渇いたときや休憩したいときにはぜひ来てください！おしゃれな雰囲気が魅力のノンアルコールバー！（200円）",
     icon: "🍸",
     imageUrl: "/3I.png",
     bannerTitle: "3I Bar",
-    bannerSub: "喉が渇いたときや休憩したいときにぜひ！",
+    bannerSub: "単価 200円！喉が渇いたときや休憩したいときにぜひ！",
     bannerColor: "from-amber-700 to-yellow-900",
   },
   {
@@ -407,6 +419,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "2年 機械コース (2M)",
     location: "第一体育館",
     zoneId: "gym1",
+    price: "100円",
     description: "2M特製！餃子 木村屋 100円！鉄板で一気に焼き上げるパリッとジューシーな絶品焼き餃子！",
     icon: "🥟",
     imageUrl: "/2M.png",
@@ -423,12 +436,13 @@ const STALLS_DATA: StallItem[] = [
     dept: "2年 電気・電子コース (2E)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "2-E はじめました ポップコーン！これ食べて高専祭、はじけてみない？おいしい間食にどうぞ！",
+    price: "100円",
+    description: "2-E はじめました ポップコーン！これ食べて高専祭、はじけてみない？おいしい間食にどうぞ！（100円）",
     icon: "🍿",
     imageUrl: "/2E.png",
-    menu: ["フレーバーポップコーン"],
+    menu: ["フレーバーポップコーン (100円)"],
     bannerTitle: "2-E ポップコーン",
-    bannerSub: "これ食べて高専祭、はじけてみない？",
+    bannerSub: "単価 100円！これ食べて高専祭、はじけてみない？",
     bannerColor: "from-yellow-400 to-orange-500",
   },
   {
@@ -439,12 +453,13 @@ const STALLS_DATA: StallItem[] = [
     dept: "2年 情報コース (2I)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "小腹が空いたら2I玉こん！秘伝の出汁がしっかり染み込んだ熱々の山形名物・玉こんにゃく！",
+    price: "100円",
+    description: "小腹が空いたら2I玉こん！秘伝の出汁がしっかり染み込んだ熱々の山形名物・玉こんにゃく！（100円）",
     icon: "🍡",
     imageUrl: "/2I.png",
-    menu: ["山形名物 玉こんにゃく"],
+    menu: ["山形名物 玉こんにゃく (100円)"],
     bannerTitle: "2I 玉こん",
-    bannerSub: "小腹が空いたら出汁の染みたあつあつ玉こん！",
+    bannerSub: "単価 100円！小腹が空いたら出汁の染みたあつあつ玉こん！",
     bannerColor: "from-amber-600 to-orange-700",
   },
   {
@@ -455,12 +470,13 @@ const STALLS_DATA: StallItem[] = [
     dept: "2年 生物・化学コース (2B)",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "2B香ばしく焼き上げる秘伝タレ＆塩のやみつき焼き鳥！串もも・つくね・とりかわ！",
+    price: "200円",
+    description: "2B香ばしく焼き上げる秘伝タレ＆塩のやみつき焼き鳥！串もも・つくね・とりかわ！（各200円）",
     icon: "🍢",
     imageUrl: "/2B.png",
-    menu: ["串もも", "つくね", "とりかわ"],
+    menu: ["串もも (200円)", "つくね (200円)", "とりかわ (200円)"],
     bannerTitle: "2B やきとり",
-    bannerSub: "串もも・つくね・とりかわ 香ばしいやみつき味！",
+    bannerSub: "単価 200円！串もも・つくね・とりかわ 香ばしいやみつき味！",
     bannerColor: "from-orange-600 to-red-700",
   },
 
@@ -553,11 +569,12 @@ const STALLS_DATA: StallItem[] = [
     location: "7号館 (711・712教室)",
     zoneId: "bldg7",
     roomNo: "711",
-    description: "その教室に入ってはいけなかった。呪われた教室。教室から、逃げられるか。3M教室で恐怖の扉を、開け。",
+    price: "100円",
+    description: "その教室に入ってはいけなかった。呪われた教室。教室から、逃げられるか。3M教室で恐怖の扉を、開け。（100円）",
     icon: "👻",
     imageUrl: "/3M.png",
     bannerTitle: "呪われた教室 お化け屋敷 (3M)",
-    bannerSub: "その教室に入ってはいけなかった。恐怖の扉を開け。",
+    bannerSub: "単価 100円！その教室に入ってはいけなかった。恐怖の扉を開け。",
     bannerColor: "from-purple-900 via-slate-900 to-red-950",
   },
   {
@@ -569,11 +586,12 @@ const STALLS_DATA: StallItem[] = [
     location: "7号館 722教室",
     zoneId: "bldg7",
     roomNo: "722",
-    description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！",
+    price: "100円",
+    description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！（100円）",
     icon: "⚽",
     imageUrl: "/4E.png",
     bannerTitle: "キッキングスナイパー (4E)",
-    bannerSub: "動くターゲットを狙ってシュート！豪華景品をゲット！",
+    bannerSub: "単価 100円！動くターゲットを狙ってシュート！豪華景品をゲット！",
     bannerColor: "from-emerald-600 to-green-700",
   },
   {
@@ -662,7 +680,7 @@ const STALLS_DATA: StallItem[] = [
     location: "4号館 411教室",
     zoneId: "bldg4",
     description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
-    icon: "🎴",
+    icon: "",
     imageUrl: "/カルタ.png",
     bannerTitle: "競技かるた体験会",
     bannerSub: "畳の上の格闘技！ガチ試合見学 & 初心者体験会",
@@ -678,11 +696,12 @@ const STALLS_DATA: StallItem[] = [
     dept: "4年 生物・化学コース (4B)",
     location: "総合メディアセンター マルチメディア教室",
     zoneId: "media_center",
-    description: "4B格付けチェック！あなたは本物をみぬけるか？一流！味覚・視覚・知識に挑戦！",
+    price: "200円",
+    description: "4B格付けチェック！あなたは本物をみぬけるか？一流！味覚・視覚・知識に挑戦！（200円）",
     icon: "🍷",
     imageUrl: "/4B.png",
     bannerTitle: "4B 格付けチェック",
-    bannerSub: "あなたは本物を見抜けるか？一流を目指せ！",
+    bannerSub: "単価 200円！あなたは本物を見抜けるか？一流を目指せ！",
     bannerColor: "from-purple-800 to-amber-600",
   },
   {
@@ -1070,7 +1089,7 @@ const EVENTS_DATA: EventDayData[] = [
   },
 ];
 
-// 校内マップのピン座標
+// 校内マップのピン座標（4号館のピンの位置を82.9%から92.9%へ10%右へ移動）
 const CAMPUS_ZONES = [
   {
     id: "prefab",
@@ -1135,7 +1154,7 @@ const CAMPUS_ZONES = [
     lightBg: "bg-teal-50 border-teal-300 text-teal-900",
     icon: "",
     top: "9.0%",
-    left: "82.9%",
+    left: "92.9%", // 82.9% -> 92.9% へ10%右へ移動
     desc: "411教室（かるた体験）を開催！",
   },
   {
@@ -1313,6 +1332,7 @@ export default function Page() {
     zoomLevelRef.current = zoomLevel;
   }, [zoomLevel]);
 
+  // ピンチ操作の厳格な対象エリア判定（画像外タッチのガード）
   useEffect(() => {
     if (!isEntered || activeTab !== "map") return;
 
@@ -1327,8 +1347,26 @@ export default function Page() {
     let startMidY = 0;
     let rafId: number | null = null;
 
+    const isInsideContainer = (e: TouchEvent) => {
+      const rect = container.getBoundingClientRect();
+      for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        if (
+          touch.clientX < rect.left ||
+          touch.clientX > rect.right ||
+          touch.clientY < rect.top ||
+          touch.clientY > rect.bottom
+        ) {
+          return false;
+        }
+      }
+      return true;
+    };
+
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
+        if (!isInsideContainer(e)) return; // 画像・マップコンテナ外でのピンチ操作を無視
+
         if (e.cancelable) e.preventDefault();
 
         startDist = Math.hypot(
@@ -1347,6 +1385,8 @@ export default function Page() {
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 2 && startDist > 0) {
+        if (!isInsideContainer(e)) return; // 途中で領域外へ出た場合のガード
+
         if (e.cancelable) e.preventDefault();
 
         const currentDist = Math.hypot(
@@ -1526,6 +1566,9 @@ export default function Page() {
     );
   };
 
+  // ピンチ操作との同期用オーバーレイスケール値
+  const overlayScale = zoomLevel / 3.0;
+
   const titlePart1 = ["熱", "狂", "の"];
   const titlePart2 = ["カ", "ー", "ニ", "バ", "ル"];
   const titlePart3 = ["高", "専", "祭"];
@@ -1690,20 +1733,18 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 pb-20 font-sans relative">
       <style>{`
+        /* スクロールバーの非表示化＆残像防止CSS */
+        .custom-map-scrollbar {
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          will-change: scroll-position;
+        }
         .custom-map-scrollbar::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-        }
-        .custom-map-scrollbar::-webkit-scrollbar-track {
-          background: rgba(241, 245, 249, 0.8);
-          border-radius: 9999px;
-        }
-        .custom-map-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(203, 213, 225, 0.9);
-          border-radius: 9999px;
-        }
-        .custom-map-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(148, 163, 184, 1);
+          display: none;
+          width: 0;
+          height: 0;
         }
       `}</style>
 
@@ -1904,78 +1945,113 @@ export default function Page() {
                   className="w-full h-full object-contain pointer-events-none rounded-2xl"
                 />
 
+                {/* 通行禁止標識（ズーム拡大縮小に同期してスケール） */}
                 <div className="absolute inset-0 pointer-events-none z-30">
-                  <div className="absolute top-[70%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div
+                    style={{
+                      top: "70%",
+                      left: "13.5%",
+                      transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                      transformOrigin: "center center",
+                    }}
+                    className="absolute drop-shadow-md"
+                  >
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  <div className="absolute top-[70%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div
+                    style={{
+                      top: "70%",
+                      left: "20.5%",
+                      transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                      transformOrigin: "center center",
+                    }}
+                    className="absolute bg-white/95 text-slate-900 text-[12px] sm:text-[14px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none"
+                  >
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
-                  <div className="absolute top-[70%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div
+                    style={{
+                      top: "70%",
+                      left: "27.5%",
+                      transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                      transformOrigin: "center center",
+                    }}
+                    className="absolute drop-shadow-md"
+                  >
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  <div className="absolute top-[52%] left-[12.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div
+                    style={{
+                      top: "52%",
+                      left: "12.5%",
+                      transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                      transformOrigin: "center center",
+                    }}
+                    className="absolute drop-shadow-md"
+                  >
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  <div className="absolute top-[52%] left-[19.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div
+                    style={{
+                      top: "52%",
+                      left: "19.5%",
+                      transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                      transformOrigin: "center center",
+                    }}
+                    className="absolute bg-white/95 text-slate-900 text-[12px] sm:text-[14px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none"
+                  >
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
-                  <div className="absolute top-[52%] left-[26.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div
+                    style={{
+                      top: "52%",
+                      left: "26.5%",
+                      transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                      transformOrigin: "center center",
+                    }}
+                    className="absolute drop-shadow-md"
+                  >
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
 
+                {/* プレハブへの順路矢印（ズーム拡大縮小に同期してスケール） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
-                    <div className="absolute top-[33.5%] left-[57.0%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[29.0%] left-[57.0%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-
-                    <div className="absolute top-[26.0%] left-[53%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[26.0%] left-[47%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[26.0%] left-[41%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[21.5%] left-[35%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[21.5%] left-[29%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[21.5%] left-[23%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[21.5%] left-[17%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-
-                    <div className="absolute top-[28%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[37%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[46%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[55%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
-                    <div className="absolute top-[64%] left-[11.5%] -translate-x-1/2 -translate-y-1/2">
-                      <PathArrow direction="down" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
-                    </div>
+                    {[
+                      { top: "33.5%", left: "57.0%", dir: "up" },
+                      { top: "29.0%", left: "57.0%", dir: "up" },
+                      { top: "26.0%", left: "53.0%", dir: "left" },
+                      { top: "26.0%", left: "47.0%", dir: "left" },
+                      { top: "26.0%", left: "41.0%", dir: "left" },
+                      { top: "21.5%", left: "35.0%", dir: "left" },
+                      { top: "21.5%", left: "29.0%", dir: "left" },
+                      { top: "21.5%", left: "23.0%", dir: "left" },
+                      { top: "21.5%", left: "17.0%", dir: "left" },
+                      { top: "28.0%", left: "11.5%", dir: "down" },
+                      { top: "37.0%", left: "11.5%", dir: "down" },
+                      { top: "46.0%", left: "11.5%", dir: "down" },
+                      { top: "55.0%", left: "11.5%", dir: "down" },
+                      { top: "64.0%", left: "11.5%", dir: "down" },
+                    ].map((arrow, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          top: arrow.top,
+                          left: arrow.left,
+                          transform: `translate(-50%, -50%) scale(${overlayScale})`,
+                          transformOrigin: "center center",
+                        }}
+                        className="absolute"
+                      >
+                        <PathArrow direction={arrow.dir as any} className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
+                      </div>
+                    ))}
                   </div>
                 )}
 
@@ -2111,6 +2187,11 @@ export default function Page() {
                                   {stall.grade}
                                 </span>
                                 <span className="text-[10px] font-bold text-slate-500">{stall.category}</span>
+                                {stall.price && (
+                                  <span className="text-[10px] font-black text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded">
+                                    {stall.price}
+                                  </span>
+                                )}
                               </div>
                               <h5 className="font-black text-sm text-slate-900 mt-0.5">{stall.title}</h5>
                               <p className="text-[11px] text-slate-500 font-medium">{stall.location}</p>
@@ -2206,6 +2287,9 @@ export default function Page() {
                           />
                           <div className="absolute top-2 left-2 bg-slate-900/75 backdrop-blur-sm text-white text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1">
                             <span>{stall.grade}</span>
+                            {stall.price && (
+                              <span className="text-amber-300 ml-1">・ {stall.price}</span>
+                            )}
                           </div>
                         </div>
                       ) : null}
@@ -2226,6 +2310,11 @@ export default function Page() {
                                 <span className="text-[10px] font-extrabold text-slate-400">
                                   {stall.category}
                                 </span>
+                                {stall.price && (
+                                  <span className="text-[10px] font-black text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded">
+                                    {stall.price}
+                                  </span>
+                                )}
                               </div>
                             )}
                             <h3 className="font-black text-base text-slate-900 mt-0.5 line-clamp-1">
@@ -2542,9 +2631,16 @@ export default function Page() {
                 <div className="flex items-center gap-3">
                   <span className="text-4xl p-3 bg-orange-50 rounded-2xl shrink-0">{modalItem.icon}</span>
                   <div>
-                    <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
-                      {modalItem.grade}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-black px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
+                        {modalItem.grade}
+                      </span>
+                      {modalItem.price && (
+                        <span className="text-[10px] font-black text-rose-600 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full">
+                          {modalItem.price}
+                        </span>
+                      )}
+                    </div>
                     <h3 className="text-lg font-black text-slate-900 mt-0.5">{modalItem.title}</h3>
                     <p className="text-xs text-slate-500 font-bold">{modalItem.dept}</p>
                   </div>
@@ -2789,55 +2885,55 @@ export default function Page() {
 
             {/* フロアレイアウトコンテンツ */}
             <div className="p-4 space-y-3 overflow-y-auto bg-slate-100/60 custom-map-scrollbar">
-              {/* ==================== ① 1号館 (1-1F_3, 1-2F_3, 1-3F_3 画像忠実再現) ==================== */}
+              {/* ==================== ① 1号館 (各部屋に企画・クラス名・金額・カラーを反映) ==================== */}
               {detailMapBuilding === "bldg1" && (
                 <div className="space-y-3">
-                  {/* --- 1号館 1F (1-1F_3.png 忠実再現) --- */}
+                  {/* --- 1号館 1F --- */}
                   {detailMapFloor === "1F" && (
                     <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
-                      <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
-                        <div className="font-black text-4xl text-slate-900 mb-2 tracking-wide">
+                      <div className="min-w-[600px] max-w-[640px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
+                        <div className="font-black text-3xl text-slate-900 mb-2 tracking-wide">
                           1F
                         </div>
 
-                        {/* 1F マップ統合キャンバス */}
-                        <div className="w-[540px] h-[310px] relative bg-white">
-                          {/* サブタイトル：4号館 */}
-                          <div className="absolute top-[18px] right-[36px] text-base font-black text-slate-900">
+                        <div className="w-[580px] h-[320px] relative bg-white">
+                          <div className="absolute top-[18px] right-[24px] text-base font-black text-slate-900">
                             4号館
                           </div>
 
                           {/* 1. 上部横廊下 */}
                           <div className="absolute top-[50px] left-0 w-full h-6 bg-neutral-600">
-                            {/* 波線（SS切断マーク） */}
-                            <div className="absolute right-[120px] top-1/2 -translate-y-1/2 z-10">
+                            <div className="absolute right-[130px] top-1/2 -translate-y-1/2 z-10">
                               <BreakLineSS />
                             </div>
                           </div>
 
-                          {/* 部屋 412 (上部横廊下の直下) */}
+                          {/* 部屋 412 (4号館・かるた) */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("412") || getRoomStall("411");
                               if (stall) setModalItem(stall);
                             }}
-                            className="absolute top-[82px] right-[36px] w-[56px] h-[68px] border-[3px] border-black bg-white rounded-sm flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                            className="absolute top-[82px] right-[20px] w-[88px] h-[92px] border-[2.5px] border-teal-600 bg-teal-50 rounded-xl p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-teal-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight"
                           >
-                            <span className="text-lg font-black">412</span>
+                            <span className="text-base mb-0.5"></span>
+                            <span className="text-xs font-black">412</span>
+                            <span className="text-[11px] font-extrabold text-teal-700 line-clamp-1">かるた体験</span>
+                            <span className="text-[10px] text-slate-500 font-bold">(4号館)</span>
                           </button>
 
                           {/* 2. 中央縦廊下 */}
-                          <div className="absolute top-[74px] left-[268px] w-6 h-[80px] bg-neutral-600" />
+                          <div className="absolute top-[74px] left-[288px] w-6 h-[80px] bg-neutral-600" />
 
                           {/* 3. 下部横廊下 */}
                           <div className="absolute top-[154px] left-0 w-full h-6 bg-neutral-600" />
 
-                          {/* 部屋 113, 112, 111 (下部横廊下の直下左側) */}
-                          <div className="absolute top-[186px] left-[20px] flex gap-2.5">
+                          {/* 部屋 113, 112, 111 (カラー＆企画＆クラス＆金額表示) */}
+                          <div className="absolute top-[186px] left-[15px] flex gap-2.5">
                             {[
-                              { id: "113", room: "113", title: "ホスト", grade: "4M" },
-                              { id: "112", room: "112", title: "ドリンク", grade: "1-2" },
-                              { id: "111", room: "111", title: "ほっとサンド", grade: "1-1" },
+                              { id: "113", room: "113", title: "ホスト", grade: "4M", price: "100円", icon: "🌹", style: "border-purple-600 bg-purple-50 hover:bg-purple-100 text-purple-950" },
+                              { id: "112", room: "112", title: "ドリンク", grade: "1-2", price: "200円", icon: "🍹", style: "border-pink-500 bg-pink-50 hover:bg-pink-100 text-pink-950" },
+                              { id: "111", room: "111", title: "ほっとサンド", grade: "1-1", price: "200円", icon: "🥪", style: "border-amber-500 bg-amber-50 hover:bg-amber-100 text-amber-950" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               return (
@@ -2846,23 +2942,25 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-[56px] h-[68px] border-[3px] border-black bg-white rounded-sm p-0.5 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer leading-tight text-center"
+                                  className={`w-[84px] h-[92px] border-[2.5px] ${r.style} rounded-xl p-1 flex flex-col items-center justify-center font-black transition shadow-sm cursor-pointer leading-tight text-center hover:scale-105`}
                                 >
-                                  <span className="text-base font-black">{r.room}</span>
+                                  <span className="text-base mb-0.5">{r.icon}</span>
+                                  <span className="text-xs font-black">{r.room}</span>
+                                  <span className="text-[11px] font-extrabold line-clamp-1">{r.title}</span>
+                                  <span className="text-[10px] opacity-80 font-bold">({r.grade}) {r.price}</span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          {/* 4. 入口縦廊下 (下部横廊下中央から下へ) */}
-                          <div className="absolute top-[178px] left-[254px] w-[52px] h-[60px] bg-neutral-600" />
-                          {/* 赤三角形▲ */}
-                          <div className="absolute top-[242px] left-[280px] -translate-x-1/2">
+                          {/* 4. 入口縦廊下 */}
+                          <div className="absolute top-[178px] left-[274px] w-[52px] h-[60px] bg-neutral-600" />
+                          <div className="absolute top-[242px] left-[300px] -translate-x-1/2">
                             <RedTriangle />
                           </div>
 
-                          {/* 階段・トイレ (下部横廊下の直下右側) */}
-                          <div className="absolute top-[186px] left-[335px] flex items-center gap-3">
+                          {/* 階段・トイレ (統一サイズ・カラー化) */}
+                          <div className="absolute top-[186px] left-[360px] flex items-center gap-2.5">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
@@ -2871,29 +2969,28 @@ export default function Page() {
                     </div>
                   )}
 
-                  {/* --- 1号館 2F (1-2F_3.png 忠実再現) --- */}
+                  {/* --- 1号館 2F --- */}
                   {detailMapFloor === "2F" && (
                     <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
-                      <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
-                        <div className="font-black text-4xl text-slate-900 mb-2 tracking-wide">
+                      <div className="min-w-[600px] max-w-[640px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
+                        <div className="font-black text-3xl text-slate-900 mb-2 tracking-wide">
                           2F
                         </div>
 
-                        {/* 2F マップ統合キャンバス */}
-                        <div className="w-[540px] h-[280px] relative bg-white">
+                        <div className="w-[580px] h-[300px] relative bg-white">
                           {/* 1. 上部横廊下 */}
                           <div className="absolute top-[54px] left-0 w-full h-6 bg-neutral-600" />
 
-                          {/* 2. 中央縦廊下 (T字接続) */}
-                          <div className="absolute top-[78px] left-[280px] w-[60px] h-[105px] bg-neutral-600" />
+                          {/* 2. 中央縦廊下 */}
+                          <div className="absolute top-[78px] left-[300px] w-[60px] h-[105px] bg-neutral-600" />
 
-                          {/* 部屋 123, 12Fゼミ室, 122, 121 (上部横廊下の直下左側) */}
+                          {/* 部屋 123, 12Fゼミ室, 122, 121 (カラー＆企画＆クラス＆金額表示) */}
                           <div className="absolute top-[86px] left-[10px] flex gap-2.5">
                             {[
-                              { id: "123", room: ["123"] },
-                              { id: "12Fゼミ室", room: ["12F", "ゼミ室"] },
-                              { id: "122", room: ["122"] },
-                              { id: "121", room: ["121"] },
+                              { id: "123", room: "123", title: "ゲームカフェ", grade: "3E", price: "200円", icon: "🎮", style: "border-cyan-500 bg-cyan-50 hover:bg-cyan-100 text-cyan-950" },
+                              { id: "12Fゼミ室", room: "12Fゼミ", title: "美術写真展示", grade: "部活", price: "", icon: "🖼️", style: "border-indigo-400 bg-indigo-50 hover:bg-indigo-100 text-indigo-950" },
+                              { id: "122", room: "122", title: "クレープ", grade: "1-4", price: "200円", icon: "🥞", style: "border-yellow-500 bg-yellow-50 hover:bg-yellow-100 text-yellow-950" },
+                              { id: "121", room: "121", title: "わたあめ", grade: "1-3", price: "100円", icon: "🍥", style: "border-purple-400 bg-purple-50 hover:bg-purple-100 text-purple-950" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               return (
@@ -2902,30 +2999,32 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-[56px] h-[68px] border-[3px] border-black bg-white rounded-sm p-0.5 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer leading-tight text-center"
+                                  className={`w-[66px] h-[92px] border-[2.5px] ${r.style} rounded-xl p-0.5 flex flex-col items-center justify-center font-black transition shadow-sm cursor-pointer leading-tight text-center hover:scale-105`}
                                 >
-                                  {r.room.map((line, idx) => (
-                                    <span key={idx} className="text-sm font-black">{line}</span>
-                                  ))}
+                                  <span className="text-base mb-0.5">{r.icon}</span>
+                                  <span className="text-[11px] font-black">{r.room}</span>
+                                  <span className="text-[10px] font-extrabold line-clamp-1">{r.title}</span>
+                                  <span className="text-[9px] opacity-80 font-bold">{r.price || `(${r.grade})`}</span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          {/* 合同講義室 (中央縦廊下の最下端に接続) */}
+                          {/* 合同講義室 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("合同講義室");
                               if (stall) setModalItem(stall);
                             }}
-                            className="absolute top-[183px] left-[278px] w-[64px] h-[64px] border-[3px] border-black bg-white rounded-sm p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer text-center leading-tight"
+                            className="absolute top-[183px] left-[295px] w-[70px] h-[72px] border-[2.5px] border-indigo-600 bg-indigo-50 rounded-xl p-1 flex flex-col items-center justify-center font-black text-indigo-950 hover:bg-indigo-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight"
                           >
-                            <span className="text-base font-black">合同</span>
-                            <span className="text-base font-black">講義室</span>
+                            <span className="text-base mb-0.5">🎮</span>
+                            <span className="text-xs font-black">合同講義室</span>
+                            <span className="text-[10px] text-indigo-700 font-extrabold">ゲーム企画</span>
                           </button>
 
-                          {/* 階段・トイレ (上部横廊下の直下右側) */}
-                          <div className="absolute top-[86px] left-[375px] flex items-center gap-3">
+                          {/* 階段・トイレ (統一サイズ・カラー化) */}
+                          <div className="absolute top-[86px] left-[390px] flex items-center gap-2.5">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
@@ -2934,29 +3033,28 @@ export default function Page() {
                     </div>
                   )}
 
-                  {/* --- 1号館 3F (1-3F_3.png 忠実再現) --- */}
+                  {/* --- 1号館 3F --- */}
                   {detailMapFloor === "3F" && (
                     <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
-                      <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
-                        <div className="font-black text-4xl text-slate-900 mb-2 tracking-wide">
+                      <div className="min-w-[600px] max-w-[640px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
+                        <div className="font-black text-3xl text-slate-900 mb-2 tracking-wide">
                           3F
                         </div>
 
-                        {/* 3F マップ統合キャンバス */}
-                        <div className="w-[540px] h-[280px] relative bg-white">
+                        <div className="w-[580px] h-[300px] relative bg-white">
                           {/* 1. 上部横廊下 */}
                           <div className="absolute top-[54px] left-0 w-full h-6 bg-neutral-600" />
 
-                          {/* 2. 中央縦廊下 (T字接続) */}
-                          <div className="absolute top-[78px] left-[280px] w-[60px] h-[105px] bg-neutral-600" />
+                          {/* 2. 中央縦廊下 */}
+                          <div className="absolute top-[78px] left-[300px] w-[60px] h-[105px] bg-neutral-600" />
 
-                          {/* 部屋 13Fゼミ室, 133, 132, 131 (上部横廊下の直下左側) */}
+                          {/* 部屋 13Fゼミ室, 133, 132, 131 (カラー＆企画＆クラス＆金額表示) */}
                           <div className="absolute top-[86px] left-[10px] flex gap-2.5">
                             {[
-                              { id: "13Fゼミ室", room: ["13F", "ゼミ室"] },
-                              { id: "133", room: ["133"] },
-                              { id: "132", room: ["132"] },
-                              { id: "131", room: ["131"] },
+                              { id: "13Fゼミ室", room: "13Fゼミ", title: "プラネタリウム", grade: "天文", price: "", icon: "🌌", style: "border-blue-600 bg-blue-50 hover:bg-blue-100 text-blue-950" },
+                              { id: "133", room: "133", title: "バー", grade: "3I", price: "200円", icon: "🍸", style: "border-amber-700 bg-amber-50 hover:bg-amber-100 text-amber-950" },
+                              { id: "132", room: "132", title: "喫茶店", grade: "3B", price: "200円", icon: "☕", style: "border-emerald-600 bg-emerald-50 hover:bg-emerald-100 text-emerald-950" },
+                              { id: "131", room: "131", title: "カジノ", grade: "4I", price: "100円", icon: "🎲", style: "border-rose-600 bg-rose-50 hover:bg-rose-100 text-rose-950" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               return (
@@ -2965,30 +3063,31 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-[56px] h-[68px] border-[3px] border-black bg-white rounded-sm p-0.5 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer leading-tight text-center"
+                                  className={`w-[66px] h-[92px] border-[2.5px] ${r.style} rounded-xl p-0.5 flex flex-col items-center justify-center font-black transition shadow-sm cursor-pointer leading-tight text-center hover:scale-105`}
                                 >
-                                  {r.room.map((line, idx) => (
-                                    <span key={idx} className="text-sm font-black">{line}</span>
-                                  ))}
+                                  <span className="text-base mb-0.5">{r.icon}</span>
+                                  <span className="text-[11px] font-black">{r.room}</span>
+                                  <span className="text-[10px] font-extrabold line-clamp-1">{r.title}</span>
+                                  <span className="text-[9px] opacity-80 font-bold">{r.price || `(${r.grade})`}</span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          {/* 大会議室 (中央縦廊下の最下端に接続) */}
+                          {/* 大会議室 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("大会議室");
                               if (stall) setModalItem(stall);
                             }}
-                            className="absolute top-[183px] left-[278px] w-[64px] h-[64px] border-[3px] border-black bg-white rounded-sm p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer text-center leading-tight"
+                            className="absolute top-[183px] left-[295px] w-[70px] h-[72px] border-[2.5px] border-slate-600 bg-slate-50 rounded-xl p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-slate-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight"
                           >
-                            <span className="text-base font-black">大</span>
-                            <span className="text-base font-black">会議室</span>
+                            <span className="text-base mb-0.5">🏫</span>
+                            <span className="text-xs font-black">大会議室</span>
                           </button>
 
-                          {/* 階段・トイレ・小会議室 (上部横廊下の直下右側) */}
-                          <div className="absolute top-[86px] left-[360px] flex items-center gap-3">
+                          {/* 階段・トイレ・小会議室 */}
+                          <div className="absolute top-[86px] left-[370px] flex items-center gap-2">
                             <StairsIcon />
                             <ToiletIcon />
                             <button
@@ -2996,10 +3095,11 @@ export default function Page() {
                                 const stall = getRoomStall("小会議室");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="w-[56px] h-[68px] border-[3px] border-black bg-white rounded-sm p-0.5 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer text-center leading-tight"
+                              className="w-[60px] h-[92px] border-[2.5px] border-blue-500 bg-blue-50 rounded-xl p-0.5 flex flex-col items-center justify-center font-black text-blue-950 hover:bg-blue-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight"
                             >
-                              <span className="text-sm font-black">小</span>
-                              <span className="text-sm font-black">会議室</span>
+                              <span className="text-base mb-0.5">🌌</span>
+                              <span className="text-[11px] font-black">小会議室</span>
+                              <span className="text-[9px] text-blue-700 font-extrabold">写真展示</span>
                             </button>
                           </div>
                         </div>
@@ -3009,7 +3109,7 @@ export default function Page() {
                 </div>
               )}
 
-              {/* ==================== ② 7号館 (詳細フロアマップ) ==================== */}
+              {/* ==================== ② 7号館 (全フロア高さ・枠サイズを2F基準に完全統一) ==================== */}
               {detailMapBuilding === "bldg7" && (
                 <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
                   <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
@@ -3018,7 +3118,7 @@ export default function Page() {
                     </div>
 
                     <div className="grid grid-cols-3 gap-4 divide-x-2 divide-slate-200">
-                      {/* --- 1F --- */}
+                      {/* --- 1F (2Fの全高152px基準に統一) --- */}
                       <div className="pr-2 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">1F</div>
                         <button
@@ -3026,12 +3126,12 @@ export default function Page() {
                             const stall = getRoomStall("711") || getRoomStall("お化け屋敷");
                             if (stall) setModalItem(stall);
                           }}
-                          className="w-full h-36 border-[2.5px] border-slate-900 bg-purple-50 rounded-lg p-2 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-snug hover:bg-purple-100 transition shadow-sm cursor-pointer"
+                          className="w-full h-[152px] border-[2.5px] border-purple-900 bg-purple-50 rounded-xl p-2 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-snug hover:bg-purple-100 transition shadow-sm cursor-pointer hover:scale-105"
                         >
-                          <span className="text-xl mb-1">👻</span>
-                          <span>711・712</span>
-                          <span className="text-purple-700 font-extrabold mt-0.5">お化け屋敷</span>
-                          <span className="text-[10px] text-slate-500">(3M)</span>
+                          <span className="text-2xl mb-1">👻</span>
+                          <span className="text-sm font-black">711・712</span>
+                          <span className="text-purple-800 font-extrabold text-sm mt-0.5">お化け屋敷</span>
+                          <span className="text-[11px] text-rose-600 font-black mt-0.5">(3M) 100円</span>
                         </button>
                         <div className="flex items-center gap-2 pt-2">
                           <StairsIcon />
@@ -3039,7 +3139,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* --- 2F --- */}
+                      {/* --- 2F (基準階: 各72px, 合計152px) --- */}
                       <div className="px-2 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">2F</div>
                         <div className="w-full space-y-2">
@@ -3048,9 +3148,9 @@ export default function Page() {
                               const stall = getRoomStall("721") || getRoomStall("研究発表");
                               if (stall) setModalItem(stall);
                             }}
-                            className="w-full h-18 border-[2.5px] border-slate-900 bg-emerald-50 rounded-lg p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-emerald-100 transition shadow-sm cursor-pointer"
+                            className="w-full h-[72px] border-[2.5px] border-emerald-600 bg-emerald-50 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-emerald-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
-                            <span>721教室</span>
+                            <span className="text-xs font-black">721教室</span>
                             <span className="text-emerald-700 font-extrabold text-[11px]">5B 研究発表</span>
                           </button>
                           <button
@@ -3058,11 +3158,11 @@ export default function Page() {
                               const stall = getRoomStall("722") || getRoomStall("キッキングスナイパー");
                               if (stall) setModalItem(stall);
                             }}
-                            className="w-full h-18 border-[2.5px] border-slate-900 bg-rose-50 rounded-lg p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-rose-100 transition shadow-sm cursor-pointer"
+                            className="w-full h-[72px] border-[2.5px] border-rose-600 bg-rose-50 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-rose-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
-                            <span>722教室</span>
+                            <span className="text-xs font-black">722教室</span>
                             <span className="text-rose-700 font-extrabold text-[11px]">キッキングスナイパー</span>
-                            <span className="text-[9px] text-slate-500">(4E)</span>
+                            <span className="text-[10px] text-rose-600 font-black">(4E) 100円</span>
                           </button>
                         </div>
                         <div className="flex items-center gap-2 pt-1">
@@ -3070,7 +3170,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* --- 3F --- */}
+                      {/* --- 3F (2Fの基準階高さ72px×2に完全統一) --- */}
                       <div className="pl-2 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">3F</div>
                         <div className="w-full space-y-2">
@@ -3079,9 +3179,9 @@ export default function Page() {
                               const stall = getRoomStall("731") || getRoomStall("AMデザイン部");
                               if (stall) setModalItem(stall);
                             }}
-                            className="w-full h-20 border-[2.5px] border-slate-900 bg-sky-50 rounded-lg p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-sky-100 transition shadow-sm cursor-pointer"
+                            className="w-full h-[72px] border-[2.5px] border-sky-600 bg-sky-50 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-sky-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
-                            <span>731教室</span>
+                            <span className="text-xs font-black">731教室</span>
                             <span className="text-sky-700 font-extrabold text-[11px]">AMデザイン部</span>
                           </button>
                           <button
@@ -3089,9 +3189,9 @@ export default function Page() {
                               const stall = getRoomStall("E.S.S.");
                               if (stall) setModalItem(stall);
                             }}
-                            className="w-full h-20 border-[2.5px] border-slate-900 bg-teal-50 rounded-lg p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-teal-100 transition shadow-sm cursor-pointer"
+                            className="w-full h-[72px] border-[2.5px] border-teal-600 bg-teal-50 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-teal-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
-                            <span>732教室</span>
+                            <span className="text-xs font-black">732教室</span>
                             <span className="text-teal-700 font-extrabold text-[11px]">E.S.S.</span>
                           </button>
                         </div>
