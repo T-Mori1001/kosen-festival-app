@@ -573,6 +573,21 @@ const STALLS_DATA: StallItem[] = [
     description: "5Bによる先進的な研究成果のポスター発表展示。",
     icon: "🔬",
   },
+  {
+    id: 306,
+    title: "E.S.S. (Little World)",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "E.S.S.",
+    location: "7号館 732教室",
+    zoneId: "bldg7", // 4号館から7号館へ修正
+    description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
+    icon: "𔢤",
+    imageUrl: "/ESS.png",
+    bannerTitle: "E.S.S. Little World",
+    bannerSub: "留学生紹介ポスター & 海外生活Vlog展示",
+    bannerColor: "from-sky-500 to-teal-600",
+  },
 
   // --- 8号館 (bldg8) ---
   {
@@ -607,21 +622,6 @@ const STALLS_DATA: StallItem[] = [
   },
 
   // --- 4号館 (bldg4) ---
-  {
-    id: 306,
-    title: "E.S.S. (Little World)",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "E.S.S.",
-    location: "7号館 732教室 / 4号館",
-    zoneId: "bldg4",
-    description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
-    icon: "𔢤",
-    imageUrl: "/ESS.png",
-    bannerTitle: "E.S.S. Little World",
-    bannerSub: "留学生紹介ポスター & 海外生活Vlog展示",
-    bannerColor: "from-sky-500 to-teal-600",
-  },
   {
     id: 307,
     title: "競技かるた体験会（畳の上の格闘技）",
@@ -1105,7 +1105,7 @@ const CAMPUS_ZONES = [
     icon: "",
     top: "9.0%",
     left: "82.9%",
-    desc: "LL教室（E.S.S.展示）、412教室（かるた体験）を開催！",
+    desc: "411教室（かるた体験）を開催！",
   },
   {
     id: "ticket",
@@ -1127,7 +1127,7 @@ const CAMPUS_ZONES = [
     icon: "👻",
     top: "40.6%",
     left: "83.6%",
-    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、5B研究発表を開催！",
+    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、E.S.S.、5B研究発表を開催！",
   },
   {
     id: "bldg8",
@@ -1921,44 +1921,45 @@ export default function Page() {
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  {/* --- 通行禁止エリア複製（10%上方向へ移動：高さ50%） --- */}
+                  {/* --- 通行禁止エリア複製（2%左、4%下へ移動：高さ54%、横位置11.5%, 18.5%, 25.5%） --- */}
                   {/* 通行禁止エリア左側標識（複製） */}
-                  <div className="absolute top-[50%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div className="absolute top-[54%] left-[11.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
                   {/* 通行禁止テキストバッジ（複製） */}
-                  <div className="absolute top-[50%] left-[20.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
+                  <div className="absolute top-[54%] left-[18.5%] -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 text-[12.6px] sm:text-[15.12px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-red-500 flex items-center justify-center whitespace-nowrap select-none">
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
                   {/* 通行禁止エリア右側標識（複製） */}
-                  <div className="absolute top-[50%] left-[27.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
+                  <div className="absolute top-[54%] left-[25.5%] -translate-x-1/2 -translate-y-1/2 drop-shadow-md scale-[1.05]">
                     <NoEntrySign className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
 
-                {/* プレハブのピンがタップされた際に表示される順路矢印群 */}
+                {/* プレハブのピンがタップされた際に表示される順路矢印群（左へ5%移動、赤色・20%拡大、間隔一定） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     {/* 1号館北側・中庭通路の登り矢印 (↑) */}
-                    <div className="absolute top-[29%] left-[58.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↑</div>
-                    <div className="absolute top-[24.5%] left-[58.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↑</div>
+                    <div className="absolute top-[29%] left-[53.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↑</div>
+                    <div className="absolute top-[24.5%] left-[53.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↑</div>
 
-                    {/* 北側横道路を西へ進む左向き矢印 (←) */}
-                    <div className="absolute top-[21.5%] left-[55%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[51%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[41%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[35%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[23%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
-                    <div className="absolute top-[21.5%] left-[18%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">←</div>
+                    {/* 北側横道路を西へ進む左向き矢印 (←) 一定間隔(6%ピッチ) */}
+                    <div className="absolute top-[21.5%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[44%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[38%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[32%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[26%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[20%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
+                    <div className="absolute top-[21.5%] left-[14%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">←</div>
 
-                    {/* 西側縦通路を南へ進む下向き矢印 (↓) */}
-                    <div className="absolute top-[28%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[36%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[45%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[55%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
-                    <div className="absolute top-[65%] left-[13.5%] -translate-x-1/2 -translate-y-1/2 text-slate-900 font-black text-sm sm:text-lg drop-shadow-md select-none">↓</div>
+                    {/* 西側縦通路を南へ進む下向き矢印 (↓) 一定間隔(9%ピッチ) */}
+                    <div className="absolute top-[28%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[37%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[46%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[55%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
+                    <div className="absolute top-[64%] left-[8.5%] -translate-x-1/2 -translate-y-1/2 text-red-600 font-black text-base sm:text-xl drop-shadow-md select-none">↓</div>
                   </div>
                 )}
 
@@ -2942,19 +2943,29 @@ export default function Page() {
                       {/* --- 3F --- */}
                       <div className="pl-2 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">3F</div>
-                        <button
-                          onClick={() => {
-                            const stall = getRoomStall("731") || getRoomStall("AMデザイン部");
-                            if (stall) setModalItem(stall);
-                          }}
-                          className="w-full h-36 border-[2.5px] border-slate-900 bg-sky-50 rounded-lg p-2 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-snug hover:bg-sky-100 transition shadow-sm cursor-pointer"
-                        >
-                          <span className="text-xl mb-1">𖤤</span>
-                          <span>731教室</span>
-                          <span className="text-sky-700 font-extrabold mt-0.5">AMデザイン部</span>
-                          <span className="text-[10px] text-slate-500">3Dプリンタ体験・展示</span>
-                        </button>
-                        <div className="flex items-center gap-2 pt-2">
+                        <div className="w-full space-y-2">
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("731") || getRoomStall("AMデザイン部");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-full h-20 border-[2.5px] border-slate-900 bg-sky-50 rounded-lg p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-sky-100 transition shadow-sm cursor-pointer"
+                          >
+                            <span>731教室</span>
+                            <span className="text-sky-700 font-extrabold text-[11px]">AMデザイン部</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("E.S.S.");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-full h-20 border-[2.5px] border-slate-900 bg-teal-50 rounded-lg p-1.5 flex flex-col items-center justify-center font-black text-slate-900 text-xs text-center leading-tight hover:bg-teal-100 transition shadow-sm cursor-pointer"
+                          >
+                            <span>732教室</span>
+                            <span className="text-teal-700 font-extrabold text-[11px]">E.S.S.</span>
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-2 pt-1">
                           <StairsIcon />
                         </div>
                       </div>
