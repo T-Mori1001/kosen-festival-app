@@ -1978,23 +1978,23 @@ export default function Page() {
                 {/* プレハブのピンがタップされた際に表示される順路矢印群 */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
-                    {/* 1号館北側・中庭通路の登り矢印 (↑) (top: +2%, left: +1%) */}
-                    <div className="absolute top-[33%] left-[57.5%] -translate-x-1/2 -translate-y-1/2">
+                    {/* 1号館北側・中庭通路の登り矢印 (↑) (下へ0.5%、左へ0.5%移動) */}
+                    <div className="absolute top-[33.5%] left-[57.0%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[28.5%] left-[57.5%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[29.0%] left-[57.0%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="up" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
 
                     {/* 北側横道路を西へ進む左向き矢印 (←) */}
-                    {/* 右側の3つ (top: +2% 下移動) */}
-                    <div className="absolute top-[25.5%] left-[53%] -translate-x-1/2 -translate-y-1/2">
+                    {/* 右側の3つ (下へ0.5%移動) */}
+                    <div className="absolute top-[26.0%] left-[53%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[25.5%] left-[47%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[26.0%] left-[47%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
-                    <div className="absolute top-[25.5%] left-[41%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[26.0%] left-[41%] -translate-x-1/2 -translate-y-1/2">
                       <PathArrow direction="left" className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                     </div>
                     {/* 左側の4つ */}
@@ -2849,7 +2849,7 @@ export default function Page() {
 
             {/* フロアレイアウトコンテンツ */}
             <div className="p-4 space-y-3 overflow-y-auto bg-slate-100/60 custom-map-scrollbar">
-              {/* ==================== ① 1号館 (1-1F, 1-2F, 1-3F 画像忠実再現) ==================== */}
+              {/* ==================== ① 1号館 (1-1F, 1-2F, 1-3F 添付画像忠実再現 ＆ 模擬店名・クラス名記載) ==================== */}
               {detailMapBuilding === "bldg1" && (
                 <div className="space-y-3">
                   {/* --- 1号館 1F --- */}
@@ -2860,6 +2860,7 @@ export default function Page() {
                           1F
                         </div>
 
+                        {/* 上部通路・4号館・412 */}
                         <div className="relative mb-12">
                           <div className="absolute -top-7 right-20 text-sm font-black text-slate-900 tracking-wider">
                             4号館
@@ -2875,25 +2876,26 @@ export default function Page() {
                                 const stall = getRoomStall("412");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="w-16 h-22 border-[2.5px] border-slate-900 bg-white font-black text-slate-900 text-lg rounded-lg hover:bg-amber-100 transition shadow-sm flex items-center justify-center cursor-pointer"
+                              className="w-20 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer"
                             >
-                              412
+                              <span className="text-lg">412</span>
                             </button>
                           </div>
                         </div>
 
-                        <div className="relative min-h-[160px] flex flex-col items-center">
+                        {/* 下部通路・113/112/111・赤三角形▲・階段・トイレ */}
+                        <div className="relative min-h-[170px] flex flex-col items-center">
                           <div className="w-12 bg-slate-500 h-28 relative">
                             <div className="absolute -bottom-7 left-1/2 -translate-x-1/2">
                               <RedTriangle />
                             </div>
                           </div>
 
-                          <div className="absolute left-6 top-0 flex gap-3">
+                          <div className="absolute left-4 top-0 flex gap-2.5">
                             {[
-                              { id: "113", label: "113" },
-                              { id: "112", label: "112" },
-                              { id: "111", label: "111" },
+                              { id: "113", room: "113", title: "ホスト", grade: "4M" },
+                              { id: "112", room: "112", title: "ドリンク", grade: "1-2" },
+                              { id: "111", room: "111", title: "ほっとサンド", grade: "1-1" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               return (
@@ -2902,15 +2904,17 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-16 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-lg text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                                  className="w-20 h-26 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer leading-tight text-center"
                                 >
-                                  <span>{r.label}</span>
+                                  <span className="text-base font-black">{r.room}</span>
+                                  <span className="text-xs text-orange-600 font-extrabold mt-0.5">{r.title}</span>
+                                  <span className="text-[10px] text-slate-500 font-bold">{r.grade}</span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          <div className="absolute right-12 top-2 flex items-center gap-4">
+                          <div className="absolute right-10 top-2 flex items-center gap-3">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
@@ -2929,7 +2933,7 @@ export default function Page() {
 
                         <div className="h-10 bg-slate-500 w-full mb-10" />
 
-                        <div className="relative min-h-[160px] flex flex-col items-center">
+                        <div className="relative min-h-[170px] flex flex-col items-center">
                           <div className="w-12 bg-slate-500 h-24 relative" />
 
                           <button
@@ -2937,18 +2941,19 @@ export default function Page() {
                               const stall = getRoomStall("合同講義室");
                               if (stall) setModalItem(stall);
                             }}
-                            className="w-24 h-20 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 text-sm leading-tight hover:bg-amber-100 transition shadow-sm -mt-1 z-10 cursor-pointer"
+                            className="w-24 h-22 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm -mt-1 z-10 cursor-pointer text-center leading-tight"
                           >
-                            <span>合同</span>
-                            <span>講義室</span>
+                            <span className="text-sm font-black">合同講義室</span>
+                            <span className="text-xs text-blue-600 font-extrabold mt-0.5">ゲーム企画</span>
+                            <span className="text-[10px] text-slate-500 font-bold">実行委員会</span>
                           </button>
 
                           <div className="absolute left-2 top-0 flex gap-2">
                             {[
-                              { id: "123", label: "123" },
-                              { id: "12Fゼミ室", label: "12F\nゼミ室" },
-                              { id: "122", label: "122" },
-                              { id: "121", label: "121" },
+                              { id: "123", room: "123", title: "ゲームカフェ", grade: "3E" },
+                              { id: "12Fゼミ室", room: "12Fゼミ室", title: "看板・作品展示", grade: "美術写真部" },
+                              { id: "122", room: "122", title: "クレープ", grade: "1-4" },
+                              { id: "121", room: "121", title: "わたあめ", grade: "1-3" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               return (
@@ -2957,15 +2962,17 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-15 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-base text-slate-900 whitespace-pre-line leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                                  className="w-20 h-26 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer leading-tight text-center"
                                 >
-                                  {r.label}
+                                  <span className="text-sm font-black">{r.room}</span>
+                                  <span className="text-xs text-orange-600 font-extrabold mt-0.5">{r.title}</span>
+                                  <span className="text-[10px] text-slate-500 font-bold">{r.grade}</span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          <div className="absolute right-12 top-2 flex items-center gap-4">
+                          <div className="absolute right-10 top-2 flex items-center gap-3">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
@@ -2974,7 +2981,7 @@ export default function Page() {
                     </div>
                   )}
 
-                  {/* --- 1号館 3F (3I: 133, 3B: 132) --- */}
+                  {/* --- 1号館 3F --- */}
                   {detailMapFloor === "3F" && (
                     <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
                       <div className="min-w-[560px] max-w-[660px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
@@ -2984,7 +2991,7 @@ export default function Page() {
 
                         <div className="h-10 bg-slate-500 w-full mb-10" />
 
-                        <div className="relative min-h-[160px] flex flex-col items-center">
+                        <div className="relative min-h-[170px] flex flex-col items-center">
                           <div className="w-12 bg-slate-500 h-24 relative" />
 
                           <button
@@ -2992,18 +2999,17 @@ export default function Page() {
                               const stall = getRoomStall("大会議室");
                               if (stall) setModalItem(stall);
                             }}
-                            className="w-24 h-20 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 text-sm leading-tight hover:bg-amber-100 transition shadow-sm -mt-1 z-10 cursor-pointer"
+                            className="w-24 h-22 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm -mt-1 z-10 cursor-pointer text-center leading-tight"
                           >
-                            <span>大</span>
-                            <span>会議室</span>
+                            <span className="text-sm font-black">大会議室</span>
                           </button>
 
                           <div className="absolute left-2 top-0 flex gap-2">
                             {[
-                              { id: "13Fゼミ室", label: "13F\nゼミ室" },
-                              { id: "133", label: "133\n(3I)" },
-                              { id: "132", label: "132\n(3B)" },
-                              { id: "131", label: "131\n(4I)" },
+                              { id: "13Fゼミ室", room: "13Fゼミ室", title: "プラネタリウム", grade: "天文部" },
+                              { id: "133", room: "133", title: "バー", grade: "3I" },
+                              { id: "132", room: "132", title: "喫茶店", grade: "3B" },
+                              { id: "131", room: "131", title: "カジノ", grade: "4I" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               return (
@@ -3012,9 +3018,11 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-15 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-xs text-slate-900 whitespace-pre-line leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                                  className="w-20 h-26 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer leading-tight text-center"
                                 >
-                                  {r.label}
+                                  <span className="text-sm font-black">{r.room}</span>
+                                  <span className="text-xs text-orange-600 font-extrabold mt-0.5">{r.title}</span>
+                                  <span className="text-[10px] text-slate-500 font-bold">{r.grade}</span>
                                 </button>
                               );
                             })}
@@ -3028,10 +3036,11 @@ export default function Page() {
                                 const stall = getRoomStall("小会議室");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="w-16 h-24 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-sm text-slate-900 leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer"
+                              className="w-20 h-26 border-[2.5px] border-slate-900 bg-white rounded-lg p-1 flex flex-col items-center justify-center font-black text-slate-900 hover:bg-amber-100 transition shadow-sm cursor-pointer text-center leading-tight"
                             >
-                              <span>小</span>
-                              <span>会議室</span>
+                              <span className="text-sm font-black">小会議室</span>
+                              <span className="text-xs text-indigo-600 font-extrabold mt-0.5">写真展示</span>
+                              <span className="text-[10px] text-slate-500 font-bold">天文部</span>
                             </button>
                           </div>
                         </div>
