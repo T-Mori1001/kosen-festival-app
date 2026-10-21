@@ -239,7 +239,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 1階 クラス企画 ---
   {
     id: 1,
-    title: "ほっとサンド",
+    title: "ほっとサンド (1-1)",
     category: "模擬店",
     grade: "1-1",
     dept: "1年1組",
@@ -258,7 +258,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 2,
-    title: "ドリンク",
+    title: "ドリンク (1-2)",
     category: "模擬店",
     grade: "1-2",
     dept: "1年2組",
@@ -277,7 +277,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 13,
-    title: "ホスト (CLUB CROWN)",
+    title: "ホスト (4M)",
     category: "クラス企画",
     grade: "4M",
     dept: "4年 機械コース (4M)",
@@ -298,7 +298,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 2階 ---
   {
     id: 3,
-    title: "わたあめ",
+    title: "わたあめ (1-3)",
     category: "模擬店",
     grade: "1-3",
     dept: "1年3組",
@@ -317,7 +317,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 4,
-    title: "クレープ",
+    title: "クレープ (1-4)",
     category: "模擬店",
     grade: "1-4",
     dept: "1年4組",
@@ -336,7 +336,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 15,
-    title: "カジノ (CASINO)",
+    title: "カジノ (4I)",
     category: "クラス企画",
     grade: "4I",
     dept: "4年 情報コース (4I)",
@@ -374,7 +374,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 1号館 (bldg1) 3階 ---
   {
     id: 10,
-    title: "ゲームカフェ",
+    title: "ゲームカフェ (3E)",
     category: "クラス企画",
     grade: "3E",
     dept: "3年 電気・電子コース (3E)",
@@ -411,7 +411,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 11,
-    title: "バー (3I Bar)",
+    title: "バー (3I)",
     category: "クラス企画",
     grade: "3I",
     dept: "3年 情報コース (3I)",
@@ -446,7 +446,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 310,
-    title: "ボードゲームブース",
+    title: "ボードゲーム有志（ボードゲームブース）",
     category: "部活動企画",
     grade: "有志",
     dept: "有志",
@@ -477,7 +477,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 第一体育館 (gym1) ---
   {
     id: 5,
-    title: "餃子 (餃子 木村屋)",
+    title: "餃子 (2M)",
     category: "模擬店",
     grade: "2M",
     dept: "2年 機械コース (2M)",
@@ -494,7 +494,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 6,
-    title: "ポップコーン (2-E)",
+    title: "ポップコーン (2E)",
     category: "模擬店",
     grade: "2E",
     dept: "2年 電気・電子コース (2E)",
@@ -609,7 +609,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 音楽部プレハブ (prefab) ---
   {
     id: 303,
-    title: "音部ライブ（音楽部）",
+    title: "音楽部（音部ライブ）",
     category: "部活動企画",
     grade: "部活",
     dept: "音楽部",
@@ -644,7 +644,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 305,
-    title: "5B 研究発表（ポスター）",
+    title: "5B（研究発表ポスター展示）",
     category: "部活動企画",
     grade: "5B",
     dept: "5年 生物・化学コース",
@@ -692,7 +692,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 306,
-    title: "E.S.S. (Little World)",
+    title: "E.S.S.（Little World）",
     category: "部活動企画",
     grade: "部活",
     dept: "E.S.S.",
@@ -711,7 +711,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 8号館 (bldg8) ---
   {
     id: 308,
-    title: "吹奏楽部 ミニコンサート",
+    title: "吹奏楽部（ミニコンサート）",
     category: "部活動企画",
     grade: "部活",
     dept: "吹奏楽部",
@@ -743,7 +743,7 @@ const STALLS_DATA: StallItem[] = [
   // --- 4号館 (bldg4) ---
   {
     id: 307,
-    title: "競技かるた体験会（畳の上の格闘技）",
+    title: "競技かるた部（競技かるた体験会）",
     category: "部活動企画",
     grade: "有志",
     dept: "競技かるた体験会",
@@ -793,32 +793,6 @@ const STALLS_DATA: StallItem[] = [
     bannerTitle: "高専ロボコン ロボ展示 & 操作体験",
     bannerSub: "NHK高専ロボコン出場機展示 & スイカ割り体験",
     bannerColor: "from-green-600 to-emerald-800",
-  },
-  {
-    id: 204,
-    title: "デジタルサロン",
-    category: "校内施設・その他",
-    grade: "施設",
-    dept: "情報基盤",
-    location: "総合メディアセンター 1階",
-    zoneId: "media_center",
-    floor: "1階",
-    roomNo: "デジタルサロン",
-    description: "デジタルコンテンツ展示およびフリー閲覧スペースです。",
-    icon: "💻",
-  },
-  {
-    id: 205,
-    title: "図書館",
-    category: "校内施設・その他",
-    grade: "施設",
-    dept: "図書",
-    location: "総合メディアセンター 2階",
-    zoneId: "media_center",
-    floor: "2階",
-    roomNo: "図書館",
-    description: "図書閲覧・学習スペースです。",
-    icon: "📚",
   },
 
   // --- 学生昇降口・広場 (entrance) ---
@@ -1741,8 +1715,13 @@ export default function Page() {
             TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
-          <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans scale-110 sm:scale-125 my-2">
-            <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-md">
+          <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans my-2">
+            <div className="text-xl sm:text-2xl font-black text-slate-800 tracking-wider mb-1 flex items-center justify-center gap-1.5 drop-shadow-sm">
+              <span className="text-amber-500">🔍</span>
+              <span>名探偵nittc</span>
+            </div>
+
+            <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-md scale-110 sm:scale-125 my-2">
               <div className="text-5xl sm:text-7xl flex">
                 {titlePart1.map((char, index) => (
                   <span
@@ -3480,17 +3459,6 @@ export default function Page() {
                             <span className="text-blue-900 font-extrabold text-[10px]">ロボコン展示・体験</span>
                             <span className="text-[8px] text-blue-800 font-bold">(ロボット部)</span>
                           </button>
-                          <button
-                            onClick={() => {
-                              const stall = getRoomStall("デジタルサロン");
-                              if (stall) setModalItem(stall);
-                            }}
-                            className="w-full h-[76px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-purple-100 transition shadow-sm cursor-pointer hover:scale-105"
-                          >
-                            <span className="text-base mb-0.5">💻</span>
-                            <span className="text-xs font-black">デジタルサロン</span>
-                            <span className="text-purple-900 font-extrabold text-[10px]">展示・情報スペース</span>
-                          </button>
                         </div>
                         <div className="flex items-center gap-2 pt-1">
                           <StairsIcon />
@@ -3502,17 +3470,6 @@ export default function Page() {
                       <div className="pl-6 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">2階</div>
                         <div className="w-full space-y-2">
-                          <button
-                            onClick={() => {
-                              const stall = getRoomStall("図書館");
-                              if (stall) setModalItem(stall);
-                            }}
-                            className="w-full h-[76px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-purple-100 transition shadow-sm cursor-pointer hover:scale-105"
-                          >
-                            <span className="text-base mb-0.5">📚</span>
-                            <span className="text-xs font-black">図書館</span>
-                            <span className="text-purple-900 font-extrabold text-[10px]">図書閲覧・学習</span>
-                          </button>
                           <button
                             onClick={() => {
                               const stall = getRoomStall("マルチメディア") || getRoomStall("4B");
