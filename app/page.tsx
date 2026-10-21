@@ -27,7 +27,7 @@ import {
 
 // --- 統一マップ記号コンポーネント ---
 
-// トイレアイコン（男女共用）
+// トトイレアイコン（男女共用）
 const ToiletIcon = () => (
   <div className="bg-slate-50 border-2 border-slate-700 px-1 py-0.5 rounded-md flex items-center justify-center gap-1 shadow-sm w-[42px] h-[36px] select-none shrink-0">
     <svg className="w-3.5 h-4 fill-blue-600" viewBox="0 0 24 24">
@@ -546,6 +546,18 @@ const STALLS_DATA: StallItem[] = [
 
   // --- ステージ企画 ---
   {
+    id: 408,
+    title: "オープニング (10/23のみ)",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "吹奏楽部の演奏で高専祭の幕が上がる! OPムービーで何かが起きるかも!?",
+    icon: "🎉",
+    imageUrl: "/OP.png",
+  },
+  {
     id: 402,
     title: "2026 KOSEN 歌謡祭 秋",
     category: "実行委員会企画",
@@ -556,6 +568,18 @@ const STALLS_DATA: StallItem[] = [
     description: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
     icon: "🎤",
     imageUrl: "/歌謡祭.png",
+  },
+  {
+    id: 410,
+    title: "音部ライブ (10/23のみ ※10/24はプレハブにて実施)",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "音楽部",
+    location: "第一体育館 (10/23) / 音楽部プレハブ (10/24)",
+    zoneId: "gym1",
+    description: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください! ※10/23のみ第一体育館で実施（10/24はプレハブにて実施）。",
+    icon: "🎸",
+    imageUrl: "/音楽部.png",
   },
   {
     id: 403,
@@ -604,6 +628,18 @@ const STALLS_DATA: StallItem[] = [
     description: "高専祭の最後を締めくくるダンス企画! 音楽にのせて最高のパフォーマンスを!",
     icon: "💃",
     imageUrl: "/DoKa Project.png",
+  },
+  {
+    id: 409,
+    title: "エンディング (10/24のみ)",
+    category: "実行委員会企画",
+    grade: "企画",
+    dept: "実行委員会",
+    location: "第一体育館",
+    zoneId: "gym1",
+    description: "EDムービーでOPの謎が明らかに! 最高の文化祭を締めくくろう!",
+    icon: "🎆",
+    imageUrl: "/ED.png",
   },
 
   // --- 音楽部プレハブ (prefab) ---
@@ -1179,7 +1215,7 @@ const CAMPUS_ZONES = [
     icon: "🏟️",
     top: "62.0%",
     left: "63.0%",
-    desc: "第一体育館のステージ企画（オープニング【10/23のみ】・エンディング【10/24のみ】・音部ライブ【10/23のみ ※10/24はプレハブにて実施】・歌謡祭等）、および2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）の会場です。",
+    desc: "メインステージ企画および2年模擬店（餃子・ポップコーン・玉こん・焼き鳥）の会場です。",
   },
   {
     id: "bldg1",
