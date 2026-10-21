@@ -446,7 +446,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 310,
-    title: "ボードゲーム有志（ボードゲームブース）",
+    title: "ボードゲーム（有志）",
     category: "部活動企画",
     grade: "有志",
     dept: "有志",
@@ -779,10 +779,10 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 309,
-    title: "ロボット技術研究部（高専ロボコン展示＆体験）",
+    title: "ロボット展示・体験（ロボ研）",
     category: "部活動企画",
     grade: "部活",
-    dept: "ロボット技術研究部",
+    dept: "ロボ研",
     location: "総合メディアセンター 1階 多目的交流室",
     zoneId: "media_center",
     floor: "1階",
@@ -1646,6 +1646,15 @@ export default function Page() {
       });
     }
 
+    // 1号館の場合は美術写真部（id: 302）を天文部（id: 301）より前にソート
+    if (selectedZoneId === "bldg1") {
+      list = [...list].sort((a, b) => {
+        if (a.id === 302 && b.id === 301) return -1;
+        if (a.id === 301 && b.id === 302) return 1;
+        return 0;
+      });
+    }
+
     return list;
   }, [selectedZoneId]);
 
@@ -1662,9 +1671,9 @@ export default function Page() {
 
   const overlayScale = zoomLevel / 3.0;
 
-  const titlePart1 = ["熱", "狂", "の"];
-  const titlePart2 = ["カ", "ー", "ニ", "バ", "ル"];
-  const titlePart3 = ["高", "専", "祭"];
+  // タイトル文字用配列（アニメーション用）
+  const titlePartMain = ["熱", "狂", "の", "高", "専", "祭"];
+  const titlePartSub = ["カ", "ー", "ニ", "バ", "ル"];
 
   if (!isEntered) {
     return (
@@ -1715,49 +1724,43 @@ export default function Page() {
             TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
+          {/* 修正後のTOPタイトル表示エリア */}
           <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans my-2">
-            <div className="text-xl sm:text-2xl font-black text-slate-800 tracking-wider mb-1 flex items-center justify-center gap-1.5 drop-shadow-sm">
-              <span className="text-amber-500">🔍</span>
-              <span>名探偵nittc</span>
+            {/* 上段：「名探偵 nittc」 */}
+            <div className="flex items-baseline justify-center gap-1.5 mb-1">
+              <span className="text-2xl sm:text-3xl font-black italic text-blue-700 tracking-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]">
+                名探偵
+              </span>
+              <span className="text-5xl sm:text-6xl font-black italic text-cyan-400 tracking-tighter drop-shadow-[0_3px_0px_rgba(29,78,216,1)] ml-0.5">
+                nittc
+              </span>
             </div>
 
-            <div className="flex items-baseline justify-center text-[#E53935] drop-shadow-md scale-110 sm:scale-125 my-2">
-              <div className="text-5xl sm:text-7xl flex">
-                {titlePart1.map((char, index) => (
+            {/* 下段：「熱狂の高専祭」＋ 右下に「カーニバル」 */}
+            <div className="relative flex items-end justify-center text-[#E53935] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] my-1">
+              <div className="text-5xl sm:text-7xl font-black flex tracking-tight">
+                {titlePartMain.map((char, index) => (
                   <span
                     key={index}
                     className="animate-drop-char"
-                    style={{ animationDelay: `${index * 0.18}s` }}
+                    style={{ animationDelay: `${index * 0.15}s` }}
                   >
                     {char}
                   </span>
                 ))}
               </div>
 
-              <div className="relative inline-block ml-2">
-                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs sm:text-sm font-black text-rose-500 tracking-widest whitespace-nowrap flex">
-                  {titlePart2.map((char, index) => (
-                    <span
-                      key={index}
-                      className="animate-drop-char"
-                      style={{ animationDelay: `${0.6 + index * 0.15}s` }}
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </span>
-
-                <div className="text-6xl sm:text-8xl flex">
-                  {titlePart3.map((char, index) => (
-                    <span
-                      key={index}
-                      className="animate-drop-char"
-                      style={{ animationDelay: `${1.3 + index * 0.18}s` }}
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </div>
+              {/* 「祭」の右下に小さくカーニバル */}
+              <div className="absolute -bottom-3 -right-6 sm:-right-8 flex text-[10px] sm:text-xs font-black text-rose-600 tracking-widest whitespace-nowrap">
+                {titlePartSub.map((char, index) => (
+                  <span
+                    key={index}
+                    className="animate-drop-char"
+                    style={{ animationDelay: `${0.9 + index * 0.12}s` }}
+                  >
+                    {char}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -3017,22 +3020,24 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[320px] relative bg-white">
-                          <div className="absolute top-[18px] right-[24px] text-base font-black text-slate-900">
+                          {/* 4号館の表示位置を少し上にずらして重なりを解消 (-top-6) */}
+                          <div className="absolute -top-6 right-[24px] text-base font-black text-slate-900">
                             4号館
                           </div>
 
                           {/* 1. 上部横廊下（グレー） */}
                           <div className="absolute top-[50px] left-0 w-full h-8 bg-neutral-600">
+                            {/* かるた体験の大きさを111教室と同じ w-[62px] h-[88px] に修正 */}
                             <button
                               onClick={() => {
                                 const stall = getRoomStall("411") || getRoomStall("かるた");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="absolute -top-5 right-[30px] w-[95px] h-[80px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
+                              className="absolute -top-5 right-[30px] w-[62px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                             >
                               <span className="text-base leading-none mb-0.5">🥋</span>
-                              <span className="text-xs font-black leading-none">411</span>
-                              <span className="text-[10px] font-extrabold leading-tight">かるた体験</span>
+                              <span className="text-[11px] font-black leading-none">411</span>
+                              <span className="text-[10px] font-extrabold leading-tight line-clamp-1">かるた体験</span>
                               <span className="text-[8px] text-blue-800 font-bold leading-none mt-0.5">(有志)</span>
                             </button>
                           </div>
@@ -3080,7 +3085,7 @@ export default function Page() {
                             <ToiletIcon />
                           </div>
 
-                          {/* △右（階段の下）の「金券販売」と「学校紹介ブース」 */}
+                          {/* 右（階段の下）の「金券販売」と「学校紹介ブース」 */}
                           <div className="absolute top-[232px] left-[330px] flex flex-col gap-1 z-30">
                             <button
                               onClick={() => {
@@ -3188,12 +3193,13 @@ export default function Page() {
                             <span className="text-[10px] font-black text-white tracking-tight">7号館へ ↓</span>
                           </div>
 
+                          {/* 中会議室の大きさを小会議室と同じ w-[62px] h-[88px] に修正 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("中会議室") || getRoomStall("ボードゲーム");
                               if (stall) setModalItem(stall);
                             }}
-                            className="absolute top-[26px] right-0 w-[90px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
+                            className="absolute top-[26px] right-0 w-[62px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                           >
                             <span className="text-base mb-0.5">🎲</span>
                             <span className="text-[11px] font-black">中会議室</span>
@@ -3456,8 +3462,8 @@ export default function Page() {
                           >
                             <span className="text-base mb-0.5">🤖</span>
                             <span className="text-xs font-black">多目的交流室</span>
-                            <span className="text-blue-900 font-extrabold text-[10px]">ロボコン展示・体験</span>
-                            <span className="text-[8px] text-blue-800 font-bold">(ロボット部)</span>
+                            <span className="text-blue-900 font-extrabold text-[10px]">ロボット展示・体験</span>
+                            <span className="text-[8px] text-blue-800 font-bold">(ロボ研)</span>
                           </button>
                         </div>
                         <div className="flex items-center gap-2 pt-1">
