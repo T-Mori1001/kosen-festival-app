@@ -396,7 +396,7 @@ const STALLS_DATA: StallItem[] = [
     title: "喫茶店 (3B)",
     category: "クラス企画",
     grade: "3B",
-    dept: "3年 生物・化学コース (3B)",
+    dept: "3年 化学・生物コース (3B)",
     location: "1号館 3階 132教室",
     zoneId: "bldg1",
     floor: "3階",
@@ -531,7 +531,7 @@ const STALLS_DATA: StallItem[] = [
     title: "焼き鳥 (2B)",
     category: "模擬店",
     grade: "2B",
-    dept: "2年 生物・化学コース (2B)",
+    dept: "2年 化学・生物コース (2B)",
     location: "第一体育館",
     zoneId: "gym1",
     price: "200円",
@@ -635,11 +635,11 @@ const STALLS_DATA: StallItem[] = [
     floor: "1階",
     roomNo: "711",
     price: "100円",
-    description: "その教室に入ってはいけなかった。呪われた教室。教室から、逃げられるか。3M教室で恐怖の扉を、開け。（100円）",
+    description: "あなたの知らない本当の恐怖を、この夏、体験してみませんか？",
     icon: "👻",
     imageUrl: "/3M.png",
     bannerTitle: "呪われた教室 お化け屋敷 (3M)",
-    bannerSub: "単価 100円！その教室に入ってはいけなかった。恐怖の扉を開け。",
+    bannerSub: "単価 100円！あなたの知らない本当の恐怖を、この夏、体験してみませんか？",
     bannerColor: "from-purple-900 via-slate-900 to-red-950",
   },
   {
@@ -647,7 +647,7 @@ const STALLS_DATA: StallItem[] = [
     title: "5B（研究発表ポスター展示）",
     category: "部活動企画",
     grade: "5B",
-    dept: "5年 生物・化学コース",
+    dept: "5年 化学・生物コース",
     location: "7号館 2階 721教室",
     zoneId: "bldg7",
     floor: "2階",
@@ -719,7 +719,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg8",
     floor: "2階",
     roomNo: "大講義室",
-    description: "吹奏楽部によるオープニング演奏（感電等）＆ミニコンサート（嵐メドレー等）！素敵な演奏をお楽しみください！（10時〜11時）",
+    description: "吹奏楽部によるオープニング演奏（感電等）＆ミニコンサート（嵐メドレー等）！素敵な演奏をお楽しみください！（10/24(土) 10時〜11時）",
     icon: "🎷",
     imageUrl: "/吹奏楽部.png",
     bannerTitle: "吹奏楽部 ミニコンサート",
@@ -736,7 +736,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg8",
     floor: "2階",
     roomNo: "大講義室",
-    description: "中学生・保護者の皆様に向けた学校説明会（10/24 13時受付開始、13時30分〜15時）。高専生活や入試など何でもご相談ください。",
+    description: "中学生・保護者の皆様に向けた学校説明会（10/24(土) 13時受付開始、13時30分〜15時）。高専生活や入試など何でもご相談ください。",
     icon: "🏫",
   },
 
@@ -764,7 +764,7 @@ const STALLS_DATA: StallItem[] = [
     title: "格付けチェック (4B)",
     category: "クラス企画",
     grade: "4B",
-    dept: "4年 生物・化学コース (4B)",
+    dept: "4年 化学・生物コース (4B)",
     location: "総合メディアセンター 2階 マルチメディア教室",
     zoneId: "media_center",
     floor: "2階",
@@ -834,7 +834,7 @@ const STALLS_DATA: StallItem[] = [
     description: "ゆめかわで世界一可愛い♡ユニコーンベビーカステラ「coco Claire」登場！山形県産つや姫米粉使用で冷めても“ふわっふわ＆もちもち”！",
     icon: "🧁",
     instagram: "https://www.instagram.com/gion_hannari_cafe/",
-    menu: ["ユニコーンベビーカステラ", "本わらび餅"],
+    menu: ["ユニコーンベビーカステラ"],
   },
   {
     id: 103,
@@ -844,7 +844,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "キッチンカー",
     location: "学生昇降口前ロータリー",
     zoneId: "entrance",
-    description: "「腸活」テーマのヘルシーメニュー！白砂糖・無添加濃厚スムージー、大豆ミート本格ガパオライス、罪悪感なし人気スイーツ！",
+    description: "「腸活」テーマのヘルシーメニュー！着色料・保存料無添加濃厚スムージー、大豆ミート本格ガパオライス、罪悪感なし人気スイーツ！",
     icon: "🥤",
     instagram: "https://www.instagram.com/felicitaplus.sakata/",
     menu: ["濃厚スムージー", "ガパオライス", "スイーツ"],
@@ -868,7 +868,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "学内購買",
     location: "総合メディアセンター 西側隣接",
     zoneId: "yamazaki",
-    description: "パン、お菓子、飲料、文房具などを販売している校内売店です。",
+    description: "パン、お菓子、飲料、文房具などを販売している校内売店です。（営業時間: 10:00〜15:00）",
     icon: "🏪",
   },
   {
@@ -1151,13 +1151,13 @@ const CAMPUS_ZONES = [
   {
     id: "yamazaki",
     name: "ヤマザキショップ 鶴岡高専店",
-    subName: "学内売店",
+    subName: "学内売店 (10:00〜15:00)",
     pinLabel: "ヤマザキショップ 鶴岡高専店",
     lightBg: "bg-orange-50 border-orange-300 text-orange-900",
     icon: "🏪",
     top: "45.0%",
     left: "44.6%",
-    desc: "総合メディアセンター西側に隣接する学内売店です。",
+    desc: "総合メディアセンター西側に隣接する学内売店です。（営業時間: 10:00〜15:00）",
   },
   {
     id: "media_center",
@@ -1179,7 +1179,7 @@ const CAMPUS_ZONES = [
     icon: "🏟️",
     top: "62.0%",
     left: "63.0%",
-    desc: "第一体育館（ステージ企画・歌謡祭・2年模擬店（餃子・ポップコーン・玉こん・焼き鳥））の会場です。",
+    desc: "第一体育館（オープニング・エンディング・歌謡祭・音部ライブ等のステージ企画、2年模擬店（餃子・ポップコーン・玉こん・焼き鳥））の会場です。",
   },
   {
     id: "bldg1",
@@ -1223,18 +1223,18 @@ const CAMPUS_ZONES = [
     icon: "👻",
     top: "40.6%",
     left: "83.6%",
-    desc: "1階: 3Mお化け屋敷、2階: 4Eキッキングスナイパー & 5B研究発表、3階: AMデザイン部 & E.S.S.を開催！",
+    desc: "1階: 3Mお化け屋敷、2階: 4Eキッキングスナイパー & 5B研究発表、3階: AMデザイン部 & E.S.S.展示",
   },
   {
     id: "bldg8",
     name: "8号館（大講義室）",
-    subName: "ミニコンサート・学校説明会",
+    subName: "ミニコンサート・学校説明会 (10/24のみ)",
     pinLabel: "8号館",
     lightBg: "bg-emerald-50 border-emerald-300 text-emerald-900",
     icon: "🎷",
     top: "21.5%",
     left: "91.5%",
-    desc: "2階の大講義室にて吹奏楽部ミニコンサート（10時〜11時）および学校説明会（13時受付開始、13時30分〜15時）を開催！",
+    desc: "【10/24(土)のみ開催】2階の大講義室にて吹奏楽部ミニコンサート（10時〜11時）および学校説明会（13時受付開始、13時30分〜15時）を開催！",
   },
   {
     id: "entrance",
@@ -3422,9 +3422,9 @@ export default function Page() {
                           className="w-full h-28 sm:h-32 border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-2 flex flex-col items-center justify-center font-black text-xs sm:text-sm text-center leading-snug hover:bg-blue-100 transition shadow-sm mb-0 z-10 cursor-pointer"
                         >
                           <span className="text-blue-900 font-black">吹奏楽部演奏会</span>
-                          <span className="text-slate-500 text-[10px]">(10時〜11時)</span>
+                          <span className="text-slate-500 text-[10px]">(10/24 10時〜11時)</span>
                           <span className="text-purple-900 font-black mt-1">学校説明会</span>
-                          <span className="text-slate-500 text-[10px]">(13時受付 / 13:30〜15:00)</span>
+                          <span className="text-slate-500 text-[10px]">(10/24 13時受付 / 13:30〜15:00)</span>
                         </button>
 
                         <div className="relative w-10 bg-neutral-600 h-40 flex flex-col items-center justify-end pb-2">
@@ -3453,6 +3453,7 @@ export default function Page() {
                         >
                           <span>中学生向け</span>
                           <span>学校説明会</span>
+                          <span className="text-slate-500 text-[10px]">(10/24のみ)</span>
                         </button>
 
                         <div className="relative w-10 bg-neutral-600 h-40">
