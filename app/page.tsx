@@ -27,7 +27,7 @@ import {
 
 // --- 統一マップ記号コンポーネント ---
 
-// トトイレアイコン（男女共用）
+// トイレアイコン（男女共用）
 const ToiletIcon = () => (
   <div className="bg-slate-50 border-2 border-slate-700 px-1 py-0.5 rounded-md flex items-center justify-center gap-1 shadow-sm w-[42px] h-[36px] select-none shrink-0">
     <svg className="w-3.5 h-4 fill-blue-600" viewBox="0 0 24 24">
@@ -547,13 +547,13 @@ const STALLS_DATA: StallItem[] = [
   // --- ステージ企画 ---
   {
     id: 408,
-    title: "オープニング (10/23のみ)",
+    title: "オープニング",
     category: "実行委員会企画",
     grade: "企画",
     dept: "実行委員会",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "吹奏楽部の演奏で高専祭の幕が上がる! OPムービーで何かが起きるかも!?",
+    description: "吹奏楽部の演奏で高専祭の幕が上がる! OPムービーで何かが起きるかも!? (※10/23[金]のみ開催)",
     icon: "🎉",
     imageUrl: "/OP.png",
   },
@@ -571,7 +571,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 410,
-    title: "音部ライブ (10/23のみ ※10/24はプレハブにて実施)",
+    title: "音部ライブ",
     category: "部活動企画",
     grade: "部活",
     dept: "音楽部",
@@ -631,13 +631,13 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 409,
-    title: "エンディング (10/24のみ)",
+    title: "エンディング",
     category: "実行委員会企画",
     grade: "企画",
     dept: "実行委員会",
     location: "第一体育館",
     zoneId: "gym1",
-    description: "EDムービーでOPの謎が明らかに! 最高の文化祭を締めくくろう!",
+    description: "EDムービーでOPの謎が明らかに! 最高の文化祭を締めくくろう! (※10/24[土]のみ開催)",
     icon: "🎆",
     imageUrl: "/ED.png",
   },
