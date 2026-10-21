@@ -194,7 +194,7 @@ interface EventDayData {
 
 // 全出店・企画・施設データ
 const STALLS_DATA: StallItem[] = [
-  // --- 1号館 (bldg1) 1階 本部・施設（一番上へ配置） ---
+  // --- 1号館 (bldg1) 1階 本部・施設 ---
   {
     id: 504,
     title: "本部",
@@ -233,19 +233,6 @@ const STALLS_DATA: StallItem[] = [
     floor: "1階",
     roomNo: "交流ラウンジ",
     description: "在校生に学校生活やキャンパスライフについて直接話を聞ける学校紹介ブースです！リアルな高専生活の雰囲気や入試・授業の疑問を先輩に質問してみよう！",
-    icon: "🏫",
-  },
-  {
-    id: 502,
-    title: "交流ラウンジ",
-    category: "校内施設・その他",
-    grade: "本部",
-    dept: "実行委員会",
-    location: "1号館 1階 交流ラウンジ",
-    zoneId: "ticket",
-    floor: "1階",
-    roomNo: "交流ラウンジ",
-    description: "高専祭実行委員会本部・案内所、金券販売および学校紹介ブースを実施している交流スペースです。",
     icon: "🏫",
   },
 
@@ -395,13 +382,13 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg1",
     floor: "3階",
     roomNo: "131教室",
-    price: "200円",
-    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンクでリフレッシュ！（200円）",
+    price: "100円",
+    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンクでリフレッシュ！（100円）",
     icon: "🎮",
     imageUrl: "/3E.png",
-    menu: ["ジュース各種 (200円)"],
+    menu: ["ジュース各種 (100円)"],
     bannerTitle: "3E ゲームカフェ",
-    bannerSub: "単価 200円！ゲームカフェへようこそ！",
+    bannerSub: "単価 100円！ゲームカフェへようこそ！",
     bannerColor: "from-cyan-500 to-blue-600",
   },
   {
@@ -636,7 +623,7 @@ const STALLS_DATA: StallItem[] = [
     bannerColor: "from-red-600 via-purple-700 to-slate-900",
   },
 
-  // --- 7号館 (bldg7) （1階→2階→3階の階層順に並び替え） ---
+  // --- 7号館 (bldg7) ---
   {
     id: 9,
     title: "お化け屋敷 (3M)",
@@ -1312,6 +1299,12 @@ const TECH_FLOATING_ITEMS = [
   { icon: "🤖", top: "84%", left: "18%", size: "text-3xl", delay: "1.6s", duration: "10.5s" },
 ];
 
+// 学年番号（1〜5）を抽出するヘルパー関数
+const getGradeNumber = (gradeStr: string) => {
+  const match = gradeStr.match(/([1-5])/);
+  return match ? parseInt(match[1], 10) : 99;
+};
+
 export default function Page() {
   const [isEntered, setIsEntered] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "stalls" | "events" | "other">("map");
@@ -1619,7 +1612,7 @@ export default function Page() {
   const primaryLiveEvent = liveEvents[0] || null;
 
   const filteredStalls = useMemo(() => {
-    return STALLS_DATA.filter((stall) => {
+    const stalls = STALLS_DATA.filter((stall) => {
       const matchesSearch =
         stall.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         stall.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -1631,6 +1624,38 @@ export default function Page() {
 
       return matchesSearch && matchesCategory;
     });
+
+    // 「すべて」選択時は、学年ごとに模擬店とクラス企画を最優先（1年〜5年順）
+    if (selectedCategory === "すべて") {
+      return [...stalls].sort((a, b) => {
+        const isClassOrStallA = a.category === "模擬店" || a.category === "クラス企画";
+        const isClassOrStallB = b.category === "模擬店" || b.category === "クラス企画";
+
+        if (isClassOrStallA && !isClassOrStallB) return -1;
+        if (!isClassOrStallA && isClassOrStallB) return 1;
+
+        if (isClassOrStallA && isClassOrStallB) {
+          const gradeA = getGradeNumber(a.grade);
+          const gradeB = getGradeNumber(b.grade);
+          if (gradeA !== gradeB) return gradeA - gradeB;
+          return a.id - b.id;
+        }
+
+        const catOrder: Record<string, number> = {
+          "部活動企画": 1,
+          "実行委員会企画": 2,
+          "キッチンカー": 3,
+          "校内施設・その他": 4,
+        };
+        const orderA = catOrder[a.category] || 99;
+        const orderB = catOrder[b.category] || 99;
+        if (orderA !== orderB) return orderA - orderB;
+
+        return a.id - b.id;
+      });
+    }
+
+    return stalls;
   }, [searchQuery, selectedCategory]);
 
   const zoneStalls = useMemo(() => {
@@ -3024,16 +3049,16 @@ export default function Page() {
                                 const stall = getRoomStall("411") || getRoomStall("かるた");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="absolute -top-3 right-[30px] w-[95px] h-[70px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
+                              className="absolute -top-5 right-[30px] w-[95px] h-[80px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                             >
-                              <span className="text-base">🥋</span>
-                              <span className="text-xs font-black">411</span>
-                              <span className="text-[10px] font-extrabold line-clamp-1">かるた体験</span>
-                              <span className="text-[8px] text-blue-800 font-bold">(有志)</span>
+                              <span className="text-base leading-none mb-0.5">🥋</span>
+                              <span className="text-xs font-black leading-none">411</span>
+                              <span className="text-[10px] font-extrabold leading-tight">かるた体験</span>
+                              <span className="text-[8px] text-blue-800 font-bold leading-none mt-0.5">(有志)</span>
                             </button>
                           </div>
 
-                          {/* 2. 中央縦廊下（2階・3階に完全に合わせた幅w-[50px]・left-[268px]） */}
+                          {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[82px] left-[268px] w-[50px] h-[72px] bg-neutral-600" />
 
                           {/* 3. 下部横廊下 */}
@@ -3064,7 +3089,7 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 4. 入口縦廊下（上の中央縦廊下と同一直線上に完全整列: left-[268px] w-[50px]） */}
+                          {/* 4. 入口縦廊下 */}
                           <div className="absolute top-[186px] left-[268px] w-[50px] h-[72px] bg-neutral-600 z-10" />
                           <div className="absolute top-[262px] left-[293px] -translate-x-1/2">
                             <RedTriangle />
@@ -3229,7 +3254,6 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 大会議室：2階合同講義室と完全に同じサイズ・位置（w-[80px] h-[76px], top-[184px] left-[253px]）に更新 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("大会議室");
