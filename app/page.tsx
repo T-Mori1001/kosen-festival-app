@@ -546,6 +546,18 @@ const STALLS_DATA: StallItem[] = [
 
   // --- ステージ企画 ---
   {
+    id: 410,
+    title: "音部ライブ",
+    category: "部活動企画",
+    grade: "部活",
+    dept: "音楽部",
+    location: "第一体育館 (10/23) / 音楽部プレハブ (10/24)",
+    zoneId: "gym1",
+    description: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください! ※10/23のみ第一体育館で実施（10/24はプレハブにて実施）。",
+    icon: "🎸",
+    imageUrl: "/音楽部.png",
+  },
+  {
     id: 408,
     title: "オープニング",
     category: "実行委員会企画",
@@ -568,18 +580,6 @@ const STALLS_DATA: StallItem[] = [
     description: "青春の1ページに、忘れられない思い出を。心を込めた歌声で、最高の瞬間を刻もう!",
     icon: "🎤",
     imageUrl: "/歌謡祭.png",
-  },
-  {
-    id: 410,
-    title: "音部ライブ",
-    category: "部活動企画",
-    grade: "部活",
-    dept: "音楽部",
-    location: "第一体育館 (10/23) / 音楽部プレハブ (10/24)",
-    zoneId: "gym1",
-    description: "色が重なれば、楽しさも広がる。軽音部ならではの生演奏をお楽しみください! ※10/23のみ第一体育館で実施（10/24はプレハブにて実施）。",
-    icon: "🎸",
-    imageUrl: "/音楽部.png",
   },
   {
     id: 403,
