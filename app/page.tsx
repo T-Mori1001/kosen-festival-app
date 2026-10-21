@@ -292,23 +292,23 @@ const STALLS_DATA: StallItem[] = [
     bannerColor: "from-amber-400 to-yellow-500",
   },
   {
-    id: 10,
-    title: "ゲームカフェ",
+    id: 15,
+    title: "カジノ (CASINO)",
     category: "クラス企画",
-    grade: "3E",
-    dept: "3年 電気・電子コース (3E)",
+    grade: "4I",
+    dept: "4年 情報コース (4I)",
     location: "1号館 2階 123教室",
     zoneId: "bldg1",
     floor: "2階",
     roomNo: "123教室",
-    price: "200円",
-    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンクでリフレッシュ！（200円）",
-    icon: "🎮",
-    imageUrl: "/3E.png",
-    menu: ["ジュース各種 (200円)"],
-    bannerTitle: "3E ゲームカフェ",
-    bannerSub: "単価 200円！ゲームカフェへようこそ！",
-    bannerColor: "from-cyan-500 to-blue-600",
+    price: "100円",
+    description: "4I特製カジノ！トランプ、UNO、ダーツ、人狼など本格的なゲームでスリリングな心理戦を楽しもう！（100円）",
+    icon: "🎲",
+    imageUrl: "/4I.png",
+    menu: ["トランプ", "UNO", "ダーツ", "人狼ゲーム"],
+    bannerTitle: "4I CASINO",
+    bannerSub: "単価 100円！TRUMP / UNO / DARTS / WERE WOLF",
+    bannerColor: "from-red-700 to-slate-900",
   },
   {
     id: 302,
@@ -330,23 +330,23 @@ const STALLS_DATA: StallItem[] = [
 
   // --- 1号館 (bldg1) 3階 ---
   {
-    id: 15,
-    title: "カジノ (CASINO)",
+    id: 10,
+    title: "ゲームカフェ",
     category: "クラス企画",
-    grade: "4I",
-    dept: "4年 情報コース (4I)",
+    grade: "3E",
+    dept: "3年 電気・電子コース (3E)",
     location: "1号館 3階 131教室",
     zoneId: "bldg1",
     floor: "3階",
     roomNo: "131教室",
-    price: "100円",
-    description: "4I特製カジノ！トランプ、UNO、ダーツ、人狼など本格的なゲームでスリリングな心理戦を楽しもう！（100円）",
-    icon: "🎲",
-    imageUrl: "/4I.png",
-    menu: ["トランプ", "UNO", "ダーツ", "人狼ゲーム"],
-    bannerTitle: "4I CASINO",
-    bannerSub: "単価 100円！TRUMP / UNO / DARTS / WERE WOLF",
-    bannerColor: "from-red-700 to-slate-900",
+    price: "200円",
+    description: "ゲームカフェへようこそ！対戦ゲームを楽しみながら冷たいドリンクでリフレッシュ！（200円）",
+    icon: "🎮",
+    imageUrl: "/3E.png",
+    menu: ["ジュース各種 (200円)"],
+    bannerTitle: "3E ゲームカフェ",
+    bannerSub: "単価 200円！ゲームカフェへようこそ！",
+    bannerColor: "from-cyan-500 to-blue-600",
   },
   {
     id: 12,
@@ -426,8 +426,10 @@ const STALLS_DATA: StallItem[] = [
     category: "実行委員会企画",
     grade: "企画",
     dept: "実行委員会",
-    location: "1号館 合同講義室",
+    location: "1号館 2階 合同講義室",
     zoneId: "bldg1",
+    floor: "2階",
+    roomNo: "合同講義室",
     description: "大画面での白熱ゲームトーナメント＆対戦アトラクション！（※10/23(金)開催）",
     icon: "🎮",
   },
@@ -1160,14 +1162,14 @@ const CAMPUS_ZONES = [
   },
   {
     id: "bldg1",
-    name: "1号館・合同講義室",
+    name: "1号館",
     subName: "一般教室棟・文化部展示",
     pinLabel: "1号館",
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "30.4%",
     left: "69.8%",
-    desc: "1階〜3階のクラス企画・模擬店をはじめ、合同講義室でのゲーム企画/休憩室、13Fゼミ室（天文部）、12Fゼミ室（美術写真部）、中会議室（ボードゲーム有志）が実施されています。",
+    desc: "1階〜3階のクラス企画・模擬店をはじめ、2階合同講義室でのゲーム企画/休憩室、13Fゼミ室（天文部）、12Fゼミ室（美術写真部）、中会議室（ボードゲーム有志）が実施されています。",
   },
   {
     id: "bldg4",
@@ -2909,7 +2911,7 @@ export default function Page() {
 
             {/* フロアレイアウトコンテンツ */}
             <div className="p-4 space-y-3 overflow-y-auto bg-slate-100/60 custom-map-scrollbar">
-              {/* ==================== ① 1号館 (重なり修正＆各教室位置を左方向に微調整) ==================== */}
+              {/* ==================== ① 1号館 ==================== */}
               {detailMapBuilding === "bldg1" && (
                 <div className="space-y-3">
                   {/* --- 1号館 1階 --- */}
@@ -2945,13 +2947,13 @@ export default function Page() {
                             </button>
                           </div>
 
-                          {/* 2. 中央縦廊下（左に移動: left-[288px] -> left-[268px]） */}
+                          {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[82px] left-[268px] w-8 h-[72px] bg-neutral-600" />
 
                           {/* 3. 下部横廊下 */}
                           <div className="absolute top-[154px] left-0 w-full h-8 bg-neutral-600" />
 
-                          {/* 部屋 113, 112, 111（左方向へ移動: left-[15px] -> left-[2px]） */}
+                          {/* 部屋 113, 112, 111 */}
                           <div className="absolute top-[190px] left-[2px] flex gap-2.5 z-30">
                             {[
                               { id: "113", room: "113", title: "ホスト", grade: "4M", icon: "🌹" },
@@ -2976,13 +2978,13 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 4. 入口縦廊下（左に移動: left-[274px] -> left-[254px]） */}
+                          {/* 4. 入口縦廊下 */}
                           <div className="absolute top-[186px] left-[254px] w-[60px] h-[52px] bg-neutral-600 z-10" />
                           <div className="absolute top-[242px] left-[284px] -translate-x-1/2">
                             <RedTriangle />
                           </div>
 
-                          {/* 階段・トイレ（左に移動: left-[360px] -> left-[330px]） */}
+                          {/* 階段・トイレ */}
                           <div className="absolute top-[190px] left-[330px] flex items-center gap-2.5 z-30">
                             <StairsIcon />
                             <ToiletIcon />
@@ -3004,13 +3006,13 @@ export default function Page() {
                           {/* 1. 上部横廊下 */}
                           <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600" />
 
-                          {/* 2. 中央縦廊下（左に移動: left-[290px] -> left-[268px]） */}
+                          {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
 
-                          {/* 部屋 123, 12Fゼミ室, 122, 121（左方向へ移動: left-[10px] -> left-[2px]） */}
+                          {/* 部屋 123(4Iカジノ), 12Fゼミ室, 122, 121 */}
                           <div className="absolute top-[90px] left-[2px] flex gap-2 z-30">
                             {[
-                              { id: "123", room: "123", title: "ゲームカフェ", grade: "3E", icon: "🎮", type: "class" },
+                              { id: "123", room: "123", title: "カジノ", grade: "4I", icon: "🎲", type: "class" },
                               { id: "12Fゼミ室", room: "12Fゼミ", title: "美術写真", grade: "部活", icon: "🖼️", type: "club" },
                               { id: "122", room: "122", title: "クレープ", grade: "1-4", icon: "🥞", type: "class" },
                               { id: "121", room: "121", title: "わたあめ", grade: "1-3", icon: "🍥", type: "class" },
@@ -3038,7 +3040,7 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 合同講義室（左に移動: left-[280px] -> left-[258px]） */}
+                          {/* 合同講義室（今日、ゲームになりました。） */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("合同講義室");
@@ -3048,10 +3050,10 @@ export default function Page() {
                           >
                             <span className="text-base mb-0.5">🎮</span>
                             <span className="text-xs font-black">合同講義室</span>
-                            <span className="text-[10px] text-purple-800 font-extrabold">ゲーム企画</span>
+                            <span className="text-[9px] text-purple-800 font-extrabold line-clamp-1">今日、ゲームに…</span>
                           </button>
 
-                          {/* 階段・トイレ（左に移動: left-[380px] -> left-[340px]） */}
+                          {/* 階段・トイレ */}
                           <div className="absolute top-[90px] left-[340px] flex items-center gap-2.5 z-30">
                             <StairsIcon />
                             <ToiletIcon />
@@ -3073,16 +3075,16 @@ export default function Page() {
                           {/* 1. 上部横廊下 */}
                           <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600" />
 
-                          {/* 2. 中央縦廊下（左に移動: left-[290px] -> left-[268px]） */}
+                          {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
 
-                          {/* 部屋 13Fゼミ室, 133, 132, 131（左方向へ移動: left-[10px] -> left-[2px]） */}
+                          {/* 部屋 13Fゼミ室, 133, 132, 131(3Eゲームカフェ) */}
                           <div className="absolute top-[90px] left-[2px] flex gap-2 z-30">
                             {[
                               { id: "13Fゼミ室", room: "13Fゼミ", title: "プラネタリウム", grade: "天文", icon: "🌌", type: "club" },
                               { id: "133", room: "133", title: "バー", grade: "3I", icon: "🍸", type: "class" },
                               { id: "132", room: "132", title: "喫茶店", grade: "3B", icon: "☕", type: "class" },
-                              { id: "131", room: "131", title: "カジノ", grade: "4I", icon: "🎲", type: "class" },
+                              { id: "131", room: "131", title: "ゲームカフェ", grade: "3E", icon: "🎮", type: "class" },
                             ].map((r) => {
                               const stall = getRoomStall(r.id);
                               const isClub = r.type === "club";
@@ -3107,7 +3109,7 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 大会議室（左に移動: left-[280px] -> left-[258px]） */}
+                          {/* 大会議室 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("大会議室");
