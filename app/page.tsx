@@ -1168,7 +1168,7 @@ const CAMPUS_ZONES = [
     icon: "📚",
     top: "48.0%",
     left: "52.2%",
-    desc: "4B格付けチェック（2階マルチメディア教室）およびロボット技術研究部（1階多目的交流室）を開催！",
+    desc: "4B格付けチェック（2階マルチメディア教室）およびロボット展示・操作体験（1階多目的交流室）を開催！",
   },
   {
     id: "gym1",
@@ -1184,7 +1184,7 @@ const CAMPUS_ZONES = [
   {
     id: "bldg1",
     name: "1号館",
-    subName: "一般教室棟・文化部展示・本部",
+    subName: "クラス企画・模擬店がいっぱい！部活動展示も！",
     pinLabel: "1号館",
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
@@ -1217,7 +1217,7 @@ const CAMPUS_ZONES = [
   {
     id: "bldg7",
     name: "7号館",
-    subName: "アトラクション・展示棟",
+    subName: "",
     pinLabel: "7号館",
     lightBg: "bg-purple-50 border-purple-300 text-purple-900",
     icon: "👻",
@@ -1723,7 +1723,7 @@ export default function Page() {
             TSURUOKA KOSEN FESTIVAL 2026
           </div>
 
-          {/* 修正後のTOPタイトル表示エリア */}
+          {/* TOPタイトル表示エリア */}
           <div className="flex flex-col items-center justify-center font-black tracking-tight font-sans my-2">
             {/* 上段：「名探偵 nittc」 */}
             <div className="flex items-baseline justify-center gap-1.5 mb-1">
@@ -2272,7 +2272,9 @@ export default function Page() {
                     <span className="text-3xl p-2 bg-white/80 rounded-2xl shadow-sm">{currentZone.icon}</span>
                     <div>
                       <h3 className="text-xl font-black text-slate-900">{currentZone.name}</h3>
-                      <p className="text-xs font-bold opacity-80">{currentZone.subName}</p>
+                      {currentZone.subName && (
+                        <p className="text-xs font-bold opacity-80">{currentZone.subName}</p>
+                      )}
                     </div>
                   </div>
                   <span className="text-xs font-black px-3 py-1 bg-white/90 rounded-full shadow-sm">
