@@ -194,7 +194,62 @@ interface EventDayData {
 
 // 全出店・企画・施設データ
 const STALLS_DATA: StallItem[] = [
-  // --- 1号館 (bldg1) 1階 ---
+  // --- 1号館 (bldg1) 1階 本部・施設（一番上へ配置） ---
+  {
+    id: 504,
+    title: "本部",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "実行委員会",
+    location: "1号館 1階 本部",
+    zoneId: "bldg1",
+    floor: "1階",
+    roomNo: "本部",
+    description: "高専祭実行委員会本部です。落とし物やご案内はこちらまでお越しください。",
+    icon: "🏫",
+  },
+  {
+    id: 501,
+    title: "金券販売",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "実行委員会",
+    location: "1号館 1階 交流ラウンジ",
+    zoneId: "ticket",
+    floor: "1階",
+    roomNo: "金券販売",
+    description: "模擬店等で使用できる100円金券の販売を行っています（1回上限3000円分）。払い戻しは10/24 15:00まで！",
+    icon: "🎟️",
+    imageUrl: "/金券.png",
+  },
+  {
+    id: 505,
+    title: "学校紹介ブース",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "広報・実行委員会",
+    location: "1号館 1階 交流ラウンジ",
+    zoneId: "ticket",
+    floor: "1階",
+    roomNo: "交流ラウンジ",
+    description: "在校生に学校生活やキャンパスライフについて直接話を聞ける学校紹介ブースです！リアルな高専生活の雰囲気や入試・授業の疑問を先輩に質問してみよう！",
+    icon: "🏫",
+  },
+  {
+    id: 502,
+    title: "交流ラウンジ",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "実行委員会",
+    location: "1号館 1階 交流ラウンジ",
+    zoneId: "ticket",
+    floor: "1階",
+    roomNo: "交流ラウンジ",
+    description: "高専祭実行委員会本部・案内所、金券販売および学校紹介ブースを実施している交流スペースです。",
+    icon: "🏫",
+  },
+
+  // --- 1号館 (bldg1) 1階 クラス企画 ---
   {
     id: 1,
     title: "ほっとサンド",
@@ -404,10 +459,10 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 310,
-    title: "ボードゲームブース（ボードゲームサークル有志）",
+    title: "ボードゲームブース",
     category: "部活動企画",
     grade: "有志",
-    dept: "ボードゲームサークル有志",
+    dept: "有志",
     location: "1号館 3階 中会議室",
     zoneId: "bldg1",
     floor: "3階",
@@ -415,9 +470,6 @@ const STALLS_DATA: StallItem[] = [
     description: "個人から提供のボードゲームをはじめ、トランプ・将棋・チンチロ・なんじゃもんじゃ・ダーツ等を多数用意！休憩がてら気軽に遊びに来てください！",
     icon: "🎲",
     menu: ["ボードゲーム", "トランプ", "将棋", "チンチロ", "なんじゃもんじゃ", "ダーツ"],
-    bannerTitle: "ボードゲームブース",
-    bannerSub: "休憩がてらにボードゲームはどうですか?",
-    bannerColor: "from-indigo-600 to-blue-800",
   },
 
   // --- 合同講義室（1号館内） ---
@@ -584,15 +636,16 @@ const STALLS_DATA: StallItem[] = [
     bannerColor: "from-red-600 via-purple-700 to-slate-900",
   },
 
-  // --- 7号館 (bldg7) ---
+  // --- 7号館 (bldg7) （1階→2階→3階の階層順に並び替え） ---
   {
     id: 9,
     title: "お化け屋敷 (3M)",
     category: "クラス企画",
     grade: "3M",
     dept: "3年 機械コース (3M)",
-    location: "7号館 (711・712教室)",
+    location: "7号館 1階 (711・712教室)",
     zoneId: "bldg7",
+    floor: "1階",
     roomNo: "711",
     price: "100円",
     description: "その教室に入ってはいけなかった。呪われた教室。教室から、逃げられるか。3M教室で恐怖の扉を、開け。（100円）",
@@ -603,13 +656,27 @@ const STALLS_DATA: StallItem[] = [
     bannerColor: "from-purple-900 via-slate-900 to-red-950",
   },
   {
+    id: 305,
+    title: "5B 研究発表（ポスター）",
+    category: "部活動企画",
+    grade: "5B",
+    dept: "5年 生物・化学コース",
+    location: "7号館 2階 721教室",
+    zoneId: "bldg7",
+    floor: "2階",
+    roomNo: "721教室",
+    description: "5Bによる先進的な研究成果のポスター発表展示。",
+    icon: "🔬",
+  },
+  {
     id: 14,
     title: "キッキングスナイパー (4E)",
     category: "クラス企画",
     grade: "4E",
     dept: "4年 電気・電子コース (4E)",
-    location: "7号館 722教室",
+    location: "7号館 2階 722教室",
     zoneId: "bldg7",
+    floor: "2階",
     roomNo: "722",
     price: "100円",
     description: "4E動くターゲットを狙って力強くシュート！高得点を狙って豪華景品をゲット！（100円）",
@@ -625,8 +692,9 @@ const STALLS_DATA: StallItem[] = [
     category: "部活動企画",
     grade: "部活",
     dept: "AMデザイン部",
-    location: "7号館 731教室",
+    location: "7号館 3階 731教室",
     zoneId: "bldg7",
+    floor: "3階",
     roomNo: "731教室",
     description: "AM DESIGN CLUB TRIAL SESSION！デザコン出場歴代作品展示、3DCAD＆3Dプリンタ体験！ミニオブジェのプレゼントも！",
     icon: "𖤤",
@@ -636,25 +704,14 @@ const STALLS_DATA: StallItem[] = [
     bannerColor: "from-sky-600 to-blue-700",
   },
   {
-    id: 305,
-    title: "5B 研究発表（ポスター）",
-    category: "部活動企画",
-    grade: "5B",
-    dept: "5年 生物・化学コース",
-    location: "7号館 721教室",
-    zoneId: "bldg7",
-    roomNo: "721教室",
-    description: "5Bによる先進的な研究成果のポスター発表展示。",
-    icon: "🔬",
-  },
-  {
     id: 306,
     title: "E.S.S. (Little World)",
     category: "部活動企画",
     grade: "部活",
     dept: "E.S.S.",
-    location: "7号館 732教室",
+    location: "7号館 3階 732教室",
     zoneId: "bldg7",
+    floor: "3階",
     roomNo: "732教室",
     description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
     icon: "𔢤",
@@ -707,7 +764,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg4",
     roomNo: "411",
     description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
-    icon: "",
+    icon: "🥋",
     imageUrl: "/カルタ.png",
     bannerTitle: "競技かるた体験会",
     bannerSub: "畳の上の格闘技！ガチ試合見学 & 初心者体験会",
@@ -830,48 +887,6 @@ const STALLS_DATA: StallItem[] = [
     icon: "🥤",
     instagram: "https://www.instagram.com/felicitaplus.sakata/",
     menu: ["濃厚スムージー", "ガパオライス", "スイーツ"],
-  },
-
-  // --- 金券販売 (ticket) ---
-  {
-    id: 501,
-    title: "金券販売（高専銀行券）",
-    category: "校内施設・その他",
-    grade: "本部",
-    dept: "実行委員会",
-    location: "1号館 1階 交流ラウンジ",
-    zoneId: "ticket",
-    floor: "1階",
-    roomNo: "金券販売",
-    description: "模擬店等で使用できる100円金券の販売を行っています（1回上限3000円分）。払い戻しは10/24 15:00まで！",
-    icon: "🎟️",
-    imageUrl: "/金券.png",
-  },
-  {
-    id: 502,
-    title: "交流ラウンジ",
-    category: "校内施設・その他",
-    grade: "本部",
-    dept: "実行委員会",
-    location: "1号館 1階 交流ラウンジ",
-    zoneId: "ticket",
-    floor: "1階",
-    roomNo: "交流ラウンジ",
-    description: "高専祭実行委員会本部・案内所及び交流スペースです。",
-    icon: "🏫",
-  },
-  {
-    id: 504,
-    title: "本部",
-    category: "校内施設・その他",
-    grade: "本部",
-    dept: "実行委員会",
-    location: "1号館 1階 本部",
-    zoneId: "bldg1",
-    floor: "1階",
-    roomNo: "本部",
-    description: "高専祭実行委員会本部です。落とし物やご案内はこちらまでお越しください。",
-    icon: "🏫",
   },
   {
     id: 201,
@@ -1208,13 +1223,13 @@ const CAMPUS_ZONES = [
   {
     id: "bldg1",
     name: "1号館",
-    subName: "一般教室棟・文化部展示",
+    subName: "一般教室棟・文化部展示・本部",
     pinLabel: "1号館",
     lightBg: "bg-blue-50 border-blue-300 text-blue-900",
     icon: "🏫",
     top: "30.4%",
     left: "69.8%",
-    desc: "1階〜3階のクラス企画・模擬店をはじめ、2階合同講義室でのゲーム企画/休憩室、13Fゼミ室（天文部）、12Fゼミ室（美術写真部）、中会議室（ボードゲーム有志）が実施されています。",
+    desc: "1階本部・交流ラウンジ（金券販売・学校紹介ブース）、1階〜3階のクラス企画・模擬店をはじめ、2階合同講義室でのゲーム企画/休憩室、13Fゼミ室（天文部）、12Fゼミ室（美術写真部）、中会議室（ボードゲームブース）が実施されています。",
   },
   {
     id: "bldg4",
@@ -1222,21 +1237,21 @@ const CAMPUS_ZONES = [
     subName: "展示・体験棟",
     pinLabel: "4号館",
     lightBg: "bg-teal-50 border-teal-300 text-teal-900",
-    icon: "",
+    icon: "🥋",
     top: "9.0%",
     left: "89.9%",
     desc: "411教室（かるた体験）を開催！",
   },
   {
     id: "ticket",
-    name: "高専祭本部（交流ラウンジ）",
-    subName: "金券本部・案内",
-    pinLabel: "高専祭本部\n（交流ラウンジ）",
+    name: "高専祭本部",
+    subName: "金券販売・案内・学校紹介",
+    pinLabel: "高専祭本部",
     lightBg: "bg-amber-50 border-amber-300 text-amber-900",
     icon: "🎟️",
     top: "40.6%",
     left: "76.5%",
-    desc: "1号館1階交流ラウンジに位置し、模擬店等で使用できる金券の販売を行っています。",
+    desc: "1号館1階交流ラウンジに位置し、金券販売・案内および学生と直接話ができる学校紹介ブースを実施しています。",
   },
   {
     id: "bldg7",
@@ -1247,7 +1262,7 @@ const CAMPUS_ZONES = [
     icon: "👻",
     top: "40.6%",
     left: "83.6%",
-    desc: "3Mお化け屋敷、4Eキッキングスナイパー、AMデザイン部、E.S.S.、5B研究発表を開催！",
+    desc: "1階: 3Mお化け屋敷、2階: 4Eキッキングスナイパー & 5B研究発表、3階: AMデザイン部 & E.S.S.を開催！",
   },
   {
     id: "bldg8",
@@ -1620,7 +1635,19 @@ export default function Page() {
 
   const zoneStalls = useMemo(() => {
     if (!selectedZoneId) return [];
-    return STALLS_DATA.filter((s) => s.zoneId === selectedZoneId);
+    let list = STALLS_DATA.filter((s) => s.zoneId === selectedZoneId);
+
+    // 7号館の場合は階数順（1階→2階→3階）に自動ソート
+    if (selectedZoneId === "bldg7") {
+      const floorOrder: Record<string, number> = { "1階": 1, "2階": 2, "3階": 3 };
+      list = [...list].sort((a, b) => {
+        const fa = a.floor ? floorOrder[a.floor] || 99 : (a.location.includes("1階") ? 1 : a.location.includes("2階") ? 2 : 3);
+        const fb = b.floor ? floorOrder[b.floor] || 99 : (b.location.includes("1階") ? 1 : b.location.includes("2階") ? 2 : 3);
+        return fa - fb;
+      });
+    }
+
+    return list;
   }, [selectedZoneId]);
 
   const currentZone = CAMPUS_ZONES.find((z) => z.id === selectedZoneId);
@@ -2055,7 +2082,6 @@ export default function Page() {
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
-                  {/* 一番右下のアイコン：0.5%上（69.5%）、0.1%左（27.4%）に調整済み */}
                   <div
                     style={{
                       top: "69.5%",
@@ -2105,7 +2131,7 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* プレハブへの順路矢印（左方向の左端矢印の高さを21.7%へ調整済み） */}
+                {/* プレハブへの順路矢印 */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     {[
@@ -2993,7 +3019,6 @@ export default function Page() {
 
                           {/* 1. 上部横廊下（グレー） */}
                           <div className="absolute top-[50px] left-0 w-full h-8 bg-neutral-600">
-                            {/* 411かるた体験：(有志)に統一 */}
                             <button
                               onClick={() => {
                                 const stall = getRoomStall("411") || getRoomStall("かるた");
@@ -3001,14 +3026,14 @@ export default function Page() {
                               }}
                               className="absolute -top-3 right-[30px] w-[95px] h-[70px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                             >
-                              <span className="text-base"></span>
+                              <span className="text-base">🥋</span>
                               <span className="text-xs font-black">411</span>
                               <span className="text-[10px] font-extrabold line-clamp-1">かるた体験</span>
                               <span className="text-[8px] text-blue-800 font-bold">(有志)</span>
                             </button>
                           </div>
 
-                          {/* 2. 中央縦廊下（2階に合わせて幅w-[50px]に統一） */}
+                          {/* 2. 中央縦廊下（2階・3階に完全に合わせた幅w-[50px]・left-[268px]） */}
                           <div className="absolute top-[82px] left-[268px] w-[50px] h-[72px] bg-neutral-600" />
 
                           {/* 3. 下部横廊下 */}
@@ -3039,39 +3064,39 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 4. 入口縦廊下（延長）と△（下に下げて配置） */}
-                          <div className="absolute top-[186px] left-[254px] w-[60px] h-[72px] bg-neutral-600 z-10" />
-                          <div className="absolute top-[262px] left-[284px] -translate-x-1/2">
+                          {/* 4. 入口縦廊下（上の中央縦廊下と同一直線上に完全整列: left-[268px] w-[50px]） */}
+                          <div className="absolute top-[186px] left-[268px] w-[50px] h-[72px] bg-neutral-600 z-10" />
+                          <div className="absolute top-[262px] left-[293px] -translate-x-1/2">
                             <RedTriangle />
                           </div>
 
-                          {/* 階段と1階トイレ（追加復元） */}
+                          {/* 階段と1階トイレ */}
                           <div className="absolute top-[190px] left-[330px] flex items-center gap-2 z-30">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
 
-                          {/* △右（階段の下）の「金券販売」と「交流ラウンジ」 */}
+                          {/* △右（階段の下）の「金券販売」と「学校紹介ブース」 */}
                           <div className="absolute top-[232px] left-[330px] flex flex-col gap-1 z-30">
                             <button
                               onClick={() => {
                                 const stall = getRoomStall("金券販売") || getRoomStall("金券");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="w-[88px] h-[36px] border-[2px] border-purple-600 bg-purple-50 text-purple-950 rounded-lg p-0.5 flex items-center justify-center gap-1 font-black transition shadow-sm cursor-pointer hover:bg-purple-100 hover:scale-105"
+                              className="w-[98px] h-[34px] border-[2px] border-purple-600 bg-purple-50 text-purple-950 rounded-lg p-0.5 flex items-center justify-center gap-1 font-black transition shadow-sm cursor-pointer hover:bg-purple-100 hover:scale-105"
                             >
                               <span className="text-xs">🎟️</span>
                               <span className="text-[10px] font-black">金券販売</span>
                             </button>
                             <button
                               onClick={() => {
-                                const stall = getRoomStall("交流ラウンジ");
+                                const stall = getRoomStall("学校紹介") || getRoomStall("交流ラウンジ");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="w-[88px] h-[36px] border-[2px] border-purple-600 bg-purple-50 text-purple-950 rounded-lg p-0.5 flex items-center justify-center gap-1 font-black transition shadow-sm cursor-pointer hover:bg-purple-100 hover:scale-105"
+                              className="w-[98px] h-[34px] border-[2px] border-purple-600 bg-purple-50 text-purple-950 rounded-lg p-0.5 flex items-center justify-center gap-1 font-black transition shadow-sm cursor-pointer hover:bg-purple-100 hover:scale-105"
                             >
                               <span className="text-xs">🏫</span>
-                              <span className="text-[10px] font-black">交流ラウンジ</span>
+                              <span className="text-[10px] font-black">学校紹介ブース</span>
                             </button>
                           </div>
                         </div>
@@ -3088,15 +3113,12 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[300px] relative bg-white">
-                          {/* 1. 上部横廊下（「7号館へ ↓」追加） */}
                           <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600 flex items-center justify-end pr-4">
                             <span className="text-[10px] font-black text-white tracking-tight">7号館へ ↓</span>
                           </div>
 
-                          {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600 z-10" />
 
-                          {/* 部屋 123(4Iカジノ), 12Fゼミ室, 122, 121 */}
                           <div className="absolute top-[90px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "123", room: "123", title: "カジノ", grade: "4I", icon: "🎲", type: "class" },
@@ -3127,7 +3149,6 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 合同講義室 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("合同講義室");
@@ -3141,7 +3162,6 @@ export default function Page() {
                             <span className="text-[8px] text-purple-700 font-bold">(実行委)</span>
                           </button>
 
-                          {/* 階段・トイレ */}
                           <div className="absolute top-[90px] left-[330px] flex items-center gap-2 z-30">
                             <StairsIcon />
                             <ToiletIcon />
@@ -3160,12 +3180,10 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[300px] relative bg-white">
-                          {/* 1. 上部横廊下（「7号館へ ↓」追加） */}
                           <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600 flex items-center justify-end pr-[100px]">
                             <span className="text-[10px] font-black text-white tracking-tight">7号館へ ↓</span>
                           </div>
 
-                          {/* 中会議室：(有志)に統一 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("中会議室") || getRoomStall("ボードゲーム");
@@ -3179,10 +3197,8 @@ export default function Page() {
                             <span className="text-[8px] text-blue-800 font-bold">(有志)</span>
                           </button>
 
-                          {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
 
-                          {/* 部屋 13Fゼミ室, 133, 132, 131 */}
                           <div className="absolute top-[90px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "13Fゼミ室", room: "13Fゼミ", title: "プラネタリウム", grade: "天文部", icon: "🌌", type: "club" },
@@ -3213,25 +3229,23 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 大会議室 */}
+                          {/* 大会議室：2階合同講義室と完全に同じサイズ・位置（w-[80px] h-[76px], top-[184px] left-[253px]）に更新 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("大会議室");
                               if (stall) setModalItem(stall);
                             }}
-                            className="absolute top-[188px] left-[258px] w-[70px] h-[72px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-purple-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight z-30"
+                            className="absolute top-[184px] left-[253px] w-[80px] h-[76px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-purple-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight z-30"
                           >
                             <span className="text-base mb-0.5">🏫</span>
                             <span className="text-xs font-black">大会議室</span>
                           </button>
 
-                          {/* 階段・トイレ（2階と位置を完全揃え top-[90px] left-[330px] gap-2） */}
                           <div className="absolute top-[90px] left-[330px] flex items-center gap-2 z-30">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
 
-                          {/* 小会議室 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("小会議室");
