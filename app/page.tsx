@@ -63,17 +63,27 @@ const RedTriangle = () => (
   <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-red-600 drop-shadow-sm select-none" />
 );
 
-// 添付画像準拠の省略記号（緑枠＋ピンクダブル波線）
+// 添付画像（image_42307c.png）準拠の接続・省略記号
 const BreakLineSS = () => (
   <div className="relative w-14 h-10 flex items-center justify-center select-none shrink-0">
-    <svg className="w-14 h-10" viewBox="0 0 56 40" fill="none">
-      {/* 左側緑枠 */}
-      <path d="M 2 10 L 22 10 M 2 30 L 22 30 M 2 10 L 2 30" stroke="#2e7d32" strokeWidth="3" strokeLinecap="round" />
-      {/* 右側緑枠 */}
-      <path d="M 34 10 L 54 10 M 34 30 L 54 30 M 54 10 L 54 30" stroke="#2e7d32" strokeWidth="3" strokeLinecap="round" />
-      {/* ダブル縦波線 */}
-      <path d="M 21 2 C 27 10 15 20 27 28 C 33 34 21 38 25 38" stroke="#d86b81" strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M 31 2 C 37 10 25 20 37 28 C 43 34 31 38 35 38" stroke="#d86b81" strokeWidth="3.5" strokeLinecap="round" />
+    <svg
+      className="w-14 h-10"
+      viewBox="0 0 56 40"
+      fill="none"
+      stroke="#1e293b"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* 上の平行線 (左右) */}
+      <line x1="2" y1="12" x2="20" y2="12" />
+      <line x1="36" y1="12" x2="54" y2="12" />
+      {/* 下の平行線 (左右) */}
+      <line x1="2" y1="28" x2="20" y2="28" />
+      <line x1="36" y1="28" x2="54" y2="28" />
+      {/* 中央を接続する縦S字波線2本 */}
+      <path d="M 20 4 C 30 14 10 26 22 36" />
+      <path d="M 28 4 C 38 14 18 26 30 36" />
     </svg>
   </div>
 );
@@ -87,10 +97,10 @@ const NoEntrySign = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
-// 順路矢印アイコン（大型化＆グラデーション装飾）
+// 順路矢印アイコン（標準サイズ＆長いシャフト）
 const PathArrow = ({
   direction = "up",
-  className = "w-12 h-12",
+  className = "w-6 h-6",
 }: {
   direction?: "up" | "down" | "left" | "right";
   className?: string;
@@ -104,20 +114,17 @@ const PathArrow = ({
 
   return (
     <svg
-      className={`${className} ${rotation} filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] select-none shrink-0`}
-      viewBox="0 0 24 24"
+      className={`${className} ${rotation} filter drop-shadow-sm select-none shrink-0`}
+      viewBox="0 0 24 32"
       fill="none"
+      stroke="#e11d48"
+      strokeWidth="3.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <defs>
-        <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#f43f5e" />
-          <stop offset="100%" stopColor="#8b5cf6" />
-        </linearGradient>
-      </defs>
-      <line x1="12" y1="21" x2="12" y2="3" stroke="url(#arrowGradient)" strokeWidth="4.5" />
-      <polyline points="4 11 12 3 20 11" stroke="url(#arrowGradient)" strokeWidth="4.5" />
+      {/* 長いシャフト（軸） */}
+      <line x1="12" y1="30" x2="12" y2="3" />
+      <polyline points="4 11 12 3 20 11" />
     </svg>
   );
 };
@@ -719,8 +726,10 @@ const STALLS_DATA: StallItem[] = [
     category: "クラス企画",
     grade: "4B",
     dept: "4年 生物・化学コース (4B)",
-    location: "総合メディアセンター マルチメディア教室",
+    location: "総合メディアセンター 2階 マルチメディア教室",
     zoneId: "media_center",
+    floor: "2階",
+    roomNo: "マルチメディア教室",
     price: "200円",
     description: "4B格付けチェック！あなたは本物をみぬけるか？一流！味覚・視覚・知識に挑戦！（200円）",
     icon: "🍷",
@@ -735,14 +744,42 @@ const STALLS_DATA: StallItem[] = [
     category: "部活動企画",
     grade: "部活",
     dept: "ロボット技術研究部",
-    location: "総合メディアセンター 多目的交流室",
+    location: "総合メディアセンター 1階 多目的交流室",
     zoneId: "media_center",
+    floor: "1階",
+    roomNo: "多目的交流室",
     description: "高専ロボコン「ぞうきんとうてきせんしゅけん」出場ロボット展示！さらにスイカ割りミニゲームロボットの操作体験もあります！",
     icon: "🤖",
     imageUrl: "/ロボコン.png",
     bannerTitle: "高専ロボコン ロボ展示 & 操作体験",
     bannerSub: "NHK高専ロボコン出場機展示 & スイカ割り体験",
     bannerColor: "from-green-600 to-emerald-800",
+  },
+  {
+    id: 204,
+    title: "デジタルサロン",
+    category: "校内施設・その他",
+    grade: "施設",
+    dept: "情報基盤",
+    location: "総合メディアセンター 1階",
+    zoneId: "media_center",
+    floor: "1階",
+    roomNo: "デジタルサロン",
+    description: "デジタルコンテンツ展示およびフリー閲覧スペースです。",
+    icon: "💻",
+  },
+  {
+    id: 205,
+    title: "図書館",
+    category: "校内施設・その他",
+    grade: "施設",
+    dept: "図書",
+    location: "総合メディアセンター 2階",
+    zoneId: "media_center",
+    floor: "2階",
+    roomNo: "図書館",
+    description: "図書閲覧・学習スペースです。",
+    icon: "📚",
   },
 
   // --- 学生昇降口・広場 (entrance) ---
@@ -836,7 +873,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "図書・情報基盤",
     location: "第一体育館 西側",
     zoneId: "media_center",
-    description: "図書室や情報処理施設が設置された総合メディアセンターです。",
+    description: "図書館やマルチメディア教室、デジタルサロン等が設置された総合メディアセンターです。",
     icon: "📚",
   },
   {
@@ -1147,7 +1184,7 @@ const CAMPUS_ZONES = [
     icon: "📚",
     top: "48.0%",
     left: "52.2%",
-    desc: "4B格付けチェック（マルチメディア教室）およびロボット技術研究部（多目的交流室）を開催！",
+    desc: "4B格付けチェック（2階マルチメディア教室）およびロボット技術研究部（1階多目的交流室）を開催！",
   },
   {
     id: "gym1",
@@ -1767,6 +1804,23 @@ export default function Page() {
           width: 0;
           height: 0;
         }
+        .map-container-scrollbar {
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+          will-change: scroll-position;
+        }
+        .map-container-scrollbar::-webkit-scrollbar {
+          display: block !important;
+          width: 8px;
+          height: 8px;
+        }
+        .map-container-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(100, 116, 139, 0.6);
+          border-radius: 4px;
+        }
+        .map-container-scrollbar::-webkit-scrollbar-track {
+          background-color: rgba(226, 232, 240, 0.6);
+        }
       `}</style>
 
       {/* リアルタイムLIVEバナー */}
@@ -1941,7 +1995,7 @@ export default function Page() {
               style={{
                 aspectRatio: `${2.37 / Math.min(zoomLevel, 2.0)}`,
               }}
-              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 cursor-grab active:cursor-grabbing custom-map-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
+              className={`w-full overflow-auto rounded-3xl border-2 border-slate-200 shadow-md bg-slate-200 cursor-grab active:cursor-grabbing map-container-scrollbar relative select-none transition-opacity duration-200 touch-pan-x touch-pan-y ${
                 isMapReady ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -2042,7 +2096,7 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* プレハブへの順路矢印 */}
+                {/* プレハブへの順路矢印（標準サイズ＆長いシャフト） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     {[
@@ -2059,12 +2113,12 @@ export default function Page() {
                         style={{
                           top: arrow.top,
                           left: arrow.left,
-                          transform: `translate(-50%, -50%) scale(${overlayScale * 1.5})`,
+                          transform: `translate(-50%, -50%) scale(${overlayScale})`,
                           transformOrigin: "center center",
                         }}
                         className="absolute"
                       >
-                        <PathArrow direction={arrow.dir as any} className="w-10 h-10 sm:w-12 sm:h-12" />
+                        <PathArrow direction={arrow.dir as any} className="w-6 h-6" />
                       </div>
                     ))}
                   </div>
@@ -2910,13 +2964,13 @@ export default function Page() {
             )}
 
             {/* フロアレイアウトコンテンツ */}
-            <div className="p-4 space-y-3 overflow-y-auto bg-slate-100/60 custom-map-scrollbar">
+            <div className="p-4 space-y-3 overflow-y-auto bg-slate-100/60 map-container-scrollbar">
               {/* ==================== ① 1号館 ==================== */}
               {detailMapBuilding === "bldg1" && (
                 <div className="space-y-3">
                   {/* --- 1号館 1階 --- */}
                   {detailMapFloor === "1階" && (
-                    <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="w-full overflow-x-auto map-container-scrollbar pb-2">
                       <div className="min-w-[600px] max-w-[640px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
                         <div className="font-black text-3xl text-slate-900 mb-2 tracking-wide">
                           1階
@@ -2953,8 +3007,8 @@ export default function Page() {
                           {/* 3. 下部横廊下 */}
                           <div className="absolute top-[154px] left-0 w-full h-8 bg-neutral-600" />
 
-                          {/* 部屋 113, 112, 111 */}
-                          <div className="absolute top-[190px] left-[2px] flex gap-2.5 z-30">
+                          {/* 部屋 113, 112, 111（ブース幅62px＆間隔gap-1に統一） */}
+                          <div className="absolute top-[190px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "113", room: "113", title: "ホスト", grade: "4M", icon: "🌹" },
                               { id: "112", room: "112", title: "ドリンク", grade: "1-2", icon: "🍹" },
@@ -2967,12 +3021,12 @@ export default function Page() {
                                   onClick={() => {
                                     if (stall) setModalItem(stall);
                                   }}
-                                  className="w-[82px] h-[88px] border-[2.5px] border-amber-500 bg-amber-50 text-amber-950 rounded-xl p-1 flex flex-col items-center justify-center font-black transition shadow-sm cursor-pointer leading-tight text-center hover:bg-amber-100 hover:scale-105"
+                                  className="w-[62px] h-[88px] border-[2.5px] border-amber-500 bg-amber-50 text-amber-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black transition shadow-sm cursor-pointer leading-tight text-center hover:bg-amber-100 hover:scale-105"
                                 >
                                   <span className="text-base mb-0.5">{r.icon}</span>
-                                  <span className="text-xs font-black">{r.room}</span>
-                                  <span className="text-[11px] font-extrabold line-clamp-1">{r.title}</span>
-                                  <span className="text-[10px] opacity-80 font-bold">({r.grade})</span>
+                                  <span className="text-[11px] font-black">{r.room}</span>
+                                  <span className="text-[10px] font-extrabold line-clamp-1">{r.title}</span>
+                                  <span className="text-[9px] opacity-80 font-bold">({r.grade})</span>
                                 </button>
                               );
                             })}
@@ -2985,7 +3039,7 @@ export default function Page() {
                           </div>
 
                           {/* 階段・トイレ */}
-                          <div className="absolute top-[190px] left-[330px] flex items-center gap-2.5 z-30">
+                          <div className="absolute top-[190px] left-[260px] flex items-center gap-2 z-30 ml-[70px]">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
@@ -2996,7 +3050,7 @@ export default function Page() {
 
                   {/* --- 1号館 2階 --- */}
                   {detailMapFloor === "2階" && (
-                    <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="w-full overflow-x-auto map-container-scrollbar pb-2">
                       <div className="min-w-[600px] max-w-[640px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
                         <div className="font-black text-3xl text-slate-900 mb-2 tracking-wide">
                           2階
@@ -3009,8 +3063,8 @@ export default function Page() {
                           {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
 
-                          {/* 部屋 123(4Iカジノ), 12Fゼミ室, 122, 121 */}
-                          <div className="absolute top-[90px] left-[2px] flex gap-2 z-30">
+                          {/* 部屋 123(4Iカジノ), 12Fゼミ室, 122, 121 (間隔gap-1) */}
+                          <div className="absolute top-[90px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "123", room: "123", title: "カジノ", grade: "4I", icon: "🎲", type: "class" },
                               { id: "12Fゼミ室", room: "12Fゼミ", title: "美術写真", grade: "部活", icon: "🖼️", type: "club" },
@@ -3054,7 +3108,7 @@ export default function Page() {
                           </button>
 
                           {/* 階段・トイレ */}
-                          <div className="absolute top-[90px] left-[340px] flex items-center gap-2.5 z-30">
+                          <div className="absolute top-[90px] left-[330px] flex items-center gap-2 z-30">
                             <StairsIcon />
                             <ToiletIcon />
                           </div>
@@ -3065,7 +3119,7 @@ export default function Page() {
 
                   {/* --- 1号館 3階 --- */}
                   {detailMapFloor === "3階" && (
-                    <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                    <div className="w-full overflow-x-auto map-container-scrollbar pb-2">
                       <div className="min-w-[600px] max-w-[640px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-4 select-none shadow-sm flex flex-col items-center">
                         <div className="font-black text-3xl text-slate-900 mb-2 tracking-wide">
                           3階
@@ -3078,8 +3132,8 @@ export default function Page() {
                           {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
 
-                          {/* 部屋 13Fゼミ室, 133, 132, 131(3Eゲームカフェ) */}
-                          <div className="absolute top-[90px] left-[2px] flex gap-2 z-30">
+                          {/* 部屋 13Fゼミ室, 133, 132, 131(3Eゲームカフェ) (間隔gap-1) */}
+                          <div className="absolute top-[90px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "13Fゼミ室", room: "13Fゼミ", title: "プラネタリウム", grade: "天文", icon: "🌌", type: "club" },
                               { id: "133", room: "133", title: "バー", grade: "3I", icon: "🍸", type: "class" },
@@ -3122,7 +3176,7 @@ export default function Page() {
                           </button>
 
                           {/* 階段・トイレ・小会議室・中会議室（ボードゲーム有志） */}
-                          <div className="absolute top-[90px] left-[330px] flex items-center gap-1.5 z-30">
+                          <div className="absolute top-[90px] left-[320px] flex items-center gap-1.5 z-30">
                             <StairsIcon />
                             <ToiletIcon />
                             <button
@@ -3157,7 +3211,7 @@ export default function Page() {
 
               {/* ==================== ② 7号館 ==================== */}
               {detailMapBuilding === "bldg7" && (
-                <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                <div className="w-full overflow-x-auto map-container-scrollbar pb-2">
                   <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
                     <div className="text-center font-black text-2xl sm:text-3xl text-slate-900 mb-6">
                       7号館詳細
@@ -3252,7 +3306,7 @@ export default function Page() {
 
               {/* ==================== ③ 8号館 ==================== */}
               {detailMapBuilding === "bldg8" && (
-                <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                <div className="w-full overflow-x-auto map-container-scrollbar pb-2">
                   <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
                     <div className="text-center font-black text-2xl sm:text-3xl text-slate-900 mb-6">
                       8号館詳細
@@ -3283,8 +3337,8 @@ export default function Page() {
                           <div className="absolute -right-12 top-4">
                             <ToiletIcon />
                           </div>
-                          <div className="text-xs font-black text-white text-center leading-tight whitespace-nowrap [writing-mode:vertical-rl] tracking-wider">
-                            1号館2階へ ↓
+                          <div className="text-xs font-black text-white text-center leading-tight whitespace-nowrap [writing-mode:vertical-rl] [text-orientation:upright] tracking-wider">
+                            １・４号館へ ↓
                           </div>
                         </div>
                       </div>
@@ -3320,55 +3374,77 @@ export default function Page() {
 
               {/* ==================== ④ 総合メディアセンター ==================== */}
               {detailMapBuilding === "media_center" && (
-                <div className="w-full overflow-x-auto custom-map-scrollbar pb-2">
+                <div className="w-full overflow-x-auto map-container-scrollbar pb-2">
                   <div className="min-w-[560px] max-w-[620px] mx-auto bg-white border-2 border-slate-300 rounded-2xl p-6 relative select-none shadow-sm">
-                    <div className="text-center font-black text-xl sm:text-2xl text-slate-900 mb-6">
-                      総合メディアセンター
+                    <div className="text-center font-black text-2xl sm:text-3xl text-slate-900 mb-6">
+                      総合メディアセンター詳細
                     </div>
 
-                    <div className="relative min-h-[220px] flex items-center justify-center my-4">
-                      <div className="w-full h-10 bg-neutral-600 relative flex items-center justify-center">
-                        <div className="absolute -top-10">
-                          <ToiletIcon />
+                    <div className="grid grid-cols-2 gap-6 divide-x-2 divide-slate-200">
+                      {/* --- 1階 --- */}
+                      <div className="pr-4 flex flex-col items-center space-y-3">
+                        <div className="font-black text-xl text-slate-900">1階</div>
+                        <div className="w-full space-y-2">
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("多目的交流室") || getRoomStall("ロボット");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-full h-[76px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-blue-100 transition shadow-sm cursor-pointer hover:scale-105"
+                          >
+                            <span className="text-base mb-0.5">🤖</span>
+                            <span className="text-xs font-black">多目的交流室</span>
+                            <span className="text-blue-900 font-extrabold text-[10px]">高専ロボコン展示・体験</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("デジタルサロン");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-full h-[76px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-purple-100 transition shadow-sm cursor-pointer hover:scale-105"
+                          >
+                            <span className="text-base mb-0.5">💻</span>
+                            <span className="text-xs font-black">デジタルサロン</span>
+                            <span className="text-purple-900 font-extrabold text-[10px]">展示・情報スペース</span>
+                          </button>
                         </div>
-
-                        <div className="absolute -bottom-6">
-                          <RedTriangle />
-                        </div>
-
-                        <div className="absolute right-12 top-12 flex flex-col items-center">
+                        <div className="flex items-center gap-2 pt-1">
                           <StairsIcon />
-                          <div className="text-center font-black text-xs text-slate-900 leading-tight mt-1">
-                            <span>↓</span>
-                            <br />
-                            <span>2 階</span>
-                            <br />
-                            <span>マルチメディア室へ</span>
-                          </div>
+                          <ToiletIcon />
                         </div>
                       </div>
 
-                      {/* 多目的交流室 */}
-                      <button
-                        onClick={() => {
-                          const stall = getRoomStall("多目的交流室") || getRoomStall("ロボット");
-                          if (stall) setModalItem(stall);
-                        }}
-                        className="absolute left-0 h-48 sm:h-52 w-16 border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex items-center justify-center font-black text-sm sm:text-base [writing-mode:vertical-rl] hover:bg-blue-100 transition shadow-sm cursor-pointer"
-                      >
-                        多目的交流室 (ロボコン)
-                      </button>
-
-                      {/* マルチメディア教室 */}
-                      <button
-                        onClick={() => {
-                          const stall = getRoomStall("マルチメディア") || getRoomStall("4B");
-                          if (stall) setModalItem(stall);
-                        }}
-                        className="absolute right-0 h-48 sm:h-52 w-16 border-[2.5px] border-amber-500 bg-amber-50 text-amber-950 rounded-xl p-1 flex items-center justify-center font-black text-sm sm:text-base [writing-mode:vertical-rl] hover:bg-amber-100 transition shadow-sm cursor-pointer"
-                      >
-                        マルチメディア室 (4B格付け)
-                      </button>
+                      {/* --- 2階 --- */}
+                      <div className="pl-6 flex flex-col items-center space-y-3">
+                        <div className="font-black text-xl text-slate-900">2階</div>
+                        <div className="w-full space-y-2">
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("図書館");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-full h-[76px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-purple-100 transition shadow-sm cursor-pointer hover:scale-105"
+                          >
+                            <span className="text-base mb-0.5">📚</span>
+                            <span className="text-xs font-black">図書館</span>
+                            <span className="text-purple-900 font-extrabold text-[10px]">図書閲覧・学習</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("マルチメディア") || getRoomStall("4B");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="w-full h-[76px] border-[2.5px] border-amber-500 bg-amber-50 text-amber-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-amber-100 transition shadow-sm cursor-pointer hover:scale-105"
+                          >
+                            <span className="text-base mb-0.5">🍷</span>
+                            <span className="text-xs font-black">マルチメディア教室</span>
+                            <span className="text-amber-900 font-extrabold text-[10px]">格付けチェック (4B)</span>
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-2 pt-1">
+                          <StairsIcon />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
