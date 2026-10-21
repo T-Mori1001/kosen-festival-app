@@ -25,9 +25,9 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 
-// --- 統一マップ記号コンポーネント（トイレ・階段・赤三角形▲・省略記号波線・通行禁止標識・順路矢印） ---
+// --- 統一マップ記号コンポーネント ---
 
-// トイレアイコン（男性: 青 / 女性: ピンク）
+// トイレアイコン（男女共用）
 const ToiletIcon = () => (
   <div className="bg-slate-50 border-2 border-slate-700 px-1 py-0.5 rounded-md flex items-center justify-center gap-1 shadow-sm w-[42px] h-[36px] select-none shrink-0">
     <svg className="w-3.5 h-4 fill-blue-600" viewBox="0 0 24 24">
@@ -42,7 +42,27 @@ const ToiletIcon = () => (
   </div>
 );
 
-// 階段アイコン（全フロア統一サイズ）
+// 女子専用トイレアイコン
+const FemaleToiletIcon = () => (
+  <div className="bg-slate-50 border-2 border-slate-700 px-1.5 py-0.5 rounded-md flex items-center justify-center shadow-sm w-[32px] h-[36px] select-none shrink-0">
+    <svg className="w-4 h-4 fill-rose-500" viewBox="0 0 24 24">
+      <circle cx="12" cy="4" r="3" />
+      <path d="M12 8c-2 0-3.5 1-4 3l-1.5 5h3v5h5v-5h3l-1.5-5c-.5-2-2-3-4-3z" />
+    </svg>
+  </div>
+);
+
+// 男子専用トイレアイコン
+const MaleToiletIcon = () => (
+  <div className="bg-slate-50 border-2 border-slate-700 px-1.5 py-0.5 rounded-md flex items-center justify-center shadow-sm w-[32px] h-[36px] select-none shrink-0">
+    <svg className="w-4 h-4 fill-blue-600" viewBox="0 0 24 24">
+      <circle cx="12" cy="4" r="3" />
+      <path d="M9 8h6v7h-1.5v6h-3v-6H9V8z" />
+    </svg>
+  </div>
+);
+
+// 階段アイコン
 const StairsIcon = () => (
   <div className="bg-slate-50 border-2 border-slate-700 rounded-md p-1 flex items-center justify-center w-[36px] h-[36px] shadow-sm select-none shrink-0">
     <svg
@@ -63,31 +83,6 @@ const RedTriangle = () => (
   <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-red-600 drop-shadow-sm select-none" />
 );
 
-// 添付画像（image_42307c.png）準拠の接続・省略記号
-const BreakLineSS = () => (
-  <div className="relative w-14 h-10 flex items-center justify-center select-none shrink-0">
-    <svg
-      className="w-14 h-10"
-      viewBox="0 0 56 40"
-      fill="none"
-      stroke="#1e293b"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {/* 上の平行線 (左右) */}
-      <line x1="2" y1="12" x2="20" y2="12" />
-      <line x1="36" y1="12" x2="54" y2="12" />
-      {/* 下の平行線 (左右) */}
-      <line x1="2" y1="28" x2="20" y2="28" />
-      <line x1="36" y1="28" x2="54" y2="28" />
-      {/* 中央を接続する縦S字波線2本 */}
-      <path d="M 20 4 C 30 14 10 26 22 36" />
-      <path d="M 28 4 C 38 14 18 26 30 36" />
-    </svg>
-  </div>
-);
-
 // 通行禁止（車両進入禁止）標識アイコン
 const NoEntrySign = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={`${className} select-none shrink-0`}>
@@ -97,10 +92,10 @@ const NoEntrySign = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
-// 順路矢印アイコン（標準サイズ＆長いシャフト）
+// 順路矢印アイコン
 const PathArrow = ({
   direction = "up",
-  className = "w-6 h-6",
+  className = "w-9 h-9",
 }: {
   direction?: "up" | "down" | "left" | "right";
   className?: string;
@@ -122,7 +117,6 @@ const PathArrow = ({
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {/* 長いシャフト（軸） */}
       <line x1="12" y1="30" x2="12" y2="3" />
       <polyline points="4 11 12 3 20 11" />
     </svg>
@@ -410,7 +404,7 @@ const STALLS_DATA: StallItem[] = [
   },
   {
     id: 310,
-    title: "休憩がてらにボードゲームはどうですか?",
+    title: "ボードゲームブース（ボードゲームサークル有志）",
     category: "部活動企画",
     grade: "有志",
     dept: "ボードゲームサークル有志",
@@ -633,7 +627,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "AMデザイン部",
     location: "7号館 731教室",
     zoneId: "bldg7",
-    roomNo: "731",
+    roomNo: "731教室",
     description: "AM DESIGN CLUB TRIAL SESSION！デザコン出場歴代作品展示、3DCAD＆3Dプリンタ体験！ミニオブジェのプレゼントも！",
     icon: "𖤤",
     imageUrl: "/AMデザイン.png",
@@ -649,7 +643,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "5年 生物・化学コース",
     location: "7号館 721教室",
     zoneId: "bldg7",
-    roomNo: "721",
+    roomNo: "721教室",
     description: "5Bによる先進的な研究成果のポスター発表展示。",
     icon: "🔬",
   },
@@ -661,6 +655,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "E.S.S.",
     location: "7号館 732教室",
     zoneId: "bldg7",
+    roomNo: "732教室",
     description: "ESS Little World！留学生紹介ポスター、世界のことを知るポスター、海外紹介Vlogで世界の学生生活をのぞいてみよう！",
     icon: "𔢤",
     imageUrl: "/ESS.png",
@@ -710,7 +705,7 @@ const STALLS_DATA: StallItem[] = [
     dept: "競技かるた体験会",
     location: "4号館 411教室",
     zoneId: "bldg4",
-    roomNo: "411教室",
+    roomNo: "411",
     description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
     icon: "🎴",
     imageUrl: "/カルタ.png",
@@ -847,10 +842,23 @@ const STALLS_DATA: StallItem[] = [
     location: "1号館 1階 交流ラウンジ",
     zoneId: "ticket",
     floor: "1階",
-    roomNo: "交流ラウンジ",
+    roomNo: "金券販売",
     description: "模擬店等で使用できる100円金券の販売を行っています（1回上限3000円分）。払い戻しは10/24 15:00まで！",
     icon: "🎟️",
     imageUrl: "/金券.png",
+  },
+  {
+    id: 502,
+    title: "交流ラウンジ",
+    category: "校内施設・その他",
+    grade: "本部",
+    dept: "実行委員会",
+    location: "1号館 1階 交流ラウンジ",
+    zoneId: "ticket",
+    floor: "1階",
+    roomNo: "交流ラウンジ",
+    description: "高専祭実行委員会本部・案内所及び交流スペースです。",
+    icon: "🏫",
   },
   {
     id: 504,
@@ -2096,13 +2104,14 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* プレハブへの順路矢印（標準サイズ＆長いシャフト） */}
+                {/* プレハブへの順路矢印（1.5倍サイズ＆指定の配置修正） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     {[
+                      { top: "38.0%", left: "57.0%", dir: "up" },
                       { top: "30.0%", left: "57.0%", dir: "up" },
                       { top: "26.0%", left: "49.0%", dir: "left" },
-                      { top: "26.0%", left: "37.0%", dir: "left" },
+                      { top: "21.5%", left: "37.0%", dir: "left" },
                       { top: "21.5%", left: "27.0%", dir: "left" },
                       { top: "21.5%", left: "15.0%", dir: "left" },
                       { top: "36.0%", left: "11.5%", dir: "down" },
@@ -2118,7 +2127,7 @@ export default function Page() {
                         }}
                         className="absolute"
                       >
-                        <PathArrow direction={arrow.dir as any} className="w-6 h-6" />
+                        <PathArrow direction={arrow.dir as any} className="w-9 h-9" />
                       </div>
                     ))}
                   </div>
@@ -2981,23 +2990,20 @@ export default function Page() {
                             4号館
                           </div>
 
-                          {/* 1. 上部横廊下（グレー） */}
+                          {/* 1. 上部横廊下（グレー） ※接続波線削除済み */}
                           <div className="absolute top-[50px] left-0 w-full h-8 bg-neutral-600">
-                            <div className="absolute right-[130px] top-1/2 -translate-y-1/2 z-20">
-                              <BreakLineSS />
-                            </div>
-
-                            {/* 411かるた体験：廊下の上・少し左側へ配置調整 */}
+                            {/* 411かるた体験：部活・有志表記統一 */}
                             <button
                               onClick={() => {
                                 const stall = getRoomStall("411") || getRoomStall("かるた");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="absolute -top-3 right-[30px] w-[90px] h-[70px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
+                              className="absolute -top-3 right-[30px] w-[95px] h-[70px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                             >
                               <span className="text-base">🎴</span>
                               <span className="text-xs font-black">411</span>
-                              <span className="text-[11px] font-extrabold line-clamp-1">かるた体験</span>
+                              <span className="text-[10px] font-extrabold line-clamp-1">かるた体験</span>
+                              <span className="text-[8px] text-blue-800 font-bold">(競技かるた有志)</span>
                             </button>
                           </div>
 
@@ -3007,7 +3013,7 @@ export default function Page() {
                           {/* 3. 下部横廊下 */}
                           <div className="absolute top-[154px] left-0 w-full h-8 bg-neutral-600" />
 
-                          {/* 部屋 113, 112, 111（ブース幅62px＆間隔gap-1に統一） */}
+                          {/* 部屋 113, 112, 111 */}
                           <div className="absolute top-[190px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "113", room: "113", title: "ホスト", grade: "4M", icon: "🌹" },
@@ -3038,10 +3044,33 @@ export default function Page() {
                             <RedTriangle />
                           </div>
 
-                          {/* 階段・トイレ */}
-                          <div className="absolute top-[190px] left-[260px] flex items-center gap-2 z-30 ml-[70px]">
+                          {/* 階段 */}
+                          <div className="absolute top-[190px] left-[330px] z-30">
                             <StairsIcon />
-                            <ToiletIcon />
+                          </div>
+
+                          {/* △右（階段の下）に追加された「金券販売」と「交流ラウンジ」のブース */}
+                          <div className="absolute top-[232px] left-[330px] flex flex-col gap-1 z-30">
+                            <button
+                              onClick={() => {
+                                const stall = getRoomStall("金券販売") || getRoomStall("金券");
+                                if (stall) setModalItem(stall);
+                              }}
+                              className="w-[88px] h-[36px] border-[2px] border-purple-600 bg-purple-50 text-purple-950 rounded-lg p-0.5 flex items-center justify-center gap-1 font-black transition shadow-sm cursor-pointer hover:bg-purple-100 hover:scale-105"
+                            >
+                              <span className="text-xs">🎟️</span>
+                              <span className="text-[10px] font-black">金券販売</span>
+                            </button>
+                            <button
+                              onClick={() => {
+                                const stall = getRoomStall("交流ラウンジ");
+                                if (stall) setModalItem(stall);
+                              }}
+                              className="w-[88px] h-[36px] border-[2px] border-purple-600 bg-purple-50 text-purple-950 rounded-lg p-0.5 flex items-center justify-center gap-1 font-black transition shadow-sm cursor-pointer hover:bg-purple-100 hover:scale-105"
+                            >
+                              <span className="text-xs">🏫</span>
+                              <span className="text-[10px] font-black">交流ラウンジ</span>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -3061,13 +3090,13 @@ export default function Page() {
                           <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600" />
 
                           {/* 2. 中央縦廊下 */}
-                          <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
+                          <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600 z-10" />
 
-                          {/* 部屋 123(4Iカジノ), 12Fゼミ室, 122, 121 (間隔gap-1) */}
+                          {/* 部屋 123(4Iカジノ), 12Fゼミ室, 122, 121 */}
                           <div className="absolute top-[90px] left-[2px] flex gap-1 z-30">
                             {[
                               { id: "123", room: "123", title: "カジノ", grade: "4I", icon: "🎲", type: "class" },
-                              { id: "12Fゼミ室", room: "12Fゼミ", title: "美術写真", grade: "部活", icon: "🖼️", type: "club" },
+                              { id: "12Fゼミ室", room: "12Fゼミ", title: "美術写真", grade: "美術写真部", icon: "🖼️", type: "club" },
                               { id: "122", room: "122", title: "クレープ", grade: "1-4", icon: "🥞", type: "class" },
                               { id: "121", room: "121", title: "わたあめ", grade: "1-3", icon: "🍥", type: "class" },
                             ].map((r) => {
@@ -3094,17 +3123,18 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 合同講義室（今日、ゲームになりました。） */}
+                          {/* 合同講義室（整和修正済み） */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("合同講義室");
                               if (stall) setModalItem(stall);
                             }}
-                            className="absolute top-[188px] left-[258px] w-[70px] h-[72px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-purple-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight z-30"
+                            className="absolute top-[184px] left-[253px] w-[80px] h-[76px] border-[2.5px] border-purple-600 bg-purple-50 text-purple-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-purple-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                           >
                             <span className="text-base mb-0.5">🎮</span>
                             <span className="text-xs font-black">合同講義室</span>
                             <span className="text-[9px] text-purple-800 font-extrabold line-clamp-1">今日、ゲームに…</span>
+                            <span className="text-[8px] text-purple-700 font-bold">(実行委)</span>
                           </button>
 
                           {/* 階段・トイレ */}
@@ -3126,16 +3156,30 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[300px] relative bg-white">
-                          {/* 1. 上部横廊下 */}
+                          {/* 1. 上部横廊下（中会議室が右端にオーバーレイ配置） */}
                           <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600" />
+
+                          {/* 中会議室：縦方向の位置を横方向廊下（グレー）と重ね、右端へ移動 */}
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("中会議室") || getRoomStall("ボードゲーム");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="absolute top-[26px] right-0 w-[90px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
+                          >
+                            <span className="text-base mb-0.5">🎲</span>
+                            <span className="text-[11px] font-black">中会議室</span>
+                            <span className="text-[10px] font-extrabold text-blue-900 line-clamp-1">ボードゲーム</span>
+                            <span className="text-[8px] text-blue-800 font-bold">(サークル有志)</span>
+                          </button>
 
                           {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600" />
 
-                          {/* 部屋 13Fゼミ室, 133, 132, 131(3Eゲームカフェ) (間隔gap-1) */}
+                          {/* 部屋 13Fゼミ室, 133, 132, 131 */}
                           <div className="absolute top-[90px] left-[2px] flex gap-1 z-30">
                             {[
-                              { id: "13Fゼミ室", room: "13Fゼミ", title: "プラネタリウム", grade: "天文", icon: "🌌", type: "club" },
+                              { id: "13Fゼミ室", room: "13Fゼミ", title: "プラネタリウム", grade: "天文部", icon: "🌌", type: "club" },
                               { id: "133", room: "133", title: "バー", grade: "3I", icon: "🍸", type: "class" },
                               { id: "132", room: "132", title: "喫茶店", grade: "3B", icon: "☕", type: "class" },
                               { id: "131", room: "131", title: "ゲームカフェ", grade: "3E", icon: "🎮", type: "class" },
@@ -3175,7 +3219,7 @@ export default function Page() {
                             <span className="text-xs font-black">大会議室</span>
                           </button>
 
-                          {/* 階段・トイレ・小会議室・中会議室（ボードゲーム有志） */}
+                          {/* 階段・トイレ・小会議室 */}
                           <div className="absolute top-[90px] left-[320px] flex items-center gap-1.5 z-30">
                             <StairsIcon />
                             <ToiletIcon />
@@ -3184,22 +3228,12 @@ export default function Page() {
                                 const stall = getRoomStall("小会議室");
                                 if (stall) setModalItem(stall);
                               }}
-                              className="w-[56px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight shrink-0"
+                              className="w-[62px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight shrink-0"
                             >
                               <span className="text-base mb-0.5">🌌</span>
                               <span className="text-[10px] font-black">小会議室</span>
-                              <span className="text-[8px] text-blue-800 font-extrabold">写真展示</span>
-                            </button>
-                            <button
-                              onClick={() => {
-                                const stall = getRoomStall("中会議室") || getRoomStall("ボードゲーム");
-                                if (stall) setModalItem(stall);
-                              }}
-                              className="w-[72px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight shrink-0"
-                            >
-                              <span className="text-base mb-0.5">🎲</span>
-                              <span className="text-[10px] font-black">中会議室</span>
-                              <span className="text-[8px] text-blue-800 font-extrabold line-clamp-2">ボドゲ有志</span>
+                              <span className="text-[9px] font-extrabold">天体写真</span>
+                              <span className="text-[8px] text-blue-800 font-bold">(天文部)</span>
                             </button>
                           </div>
                         </div>
@@ -3251,7 +3285,8 @@ export default function Page() {
                             className="w-full h-[72px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-blue-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
                             <span className="text-xs font-black">721教室</span>
-                            <span className="text-blue-900 font-extrabold text-[11px]">5B 研究発表</span>
+                            <span className="text-blue-900 font-extrabold text-[11px]">研究発表</span>
+                            <span className="text-[9px] text-blue-800 font-bold">(5B)</span>
                           </button>
                           <button
                             onClick={() => {
@@ -3282,7 +3317,8 @@ export default function Page() {
                             className="w-full h-[72px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-blue-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
                             <span className="text-xs font-black">731教室</span>
-                            <span className="text-blue-900 font-extrabold text-[11px]">AMデザイン部</span>
+                            <span className="text-blue-900 font-extrabold text-[11px]">3Dプリンタ体験</span>
+                            <span className="text-[9px] text-blue-800 font-bold">(AMデザイン部)</span>
                           </button>
                           <button
                             onClick={() => {
@@ -3292,7 +3328,8 @@ export default function Page() {
                             className="w-full h-[72px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1.5 flex flex-col items-center justify-center font-black text-xs text-center leading-tight hover:bg-blue-100 transition shadow-sm cursor-pointer hover:scale-105"
                           >
                             <span className="text-xs font-black">732教室</span>
-                            <span className="text-blue-900 font-extrabold text-[11px]">E.S.S.</span>
+                            <span className="text-blue-900 font-extrabold text-[11px]">Little World</span>
+                            <span className="text-[9px] text-blue-800 font-bold">(E.S.S.)</span>
                           </button>
                         </div>
                         <div className="flex items-center gap-2 pt-1">
@@ -3313,7 +3350,7 @@ export default function Page() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-6 divide-x-2 divide-slate-200">
-                      {/* --- 2階 --- */}
+                      {/* --- 2階（トイレ女子のみ） --- */}
                       <div className="pr-4 flex flex-col items-center">
                         <div className="font-black text-2xl text-slate-900 mb-3">2階</div>
 
@@ -3325,7 +3362,7 @@ export default function Page() {
                           className="w-full h-28 sm:h-32 border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-2 flex flex-col items-center justify-center font-black text-xs sm:text-sm text-center leading-snug hover:bg-blue-100 transition shadow-sm mb-0 z-10 cursor-pointer"
                         >
                           <span className="text-blue-900 font-black">吹奏楽部演奏会</span>
-                          <span className="text-slate-500 my-0.5">(10時〜11時)</span>
+                          <span className="text-slate-500 text-[10px]">(10時〜11時)</span>
                           <span className="text-purple-900 font-black mt-1">学校説明会</span>
                           <span className="text-slate-500 text-[10px]">(13時受付 / 13:30〜15:00)</span>
                         </button>
@@ -3334,8 +3371,8 @@ export default function Page() {
                           <div className="absolute -left-10 top-4">
                             <StairsIcon />
                           </div>
-                          <div className="absolute -right-12 top-4">
-                            <ToiletIcon />
+                          <div className="absolute -right-10 top-4">
+                            <FemaleToiletIcon />
                           </div>
                           <div className="text-xs font-black text-white text-center leading-tight whitespace-nowrap [writing-mode:vertical-rl] [text-orientation:upright] tracking-wider">
                             １・４号館へ ↓
@@ -3343,7 +3380,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* --- 3階 --- */}
+                      {/* --- 3階（トイレ男子のみ） --- */}
                       <div className="pl-6 flex flex-col items-center">
                         <div className="font-black text-2xl text-slate-900 mb-3">3階</div>
 
@@ -3362,8 +3399,8 @@ export default function Page() {
                           <div className="absolute -left-10 top-4">
                             <StairsIcon />
                           </div>
-                          <div className="absolute -right-12 top-4">
-                            <ToiletIcon />
+                          <div className="absolute -right-10 top-4">
+                            <MaleToiletIcon />
                           </div>
                         </div>
                       </div>
@@ -3394,7 +3431,8 @@ export default function Page() {
                           >
                             <span className="text-base mb-0.5">🤖</span>
                             <span className="text-xs font-black">多目的交流室</span>
-                            <span className="text-blue-900 font-extrabold text-[10px]">高専ロボコン展示・体験</span>
+                            <span className="text-blue-900 font-extrabold text-[10px]">ロボコン展示・体験</span>
+                            <span className="text-[8px] text-blue-800 font-bold">(ロボット部)</span>
                           </button>
                           <button
                             onClick={() => {
@@ -3414,7 +3452,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* --- 2階 --- */}
+                      {/* --- 2階（男女トイレ追加済み） --- */}
                       <div className="pl-6 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">2階</div>
                         <div className="w-full space-y-2">
@@ -3438,11 +3476,13 @@ export default function Page() {
                           >
                             <span className="text-base mb-0.5">🍷</span>
                             <span className="text-xs font-black">マルチメディア教室</span>
-                            <span className="text-amber-900 font-extrabold text-[10px]">格付けチェック (4B)</span>
+                            <span className="text-amber-900 font-extrabold text-[10px]">格付けチェック</span>
+                            <span className="text-[9px] font-black">(4B)</span>
                           </button>
                         </div>
                         <div className="flex items-center gap-2 pt-1">
                           <StairsIcon />
+                          <ToiletIcon />
                         </div>
                       </div>
                     </div>
