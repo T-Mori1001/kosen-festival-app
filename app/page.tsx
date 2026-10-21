@@ -743,10 +743,10 @@ const STALLS_DATA: StallItem[] = [
   // --- 4号館 (bldg4) ---
   {
     id: 307,
-    title: "競技かるた部（競技かるた体験会）",
+    title: "競技かるた体験会（有志）",
     category: "部活動企画",
     grade: "有志",
-    dept: "競技かるた体験会",
+    dept: "有志",
     location: "4号館 411教室",
     zoneId: "bldg4",
     roomNo: "411",
@@ -1292,7 +1292,7 @@ export default function Page() {
   >(null);
 
   const [selectedDay, setSelectedDay] = useState<1 | 2>(1);
-  const [zoomLevel, setZoomLevel] = useState<number>(3.0);
+  const [zoomLevel, setZoomLevel] = useState<number>(2.0);
   const [isMapReady, setIsMapReady] = useState<boolean>(false);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -1392,7 +1392,7 @@ export default function Page() {
     if (!container) return;
 
     let startDist = 0;
-    let startZoom = 3.0;
+    let startZoom = 2.0;
     let startScrollLeft = 0;
     let startScrollTop = 0;
     let startMidX = 0;
@@ -1526,9 +1526,9 @@ export default function Page() {
 
   const handleResetZoom = () => {
     if (mapContentRef.current) {
-      mapContentRef.current.style.width = "300%";
+      mapContentRef.current.style.width = "200%";
     }
-    setZoomLevel(3.0);
+    setZoomLevel(2.0);
     setTimeout(() => {
       if (selectedZoneId) {
         centerZonePin(selectedZoneId, true);
@@ -1669,10 +1669,9 @@ export default function Page() {
     );
   };
 
-  const overlayScale = zoomLevel / 3.0;
+  const overlayScale = zoomLevel / 2.0;
 
   // タイトル文字用配列（アニメーション用）
-  const titlePartMain = ["熱", "狂", "の", "高", "専", "祭"];
   const titlePartSub = ["カ", "ー", "ニ", "バ", "ル"];
 
   if (!isEntered) {
@@ -1736,31 +1735,60 @@ export default function Page() {
               </span>
             </div>
 
-            {/* 下段：「熱狂の高専祭」＋ 右下に「カーニバル」 */}
-            <div className="relative flex items-end justify-center text-[#E53935] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] my-1">
-              <div className="text-5xl sm:text-7xl font-black flex tracking-tight">
-                {titlePartMain.map((char, index) => (
-                  <span
-                    key={index}
-                    className="animate-drop-char"
-                    style={{ animationDelay: `${index * 0.15}s` }}
-                  >
-                    {char}
-                  </span>
-                ))}
+            {/* 下段：「熱狂の高専祭」明朝体 ＋ 真下に「カーニバル」 */}
+            <div className="relative flex flex-col items-center justify-center text-[#E53935] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] my-1 font-serif">
+              <div className="flex items-baseline justify-center tracking-tight">
+                <span
+                  className="animate-drop-char text-6xl sm:text-8xl font-black"
+                  style={{ animationDelay: "0s" }}
+                >
+                  熱
+                </span>
+                <span
+                  className="animate-drop-char text-5xl sm:text-7xl font-black"
+                  style={{ animationDelay: "0.15s" }}
+                >
+                  狂
+                </span>
+                <span
+                  className="animate-drop-char text-3xl sm:text-4xl font-bold self-center px-0.5"
+                  style={{ animationDelay: "0.3s" }}
+                >
+                  の
+                </span>
+                <span
+                  className="animate-drop-char text-5xl sm:text-7xl font-black"
+                  style={{ animationDelay: "0.45s" }}
+                >
+                  高
+                </span>
+                <span
+                  className="animate-drop-char text-5xl sm:text-7xl font-black"
+                  style={{ animationDelay: "0.6s" }}
+                >
+                  専
+                </span>
+                <span
+                  className="animate-drop-char text-6xl sm:text-8xl font-black"
+                  style={{ animationDelay: "0.75s" }}
+                >
+                  祭
+                </span>
               </div>
 
-              {/* 「祭」の右下に小さくカーニバル */}
-              <div className="absolute -bottom-3 -right-6 sm:-right-8 flex text-[10px] sm:text-xs font-black text-rose-600 tracking-widest whitespace-nowrap">
-                {titlePartSub.map((char, index) => (
-                  <span
-                    key={index}
-                    className="animate-drop-char"
-                    style={{ animationDelay: `${0.9 + index * 0.12}s` }}
-                  >
-                    {char}
-                  </span>
-                ))}
+              {/* 「高専祭」の真下に配置された「カーニバル」 */}
+              <div className="w-full flex justify-end pr-2 sm:pr-6 -mt-1 sm:-mt-2">
+                <div className="flex text-xs sm:text-sm font-black text-rose-600 tracking-[0.3em] font-sans">
+                  {titlePartSub.map((char, index) => (
+                    <span
+                      key={index}
+                      className="animate-drop-char"
+                      style={{ animationDelay: `${0.9 + index * 0.12}s` }}
+                    >
+                      {char}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -2020,7 +2048,7 @@ export default function Page() {
                 >
                   <ZoomIn className="w-3.5 h-3.5" />
                 </button>
-                {zoomLevel !== 3.0 && (
+                {zoomLevel !== 2.0 && (
                   <button
                     onClick={handleResetZoom}
                     className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition ml-0.5 border-l border-slate-200"
@@ -3020,14 +3048,14 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[320px] relative bg-white">
-                          {/* 4号館の表示位置を少し上にずらして重なりを解消 (-top-6) */}
-                          <div className="absolute -top-6 right-[24px] text-base font-black text-slate-900">
+                          {/* かるた体験（411教室）の直上に4号館の文字を配置 */}
+                          <div className="absolute top-[2px] right-[30px] w-[62px] text-center text-xs font-black text-slate-900 z-30">
                             4号館
                           </div>
 
                           {/* 1. 上部横廊下（グレー） */}
                           <div className="absolute top-[50px] left-0 w-full h-8 bg-neutral-600">
-                            {/* かるた体験の大きさを111教室と同じ w-[62px] h-[88px] に修正 */}
+                            {/* かるた体験（411教室） */}
                             <button
                               onClick={() => {
                                 const stall = getRoomStall("411") || getRoomStall("かるた");
@@ -3193,7 +3221,6 @@ export default function Page() {
                             <span className="text-[10px] font-black text-white tracking-tight">7号館へ ↓</span>
                           </div>
 
-                          {/* 中会議室の大きさを小会議室と同じ w-[62px] h-[88px] に修正 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("中会議室") || getRoomStall("ボードゲーム");
