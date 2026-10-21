@@ -707,7 +707,7 @@ const STALLS_DATA: StallItem[] = [
     zoneId: "bldg4",
     roomNo: "411",
     description: "「畳の上の格闘技」と呼ばれる競技かるた！午前の部(10:00~11:15)ガチ試合観戦、午後の部(13:15~14:30)体験会開催！初心者歓迎！",
-    icon: "🎴",
+    icon: "",
     imageUrl: "/カルタ.png",
     bannerTitle: "競技かるた体験会",
     bannerSub: "畳の上の格闘技！ガチ試合見学 & 初心者体験会",
@@ -1222,7 +1222,7 @@ const CAMPUS_ZONES = [
     subName: "展示・体験棟",
     pinLabel: "4号館",
     lightBg: "bg-teal-50 border-teal-300 text-teal-900",
-    icon: "🎴",
+    icon: "",
     top: "9.0%",
     left: "89.9%",
     desc: "411教室（かるた体験）を開催！",
@@ -2055,10 +2055,11 @@ export default function Page() {
                     <span className="text-red-600 font-extrabold tracking-tight">通行禁止</span>
                   </div>
 
+                  {/* 一番右下のアイコン：0.5%上（69.5%）、0.1%左（27.4%）に調整済み */}
                   <div
                     style={{
-                      top: "70%",
-                      left: "27.5%",
+                      top: "69.5%",
+                      left: "27.4%",
                       transform: `translate(-50%, -50%) scale(${overlayScale})`,
                       transformOrigin: "center center",
                     }}
@@ -2104,7 +2105,7 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* プレハブへの順路矢印（1.5倍サイズ＆指定の配置修正） */}
+                {/* プレハブへの順路矢印（左方向の左端矢印の高さを21.7%へ調整済み） */}
                 {selectedZoneId === "prefab" && (
                   <div className="absolute inset-0 pointer-events-none z-20">
                     {[
@@ -2113,7 +2114,7 @@ export default function Page() {
                       { top: "26.0%", left: "49.0%", dir: "left" },
                       { top: "21.5%", left: "37.0%", dir: "left" },
                       { top: "21.5%", left: "27.0%", dir: "left" },
-                      { top: "21.5%", left: "15.0%", dir: "left" },
+                      { top: "21.7%", left: "15.0%", dir: "left" },
                       { top: "36.0%", left: "11.5%", dir: "down" },
                       { top: "54.0%", left: "11.5%", dir: "down" },
                     ].map((arrow, idx) => (
@@ -2990,9 +2991,9 @@ export default function Page() {
                             4号館
                           </div>
 
-                          {/* 1. 上部横廊下（グレー） ※接続波線削除済み */}
+                          {/* 1. 上部横廊下（グレー） */}
                           <div className="absolute top-[50px] left-0 w-full h-8 bg-neutral-600">
-                            {/* 411かるた体験：部活・有志表記統一 */}
+                            {/* 411かるた体験：(有志)に統一 */}
                             <button
                               onClick={() => {
                                 const stall = getRoomStall("411") || getRoomStall("かるた");
@@ -3000,15 +3001,15 @@ export default function Page() {
                               }}
                               className="absolute -top-3 right-[30px] w-[95px] h-[70px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-1 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-md cursor-pointer text-center leading-tight z-30"
                             >
-                              <span className="text-base">🎴</span>
+                              <span className="text-base"></span>
                               <span className="text-xs font-black">411</span>
                               <span className="text-[10px] font-extrabold line-clamp-1">かるた体験</span>
-                              <span className="text-[8px] text-blue-800 font-bold">(競技かるた有志)</span>
+                              <span className="text-[8px] text-blue-800 font-bold">(有志)</span>
                             </button>
                           </div>
 
-                          {/* 2. 中央縦廊下 */}
-                          <div className="absolute top-[82px] left-[268px] w-8 h-[72px] bg-neutral-600" />
+                          {/* 2. 中央縦廊下（2階に合わせて幅w-[50px]に統一） */}
+                          <div className="absolute top-[82px] left-[268px] w-[50px] h-[72px] bg-neutral-600" />
 
                           {/* 3. 下部横廊下 */}
                           <div className="absolute top-[154px] left-0 w-full h-8 bg-neutral-600" />
@@ -3038,18 +3039,19 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 4. 入口縦廊下 */}
-                          <div className="absolute top-[186px] left-[254px] w-[60px] h-[52px] bg-neutral-600 z-10" />
-                          <div className="absolute top-[242px] left-[284px] -translate-x-1/2">
+                          {/* 4. 入口縦廊下（延長）と△（下に下げて配置） */}
+                          <div className="absolute top-[186px] left-[254px] w-[60px] h-[72px] bg-neutral-600 z-10" />
+                          <div className="absolute top-[262px] left-[284px] -translate-x-1/2">
                             <RedTriangle />
                           </div>
 
-                          {/* 階段 */}
-                          <div className="absolute top-[190px] left-[330px] z-30">
+                          {/* 階段と1階トイレ（追加復元） */}
+                          <div className="absolute top-[190px] left-[330px] flex items-center gap-2 z-30">
                             <StairsIcon />
+                            <ToiletIcon />
                           </div>
 
-                          {/* △右（階段の下）に追加された「金券販売」と「交流ラウンジ」のブース */}
+                          {/* △右（階段の下）の「金券販売」と「交流ラウンジ」 */}
                           <div className="absolute top-[232px] left-[330px] flex flex-col gap-1 z-30">
                             <button
                               onClick={() => {
@@ -3086,8 +3088,10 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[300px] relative bg-white">
-                          {/* 1. 上部横廊下 */}
-                          <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600" />
+                          {/* 1. 上部横廊下（「7号館へ ↓」追加） */}
+                          <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600 flex items-center justify-end pr-4">
+                            <span className="text-[10px] font-black text-white tracking-tight">7号館へ ↓</span>
+                          </div>
 
                           {/* 2. 中央縦廊下 */}
                           <div className="absolute top-[86px] left-[268px] w-[50px] h-[98px] bg-neutral-600 z-10" />
@@ -3123,7 +3127,7 @@ export default function Page() {
                             })}
                           </div>
 
-                          {/* 合同講義室（整和修正済み） */}
+                          {/* 合同講義室 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("合同講義室");
@@ -3156,10 +3160,12 @@ export default function Page() {
                         </div>
 
                         <div className="w-[580px] h-[300px] relative bg-white">
-                          {/* 1. 上部横廊下（中会議室が右端にオーバーレイ配置） */}
-                          <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600" />
+                          {/* 1. 上部横廊下（「7号館へ ↓」追加） */}
+                          <div className="absolute top-[54px] left-0 w-full h-8 bg-neutral-600 flex items-center justify-end pr-[100px]">
+                            <span className="text-[10px] font-black text-white tracking-tight">7号館へ ↓</span>
+                          </div>
 
-                          {/* 中会議室：縦方向の位置を横方向廊下（グレー）と重ね、右端へ移動 */}
+                          {/* 中会議室：(有志)に統一 */}
                           <button
                             onClick={() => {
                               const stall = getRoomStall("中会議室") || getRoomStall("ボードゲーム");
@@ -3170,7 +3176,7 @@ export default function Page() {
                             <span className="text-base mb-0.5">🎲</span>
                             <span className="text-[11px] font-black">中会議室</span>
                             <span className="text-[10px] font-extrabold text-blue-900 line-clamp-1">ボードゲーム</span>
-                            <span className="text-[8px] text-blue-800 font-bold">(サークル有志)</span>
+                            <span className="text-[8px] text-blue-800 font-bold">(有志)</span>
                           </button>
 
                           {/* 2. 中央縦廊下 */}
@@ -3219,23 +3225,25 @@ export default function Page() {
                             <span className="text-xs font-black">大会議室</span>
                           </button>
 
-                          {/* 階段・トイレ・小会議室 */}
-                          <div className="absolute top-[90px] left-[320px] flex items-center gap-1.5 z-30">
+                          {/* 階段・トイレ（2階と位置を完全揃え top-[90px] left-[330px] gap-2） */}
+                          <div className="absolute top-[90px] left-[330px] flex items-center gap-2 z-30">
                             <StairsIcon />
                             <ToiletIcon />
-                            <button
-                              onClick={() => {
-                                const stall = getRoomStall("小会議室");
-                                if (stall) setModalItem(stall);
-                              }}
-                              className="w-[62px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight shrink-0"
-                            >
-                              <span className="text-base mb-0.5">🌌</span>
-                              <span className="text-[10px] font-black">小会議室</span>
-                              <span className="text-[9px] font-extrabold">天体写真</span>
-                              <span className="text-[8px] text-blue-800 font-bold">(天文部)</span>
-                            </button>
                           </div>
+
+                          {/* 小会議室 */}
+                          <button
+                            onClick={() => {
+                              const stall = getRoomStall("小会議室");
+                              if (stall) setModalItem(stall);
+                            }}
+                            className="absolute top-[90px] left-[420px] w-[62px] h-[88px] border-[2.5px] border-blue-600 bg-blue-50 text-blue-950 rounded-xl p-0.5 flex flex-col items-center justify-center font-black hover:bg-blue-100 hover:scale-105 transition shadow-sm cursor-pointer text-center leading-tight z-30 shrink-0"
+                          >
+                            <span className="text-base mb-0.5">🌌</span>
+                            <span className="text-[10px] font-black">小会議室</span>
+                            <span className="text-[9px] font-extrabold">天体写真</span>
+                            <span className="text-[8px] text-blue-800 font-bold">(天文部)</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -3452,7 +3460,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* --- 2階（男女トイレ追加済み） --- */}
+                      {/* --- 2階 --- */}
                       <div className="pl-6 flex flex-col items-center space-y-3">
                         <div className="font-black text-xl text-slate-900">2階</div>
                         <div className="w-full space-y-2">
